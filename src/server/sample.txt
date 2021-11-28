@@ -1,0 +1,72 @@
+type Query {
+    //app-wide
+    allUsers: [User]
+    allPrompts: [Prompts]
+
+    //user-specific
+    getUser(id: String!): User
+
+    //prompt-specific
+    getPrompt(id: String!): Prompt
+
+    //song-specific
+    getSong(id: String!): Song
+
+    //comment-specific
+    getComment(id: String!): Comment
+}
+
+type Mutation {
+
+}
+
+type User {
+    id: String!
+    username: String!
+    email: String!
+    password: String!
+    accessToken: String
+    refreshToken: String
+    profile_picture: String
+    prompts: [Prompt]
+    likes: [Comment]
+    votes: [Prompt]
+    submissions: [SongSubmission]
+}
+
+type Prompt {
+    id: String!
+    prompt: String!
+    posted_by: User
+    submittedSongs: [SongSubmission]
+    comments: [Comment]
+}
+
+type SongSubmission {
+    id: String!
+    prompt_id: String!
+    song: Song!
+    submitted_by: User!
+    votes: Int!
+}
+
+type Song {
+    id: String!
+    spotifyId: String!
+    uri: String!
+    name: String!
+    artist: String!
+    previewUrl: String! 
+    album: String!
+    imageUrl: String!
+}
+
+type Comment {
+    id: String!
+    prompt_id: String!
+    comment: String!
+    posted_by: User
+    likes: Int!
+}
+
+
