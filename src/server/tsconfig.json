@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "target": "ES6",
+      "rootDir": "./",   
+      "moduleResolution": "node"
+    }
+}
