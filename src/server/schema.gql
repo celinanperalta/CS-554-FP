@@ -4,21 +4,20 @@
 # -----------------------------------------------
 
 type Mutation {
-  addTodo(todoInput: TodoInput!): Todo!
+  addSong(album: String!, artist: String!, id: String!, imageUrl: String!, name: String!, previewUrl: String!, spotifyId: String!, uri: String!): Song!
 }
 
 type Query {
-  getTodos: [Todo!]
+  getSongs: [Song!]
 }
 
-type Todo {
-  description: String!
-  id: Float!
-  status: Boolean!
-  title: String!
-}
-
-input TodoInput {
-  description: String!
-  title: String!
+type Song {
+  album: String!
+  artist: String!
+  id: String!
+  imageUrl: String!
+  name: String!
+  previewUrl: String!
+  spotifyId: String!
+  uri: String!
 }

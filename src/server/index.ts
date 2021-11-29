@@ -2,14 +2,20 @@ import 'reflect-metadata'
 import { ApolloServer } from 'apollo-server-express'
 import * as Express from 'express'
 import { buildSchema } from 'type-graphql'
+import { SongResolver } from './resolvers/songResolver'
 
-import { TodoResolver } from './resolvers/todoResolver'
+
+
+
+//import { TodoResolver } from './resolvers/todoResolver'
 
 async function main() {
   const schema = await buildSchema({
-    resolvers: [TodoResolver],
+    resolvers: [SongResolver],
     emitSchemaFile: true,
   })
+
+  
 
   const app = Express()
 

@@ -1,0 +1,49 @@
+{
+    "id": "123456",
+    "spotifyId": "123abc",
+    "uri": "spotify:track1",
+    "name": "song 1",
+    "artist": "artist 1",
+    "previewUrl": "google.com",
+    "album": "album 1",
+    "imageUrl": "image1.png"
+},
+
+{
+    "id": "1234567",
+    "spotifyId": "123abcd",
+    "uri": "spotify:track2",
+    "name": "song 2",
+    "artist": "artist 1",
+    "previewUrl": "google.com",
+    "album": "album 1",
+    "imageUrl": "image2.png"
+}
+
+mutation($spotifyId: String!, $uri: String!, $name: String!, $artist: String!, $previewUrl: String!, $album: String!, $imageUrl: String!, $id: String!){
+  addSong(spotifyId: $spotifyId, uri: $uri, name: $name, artist: $artist, previewUrl: $previewUrl, album: $album, imageUrl: $imageUrl, id: $id){
+    spotifyId
+    uri
+    name
+    artist
+    previewUrl
+    album
+    imageUrl
+    id
+  }
+}
+
+query Query {
+  getSongs {
+    id
+    spotifyId
+    uri
+    name
+    artist
+    previewUrl
+    album
+    imageUrl
+  }
+}
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html
