@@ -1,7 +1,8 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql'
 import {Song} from '../schemas/Song';
-import {Client} from "@elastic/elasticsearch";
+import {Client} from '@elastic/elasticsearch';
 
+@Resolver(of => Song)
 export class SongResolver {
         //uses https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/16.x/api-search.html to search in the es-server
         // use the "match_all": {} to get all documents (in this case songs) that are in the index "songs"

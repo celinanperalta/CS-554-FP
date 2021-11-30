@@ -9,11 +9,11 @@
     imageUrl: String!
 } */
 
-import { Field, ObjectType} from 'type-graphql';
+import { Field, ID, ObjectType} from 'type-graphql';
 
 @ObjectType()
 export class Song{
-    @Field()
+    @Field(() => ID)
     id: string
 
     @Field()

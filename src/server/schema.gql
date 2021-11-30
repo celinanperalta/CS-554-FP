@@ -5,19 +5,39 @@
 
 type Mutation {
   addSong(album: String!, artist: String!, id: String!, imageUrl: String!, name: String!, previewUrl: String!, spotifyId: String!, uri: String!): Song!
+  login(password: String!, username: String!): User
+  logout: Boolean!
+  register(email: String!, password: String!, username: String!): User!
 }
 
 type Query {
   getSongs: [Song!]
+  getUser(id: String!): User
+  getUsers: [User!]
+  me: User
 }
 
 type Song {
   album: String!
   artist: String!
-  id: String!
+  id: ID!
   imageUrl: String!
   name: String!
   previewUrl: String!
   spotifyId: String!
   uri: String!
+}
+
+type User {
+  accessToken: String!
+  email: String!
+  id: ID!
+  likes: [String!]!
+  password: String!
+  profile_picture: String!
+  prompts: [String!]!
+  refreshToken: String!
+  submissions: [String!]!
+  username: String!
+  votes: [String!]!
 }
