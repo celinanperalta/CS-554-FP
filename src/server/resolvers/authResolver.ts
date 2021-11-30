@@ -28,7 +28,6 @@ export class AuthResolver {
     };
     const { user } = await ctx.authenticate("graphql-local", credentials);
     await ctx.login(user);
-    console.log(ctx.getUser())
     return user;
   }
 
