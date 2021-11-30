@@ -1,4 +1,4 @@
-import { Field, ObjectType} from 'type-graphql';
+import { Field, ID, ObjectType} from 'type-graphql';
 import { SongSubmission } from './SongSubmission';
 
 // {
@@ -10,15 +10,15 @@ import { SongSubmission } from './SongSubmission';
 // }
 
 export class Prompt {
-    @Field()
+    @Field(() => ID)
     id: string;
 
     @Field()
     prompt: string;
 
-    @Field({ description: "Array of SongSubmission IDs" })
+    @Field(() => [String])
     submittedSongs: string[];
 
-    @Field({ description: "Array of Comment IDs" })
+    @Field(() => [String])
     comments: string[];
 }

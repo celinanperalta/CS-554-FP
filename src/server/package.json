@@ -2,29 +2,45 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Server for Spotluck",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec ts-node index.ts"
+    "start": "nodemon --exec ts-node index.ts --emitDecoratorMetadata --experimentalDecorators --watch ./ --ext .ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.15.0",
     "axios": "^0.24.0",
+    "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
     "class-validator": "^0.13.2",
     "elasticsearch": "^16.7.2",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "firebase": "^9.5.0",
     "graphql": "^15.3.0",
+    "graphql-passport": "^0.6.4",
+    "passport": "^0.5.0",
     "redis": "^4.0.0",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
     "@types/node": "^16.11.10",
+    "@types/passport": "^1.0.7",
+    "@types/uuid": "^8.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
     "apollo-server-express": "^3.5.0",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb": "^19.0.1",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "nodemon": "^2.0.15"
   }
 }

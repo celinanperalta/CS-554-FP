@@ -1,8 +1,8 @@
-import { Field, ObjectType} from 'type-graphql';
+import { Field, ID, ObjectType} from 'type-graphql';
 
 @ObjectType()
 export class User {
-  @Field()
+  @Field(() => ID)
   id: string
 
   @Field()
@@ -12,9 +12,9 @@ export class User {
   email: string
 
   @Field()
-  password: boolean
+  password: string
 
-  @Field({ description: "Array of Prompt IDs" })
+  @Field(() => [String])
   prompts: string[]
   
   @Field()
@@ -26,12 +26,12 @@ export class User {
   @Field()
   profile_picture: string
 
-  @Field({ description: "Array of Comment IDs"})
+  @Field(() => [String])
   likes: string[]
 
-  @Field({ description: "Array of Prompt IDs"})
+  @Field(() => [String])
   votes: string[]
 
-  @Field({ description: "Array of SongSubmission IDs"} )
+  @Field(() => [String])
   submissions: string[]
 }
