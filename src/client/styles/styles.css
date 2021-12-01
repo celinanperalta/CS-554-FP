@@ -1,0 +1,46 @@
+.NavBar{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  top: 0;
+}
+
+.NavBar li{
+    float: left;
+}
+
+.active {
+    background-color: #04AA6D;
+}
+
+.NavBar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.NavBar li a:hover {
+    background-color: #111;
+}
+
+.app {
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.comments {
+    list-style-type: none;
+}
+
+.song-suggestions{
+    list-style-type: none;
+}
+
+.prompts{
+    list-style-type: none;
+}
