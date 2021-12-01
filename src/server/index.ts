@@ -13,81 +13,79 @@ import { User } from "./schemas/User";
 
 import userService from "./services/userService";
 import { seed } from "./config/esConnection";
+import initPassport from "./config/initPassport";
+import { emitWarning } from "process";
 
+const cors = require("cors");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const passport = require("passport");
 
+const corsOptions = {
+  origin: ['http://localhost:4000'],
+  credentials: true,
+};
+
+const SESSION_SECRET = "bad secret";
+const PORT = 4000;
+
 async function main() {
+  require("dotenv").config();
+
   const schema = await buildSchema({
     resolvers: [SongResolver, UserResolver, AuthResolver],
     emitSchemaFile: true,
   });
 
-  const SESSION_SECRET = "bad secret";
-
-  passport.serializeUser(function (user: User, done) {
-    done(null, user);
-  });
-
-  passport.deserializeUser(function (id: string, done) {
-    userService.getUserById(id).then((user) => {
-      done(null, user);
-    });
-  });
-
-  passport.use(
-    new GraphQLLocalStrategy(
-      async (username: string, password: string, done) => {
-        const users = await userService.getUsers();
-        const matchingUser: User = users.find(
-          (user) => username === user.username
-        );
-        if (!matchingUser) {
-          done(new Error(`User ${username} not found.`), false);
-        } else {
-          const matchPass = await bcrypt.compare(
-            password,
-            matchingUser.password
-          );
-          const error = matchPass ? null : new Error("Bad credentials.");
-          done(error, matchingUser);
-        }
-      }
-    )
-  );
+  initPassport();
 
   const app = Express();
 
-  const server = new ApolloServer({
-    schema,
-    context: ({ req, res }) => buildContext({ req, res }),
-  });
+  app.use(cors(corsOptions));
 
   app.use(
     session({
-      genid: (req) => uuid(),
+      genid: (req: any) => uuid(),
       secret: SESSION_SECRET,
-      resave: false,
+      resave: true,
       saveUninitialized: false,
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        secure: false,
-      },
     })
   );
 
   app.use(passport.initialize());
   app.use(passport.session());
 
+  app.get(
+    "/auth/spotify",
+    passport.authenticate("spotify", {
+      scope: ['user-read-email', 'user-read-private'],
+      showDialog: false,
+    })
+  );
+
+  app.get(
+    "/auth/spotify/callback",
+    passport.authenticate("spotify", { failureRedirect: "/login" }),
+    function (req, res) {
+      // Successful authentication, redirect home.
+      console.log(req.user);
+      res.redirect("/");
+    }
+  );
+
+  const server = new ApolloServer({
+    schema,
+    context: ({ req, res }) => buildContext({ req, res, User }),
+  });
+
   await server.start();
 
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, cors: false });
 
   await seed();
 
-  app.listen(4000, () =>
-    console.log("Server is running on http://localhost:4000/graphql")
+  app.listen(PORT, () =>
+    console.log(`Server is running on http://localhost:${PORT}/graphql`)
   );
 }
 
