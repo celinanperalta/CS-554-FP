@@ -8,7 +8,7 @@
     "start": "nodemon --exec ts-node index.ts --emitDecoratorMetadata --experimentalDecorators --watch ./ --ext .ts"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.15.0",
+    "@elastic/elasticsearch": "^7.13.0",
     "@types/cors": "^2.8.12",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",

@@ -1,8 +1,8 @@
 "use strict";
 
 import { Client, ApiResponse, RequestParams } from "@elastic/elasticsearch";
-
-const client = new Client({ node: "http://localhost:9200" });
+require('dotenv').config();
+const client = new Client({ node: process.env.ES_HOST });
 
 async function run(): Promise<void> {
   const indices = ["users", "songs", "submissions", "comments", "prompts"];
