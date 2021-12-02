@@ -52,7 +52,7 @@ async function main() {
       genid: (req: any) => uuid(),
       secret: SESSION_SECRET,
       resave: false,
-      saveUninitialized: false,
+      saveUninitialized: true,
     })
   );
 
