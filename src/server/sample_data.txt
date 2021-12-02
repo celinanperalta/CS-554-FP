@@ -1,5 +1,4 @@
 {
-    "id": "123456",
     "spotifyId": "123abc",
     "uri": "spotify:track1",
     "name": "song 1",
@@ -10,7 +9,6 @@
 },
 
 {
-    "id": "1234567",
     "spotifyId": "123abcd",
     "uri": "spotify:track2",
     "name": "song 2",

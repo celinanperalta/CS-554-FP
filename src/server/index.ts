@@ -19,6 +19,7 @@ const session = require("express-session");
 const passport = require("passport");
 
 async function main() {
+  require("dotenv").config();
   const schema = await buildSchema({
     resolvers: [SongResolver, UserResolver, AuthResolver],
     emitSchemaFile: true,

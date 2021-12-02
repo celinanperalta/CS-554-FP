@@ -11,6 +11,8 @@ const getUsers = async () : Promise<User[]> => {
             }
         }
     });
+    console.log(body.hits.hits);
+    console.log(body.hits.hits.map(hit => hit._source))
     return body.hits.hits.map(hit => hit._source)
 }
 
@@ -44,7 +46,7 @@ const addUser = async (username: string, email: string, hashedPassword: string) 
     await client.index({
         index: 'users',
         id: user.id,
-        body: user
+        body: user,
     })
     return user
 }

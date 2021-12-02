@@ -8,11 +8,12 @@
     "start": "nodemon --exec ts-node index.ts --emitDecoratorMetadata --experimentalDecorators --watch ./ --ext .ts"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.15.0",
+    "@elastic/elasticsearch": "^7.13.0",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
     "class-validator": "^0.13.2",
+    "dotenv": "^10.0.0",
     "elasticsearch": "^16.7.2",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
