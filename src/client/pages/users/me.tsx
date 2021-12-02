@@ -1,17 +1,16 @@
 import useUser from "../../lib/useUser";
 
-const User = ({ user }) => {
+const Me = () => {
   const { data } = useUser({
     redirectTo: "/login",
   });
 
   return (
     <div>
-      <h1>User</h1>
-      <p>{user.name}</p>
-      <p>{user.email}</p>
+      <h1>My Profile</h1>
+      <p>{data?.me.username}</p>
     </div>
   );
 };
 
-export default User;
+export default Me;

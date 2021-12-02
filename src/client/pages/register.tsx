@@ -1,27 +1,41 @@
+import { useApolloClient } from '@apollo/client'
 import React, {useState} from 'react'
-import { useAuth } from '../lib/useAuth'
+import queries from '../queries'
 
-const Login = () => {
+const Register = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  
-  const { signIn, signOut } = useAuth()
+  const [email, setEmail] = useState('')
 
-  function onSubmit(e) {
+  const client = useApolloClient()
+
+  const onSubmit = async (e) => {
     e.preventDefault()
-    signIn({ username, password })
+    const { data } = await client.mutate({
+      mutation: queries.REGISTER_USER,
+      variables: {
+        username,
+        password,
+        email
+      }
+    })
+    console.log(data)
   }
 
   return (
     <div className= "app">
-      <h2>Login</h2>
-      <div>
+      <h2>Sign Up</h2>
       <form onSubmit={onSubmit}>
         <input
           type="text"
           placeholder="username"
           onChange={(e) => setUsername(e.target.value)}
+        ></input>
+        <input
+          type="text"
+          placeholder="email"
+          onChange={(e) => setEmail(e.target.value)}
         ></input>
         <input
           type="password"
@@ -31,8 +45,8 @@ const Login = () => {
         <button type="submit">Sign In</button>
       </form>
     </div>
-    </div>
+
   )
 }
 
-export default Login;
+export default Register;

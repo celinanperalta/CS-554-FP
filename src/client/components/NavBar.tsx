@@ -17,8 +17,8 @@ const NavBar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/signup">
-                        <a className={router.asPath == "/signup" ? "active" : ""}>SignUp</a>
+                    <Link href="/register">
+                        <a className={router.asPath == "/register" ? "active" : ""}>Register</a>
                     </Link>
                 </li>
                 <li>
