@@ -25,7 +25,7 @@ const getUserById = async (id: string) : Promise<User> => {
             }
         }
     });
-    return body.hits.hits[0]._source
+    return body.hits.hits[0]?._source
 }
 
 const addUser = async (username: string, email: string, hashedPassword: string) : Promise<User> => {
@@ -49,8 +49,20 @@ const addUser = async (username: string, email: string, hashedPassword: string) 
     return user
 }
 
+const updateUser = async (newUser: User, user: User) : Promise<User> => {
+    await client.update({
+        index: 'users',
+        id: user.id,
+        body: {
+            doc: newUser
+        }
+    })
+    return newUser
+}
+
 export default {
     getUsers,
     getUserById,
-    addUser
+    addUser,
+    updateUser
 }
