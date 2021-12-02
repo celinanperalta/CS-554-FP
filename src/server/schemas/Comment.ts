@@ -1,5 +1,4 @@
 import { Field, ObjectType} from 'type-graphql';
-import { User } from './User';
 
 @ObjectType()
 export class Comment {
@@ -13,7 +12,7 @@ export class Comment {
     comment: string
 
     @Field()
-    posted_by: User
+    posted_by: string
 
     @Field()
     likes: number

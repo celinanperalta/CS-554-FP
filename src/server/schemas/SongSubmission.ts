@@ -1,6 +1,4 @@
 import { Field, ID, ObjectType} from 'type-graphql';
-import { Song } from './Song';
-import { User } from './User';
 @ObjectType()
 export class SongSubmission {
   @Field(() => ID)
@@ -10,10 +8,10 @@ export class SongSubmission {
   prompt_id: string
 
   @Field()
-  song: Song
+  song: string
 
   @Field()
-  submitted_by: User
+  submitted_by: string
 
   @Field()
   votes: number

@@ -29,7 +29,7 @@ const getCommentById = async (id: string) : Promise<Comment> => {
     return body.hits.hits[0]._source
 }
 
-const addComment = async (prompt_id: string , comment: string,  posted_by: User,  likes: number) : Promise<Comment> => {
+const addComment = async (prompt_id: string , comment: string,  posted_by: string,  likes: number) : Promise<Comment> => {
     let new_comment = new Comment()
     new_comment.id = uuid()
     new_comment.comment = comment

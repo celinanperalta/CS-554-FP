@@ -19,7 +19,7 @@ export class CommentResolver {
     }
 
     @Mutation(returns => Comment, {nullable:true})
-    async addComment(@Arg("prompt_id")prompt_id: string , @Arg("comment")comment: string,  @Arg("posted_by")posted_by: User,  @Arg("likes")likes: number): Promise<Comment>{
+    async addComment(@Arg("prompt_id")prompt_id: string , @Arg("comment")comment: string,  @Arg("posted_by")posted_by: string,  @Arg("likes")likes: number): Promise<Comment>{
         return await commentService.addComment(prompt_id,comment,posted_by,likes);
     }
 

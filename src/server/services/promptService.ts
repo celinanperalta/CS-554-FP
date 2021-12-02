@@ -1,6 +1,5 @@
 import client from "../config/esConnection";
 import { Prompt } from "../schemas/Prompt";
-import { User } from "../schemas/User";
 import {v4 as uuid} from 'uuid';
 
 
@@ -30,7 +29,7 @@ const getPromptById = async (id: string) : Promise<Prompt> => {
     return body.hits.hits[0]._source
 }
 
-const addPrompt = async ( prompt: string,  posted_by: User,  submittedSongs: string[], comments: string[]) : Promise<Prompt> => {
+const addPrompt = async ( prompt: string,  posted_by: string,  submittedSongs: string[], comments: string[]) : Promise<Prompt> => {
     let new_prompt = new Prompt()
     new_prompt.id = uuid()
     new_prompt.prompt = prompt

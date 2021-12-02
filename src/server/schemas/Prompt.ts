@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType} from 'type-graphql';
 import { SongSubmission } from './SongSubmission';
 import { User } from './User';
+import { Comment } from './Comment';
 // {
 //     id: String!
 //     prompt: String!
@@ -8,7 +9,7 @@ import { User } from './User';
 //     submittedSongs: [SongSubmission]
 //     comments: [Comment]
 // }
-
+@ObjectType()
 export class Prompt {
     @Field(() => ID)
     id: string;
@@ -17,7 +18,7 @@ export class Prompt {
     prompt: string;
 
     @Field()
-    posted_by: User
+    posted_by: string
 
     @Field(() => [String])
     submittedSongs: string[];

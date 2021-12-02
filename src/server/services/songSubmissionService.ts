@@ -31,7 +31,7 @@ const getSongSubmissionById = async (id: string) : Promise<SongSubmission> => {
     return body.hits.hits[0]._source
 }
 
-const addSongSubmission = async ( prompt_id: string,  song: Song, submitted_by: User, votes: number) : Promise<SongSubmission> => {
+const addSongSubmission = async ( prompt_id: string,  song: string, submitted_by: string, votes: number) : Promise<SongSubmission> => {
     let songSubmission = new SongSubmission()
     songSubmission.id = uuid()
     songSubmission.song = song

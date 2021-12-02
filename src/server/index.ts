@@ -8,6 +8,9 @@ import { GraphQLLocalStrategy, buildContext } from "graphql-passport";
 import { SongResolver } from "./resolvers/songResolver";
 import { UserResolver } from "./resolvers/userResolver";
 import { AuthResolver } from "./resolvers/authResolver";
+import { CommentResolver } from "./resolvers/commentResolver";
+import { PromptResolver } from "./resolvers/promptResolver";
+import { SongSubmissionResolver } from "./resolvers/songSubmissionResolver";
 
 import { User } from "./schemas/User";
 
@@ -21,7 +24,7 @@ const passport = require("passport");
 async function main() {
   require("dotenv").config();
   const schema = await buildSchema({
-    resolvers: [SongResolver, UserResolver, AuthResolver],
+    resolvers: [SongResolver, UserResolver, AuthResolver, CommentResolver, PromptResolver, SongSubmissionResolver],
     emitSchemaFile: true,
   });
 
