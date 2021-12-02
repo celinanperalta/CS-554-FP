@@ -1,5 +1,4 @@
 import { Field, ID, ObjectType} from 'type-graphql';
-
 @ObjectType()
 export class SongSubmission {
   @Field(() => ID)
@@ -12,7 +11,7 @@ export class SongSubmission {
   song: string
 
   @Field()
-  submitted_by: boolean
+  submitted_by: string
 
   @Field()
   votes: number
