@@ -1,6 +1,5 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql'
 import {Song} from '../schemas/Song';
-import client from "../config/esConnection";
 import songService from "../services/songService";
 
 @Resolver(of => Song)

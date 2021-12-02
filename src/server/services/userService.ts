@@ -11,8 +11,6 @@ const getUsers = async () : Promise<User[]> => {
             }
         }
     });
-    console.log(body.hits.hits);
-    console.log(body.hits.hits.map(hit => hit._source))
     return body.hits.hits.map(hit => hit._source)
 }
 

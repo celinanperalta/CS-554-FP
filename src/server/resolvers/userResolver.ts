@@ -1,10 +1,6 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql'
 import { User } from '../schemas/User'
-import client from '../config/esConnection'
-import { v4 as uuid } from 'uuid'
 import userService from '../services/userService'
-import bcrypt from 'bcrypt'
-
 @Resolver(of => User) 
 export class UserResolver {
 
@@ -14,10 +10,15 @@ export class UserResolver {
     }
 
     @Query(returns => User, {nullable: true})
-    async getUser(
+    async getUserById(
         @Arg('id') id: string
         ): Promise<User> {
             return await userService.getUserById(id)
+    }
+
+    @Mutation(returns => User, {nullable:true})
+    async addUser(@Arg('username')username: string, @Arg('email') email: string, @Arg('hashedPassword')hashedPassword: string): Promise<User>{
+        return await userService.addUser(username,email,hashedPassword);
     }
 
 }
