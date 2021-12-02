@@ -13,7 +13,7 @@ const bcrypt = require("bcrypt");
 export class AuthResolver {
   @Query((returns) => User, {nullable: true})
   async me(@Ctx() ctx: UserLoginContext): Promise<User> {
-    return ctx.user;
+    return ctx.req.user as User;
   }
 
   @Mutation((returns) => User, { nullable: true })

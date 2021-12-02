@@ -3,16 +3,44 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Comment {
+  comment: String!
+  id: String!
+  likes: Float!
+  posted_by: String!
+  prompt_id: String!
+}
+
 type Mutation {
-  addSong(album: String!, artist: String!, id: String!, imageUrl: String!, name: String!, previewUrl: String!, spotifyId: String!, uri: String!): Song!
+  addComment(comment: String!, likes: Float!, posted_by: String!, prompt_id: String!): Comment
+  addPrompt(posted_by: String!, prompt: String!): Prompt
+  addSong(album: String!, artist: String!, imageUrl: String!, name: String!, previewUrl: String!, spotifyId: String!, uri: String!): Song!
+  addSongSubmission(prompt: String!, song: String!, submitted_by: String!, votes: Float!): SongSubmission
+  addUser(email: String!, hashedPassword: String!, username: String!): User
   login(password: String!, username: String!): User
   logout: Boolean!
   register(email: String!, password: String!, username: String!): User!
 }
 
+type Prompt {
+  comments: [String!]!
+  id: ID!
+  posted_by: String!
+  prompt: String!
+  submittedSongs: [String!]!
+}
+
 type Query {
+  getCommentById(id: String!): Comment
+  getComments: [Comment!]
+  getPromptById(id: String!): Prompt
+  getPrompts: [Prompt!]
+  getSongById(id: String!): Song
+  getSongBySpotifyId(spotifyId: String!): Song
+  getSongSubmissionById(id: String!): SongSubmission
+  getSongSubmissions: [SongSubmission!]
   getSongs: [Song!]
-  getUser(id: String!): User
+  getUserById(id: String!): User
   getUsers: [User!]
   me: User
 }
@@ -26,6 +54,14 @@ type Song {
   previewUrl: String!
   spotifyId: String!
   uri: String!
+}
+
+type SongSubmission {
+  id: ID!
+  prompt_id: String!
+  song: String!
+  submitted_by: String!
+  votes: Float!
 }
 
 type User {

@@ -25,7 +25,7 @@ const session = require("express-session");
 const passport = require("passport");
 
 const corsOptions = {
-  origin: ['http://localhost:4000'],
+  origin: ['http://localhost:3000', 'https://studio.apollographql.com'],
   credentials: true,
 };
 
@@ -38,6 +38,7 @@ async function main() {
   const schema = await buildSchema({
     resolvers: [SongResolver, UserResolver, AuthResolver, CommentResolver, PromptResolver, SongSubmissionResolver],
     emitSchemaFile: true,
+    
   });
 
   initPassport();
@@ -50,7 +51,7 @@ async function main() {
     session({
       genid: (req: any) => uuid(),
       secret: SESSION_SECRET,
-      resave: true,
+      resave: false,
       saveUninitialized: false,
     })
   );
