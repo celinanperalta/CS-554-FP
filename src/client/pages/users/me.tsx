@@ -5,10 +5,14 @@ const Me = () => {
     redirectTo: "/login",
   });
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <div>
       <h1>My Profile</h1>
-      <p>{data?.me.username}</p>
+      <p>{data.me && data.me.username}</p>
     </div>
   );
 };

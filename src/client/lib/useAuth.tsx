@@ -93,8 +93,14 @@ function useProvideAuth() {
     }
   };
 
-  const signOut = () => {
+  const signOut = async () => {
+    console.log("signing out");
+    const client = createApolloClient();
+    const result = await client.mutate({
+      mutation: queries.LOGOUT_USER,
+    });
     setAuthToken(null);
+    Router.push("/");
   };
 
   return {

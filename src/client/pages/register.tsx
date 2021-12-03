@@ -1,8 +1,15 @@
 import { useApolloClient } from '@apollo/client'
 import React, {useState} from 'react'
+import { useAuth } from '../lib/useAuth'
+import useUser from '../lib/useUser'
 import queries from '../queries'
+import Router from "next/router";
+
+
 
 const Register = () => {
+
+  const {isSignedIn} = useAuth()
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -20,7 +27,10 @@ const Register = () => {
         email
       }
     })
-    console.log(data)
+  }
+
+  if (isSignedIn()) {
+    Router.push('/users/me')
   }
 
   return (
