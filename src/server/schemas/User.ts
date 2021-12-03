@@ -6,32 +6,35 @@ export class User {
   id: string
 
   @Field()
-  username: string
+  username?: string
 
   @Field()
-  email: string
+  email?: string
 
   @Field()
   password: string
 
   @Field(() => [String])
-  prompts: string[]
+  prompts?: string[]
   
   @Field()
-  accessToken: string
+  accessToken?: string
 
   @Field()
-  refreshToken: string
+  refreshToken?: string
 
   @Field()
-  profile_picture: string
+  profile_picture?: string
 
   @Field(() => [String])
-  likes: string[]
+  likes?: string[]
 
   @Field(() => [String])
-  votes: string[]
+  votes?: string[]
 
   @Field(() => [String])
-  submissions: string[]
+  submissions?: string[]
+
+  @Field(()=> [String])
+  comments?: string[]
 }
