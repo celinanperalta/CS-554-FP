@@ -1,9 +1,42 @@
 import { PassportSubscriptionContext, PassportContext } from 'graphql-passport';
+import { Field } from 'type-graphql';
 import { User } from '../schemas/User';
 
 export type UserLogin = {
     username: string;
     password: string;
+}
+
+export interface userPatch  {
+    id: string,
+    username?: string,
+    email?: string,
+    password?: string,
+    prompts?: string[],
+    accessToken?: string,
+    refreshToken?: string,
+    profile_picture?: string,
+    likes?: string[],
+    votes?: string[],
+    submissions?: string[],
+    comments?: string[],
+}
+
+export interface promptPatch {
+    id: string,
+    comments?: string[],
+    posted_by: string,
+    prompt?: string,
+    submittedSongs?: string[]
+}
+
+export interface commentPatch {
+    id: string,
+    prompt_id: string,
+    comment?: string,
+    posted_by: string,
+    likes? : number
+
 }
 
 export interface UserLoginContext extends PassportContext<User, UserLogin>{}
