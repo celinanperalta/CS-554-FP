@@ -1,5 +1,8 @@
 import React from 'react'
 import Link from "next/link";
+import Card from "./card";
+import {Grid, makeStyles} from '@material-ui/core';
+
 const Prompts = () =>{
 
     const dummyList = [
@@ -13,15 +16,11 @@ const Prompts = () =>{
         <div className="app">
             <h2>Prompts on this page</h2>
             <ul className="prompts">
+        <Grid container className="" spacing={5}>
         {dummyList.map((item, index) => (
-        <li key={index}>
-          <Link as={`/prompts/${item.id}`} href="/prompts/[promptId]">
-            <a>
-              {item.prompt}
-            </a>
-          </Link>
-        </li>
-      ))}
+            <Card key={index} data={item} />
+        ))}
+      </Grid>
     </ul>
 
         </div>
