@@ -24,6 +24,7 @@ const useStyles = makeStyles({
       marginRight: 'auto',
       borderRadius: 5,
       border: '1px solid #1e8678',
+      textAlign: "left",
       boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
     },
     titleHead: {
@@ -38,23 +39,34 @@ const useStyles = makeStyles({
       height: '100%',
       width: '100%'
     },
+    header: {
+        backgroundColor: '#333',
+        //color: 'white'
+    },
     button: {
-      color: '#1e8678',
-      fontWeight: 'bold',
-      fontSize: 12
-    }
+      color: '#04AA6D',
+      borderColor: '#04AA6D',
+      margin: "10px"
+    },
+    // 'button:hover': {
+    //     backgroundColor: '#333',
+    //     borderColor: '#333',
+    //     boxShadow: 'none',
+    //   }
   });
 
 const BuildCard = (props) => {
+    const classes = useStyles();
+
     return (
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <Card className="promptCard" variant="outlined">
-                <CardHeader className="promptHeader" subheader={props.data.posted_by} />
+        <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
+            <Card className={classes.card} variant="outlined">
+                <CardHeader className={classes.header} subheader={props.data.posted_by} />
                 <CardContent>
                     <Typography className="promptContent" >{props.data.prompt}</Typography>
                 </CardContent>
                 <Link href={`/prompts/${props.data.id}`}>
-                    <Button className="promptButon" size="small">LEt mE ComMent pLS</Button>
+                    <Button variant="outlined" className={classes.button} size="small" color="secondary">LEt mE ComMent pLS</Button>
                 </Link>
                 <br/>
                 <br/>                          
