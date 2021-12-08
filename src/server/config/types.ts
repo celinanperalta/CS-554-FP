@@ -39,4 +39,7 @@ export interface commentPatch {
 
 }
 
-export interface UserLoginContext extends PassportContext<User, UserLogin>{}
+export interface UserLoginContext extends PassportContext<User, UserLogin>{
+  req: any;
+  res: any;
+}

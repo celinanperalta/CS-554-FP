@@ -84,17 +84,6 @@ const updateUser = async (newUserInfo: userPatch): Promise<User> => {
 
 };
 
-const updateUser = async (newUser: User, user: User) : Promise<User> => {
-    await client.update({
-        index: 'users',
-        id: user.id,
-        body: {
-            doc: newUser
-        }
-    })
-    return newUser
-}
-
 export default {
   getUsers,
   getUserById,

@@ -38,7 +38,6 @@ async function main() {
   const schema = await buildSchema({
     resolvers: [SongResolver, UserResolver, AuthResolver, CommentResolver, PromptResolver, SongSubmissionResolver],
     emitSchemaFile: true,
-    
   });
 
   initPassport();
@@ -53,6 +52,10 @@ async function main() {
       secret: SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
+      cookie: {
+        httpOnly: true,
+        secure: true,
+      },
     })
   );
 
