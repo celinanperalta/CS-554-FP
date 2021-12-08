@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useAuth } from "../lib/useAuth";
+import { useAuth } from "../lib/useAuth.jsx";
 const NavBar = () => {
   const router = useRouter();
   const { isSignedIn, signOut } = useAuth();
 
+  // Todo: Better route restriction
   return (
     <div className="app">
       <ul className="NavBar">
@@ -23,7 +24,14 @@ const NavBar = () => {
                 </a>
               </Link>
             </li>
-            <li onClick={() => signOut()}>
+            <li>
+              <Link href="/users/me">
+                <a className={router.asPath == "/users/me" ? "active" : ""}>
+                  My Profile
+                </a>
+              </Link>
+            </li>
+            <li onClick={async () => await signOut()}>
               <a>Logout</a>
             </li>
           </div>

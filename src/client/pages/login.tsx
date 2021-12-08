@@ -1,23 +1,20 @@
 import React, {useState} from 'react'
 import { useAuth } from '../lib/useAuth'
-import Router from "next/router";
+import {useRouter} from "next/router";
+import useUser from '../lib/useUser';
 
 const Login = () => {
 
+  const router = useRouter();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   
   const { isSignedIn, signIn, signOut } = useAuth()
 
-  if (isSignedIn()) {
-    Router.push("/users/me")
-  }
-  
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault()
-    signIn({ username, password })
+    await signIn({ username, password })
   }
-
 
   return (
     <div className= "app">

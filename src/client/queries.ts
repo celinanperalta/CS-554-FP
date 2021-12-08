@@ -45,7 +45,6 @@ const GET_ME = gql`
     me {
       id
       username
-      password
       email
     }
   }
@@ -57,9 +56,27 @@ const LOGOUT_USER = gql`
   }
 `;
 
+const GET_USER = gql`
+query Query($id: String!) {
+  getUserById(id: $id) {
+    id
+    username
+    email
+    prompts
+    accessToken
+    refreshToken
+    profile_picture
+    likes
+    votes
+    submissions
+  }
+}
+`;
+
 export default {
   LOGIN_USER,
   REGISTER_USER,
   GET_ME,
   LOGOUT_USER,
+  GET_USER
 };
