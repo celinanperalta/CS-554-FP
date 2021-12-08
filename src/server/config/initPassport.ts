@@ -16,6 +16,8 @@ const spotifyCallback = async (req, accessToken, refreshToken, expires_in, profi
       return;
     }
 
+    console.log('spotifyCallback', req)
+
     // To do: Ensure user is authenticated with email/password before spotify authentication.
     const dummyUser : User = {
         id: profile._json.uri,
@@ -57,11 +59,13 @@ const initPassport = () => {
     )
   );
   passport.serializeUser(function (user: User, done) {
+    console.log("serializeUser", user.id);
     done(null, user.id);
   });
 
   passport.deserializeUser(async (id: string, done) => {
     const user = await userService.getUserById(id);
+    console.log("deserializeUser", id);
     done(null, user);
   });
 

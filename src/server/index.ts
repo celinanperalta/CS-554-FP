@@ -25,7 +25,7 @@ const session = require("express-session");
 const passport = require("passport");
 
 const corsOptions = {
-  origin: ['http://localhost:4000'],
+  origin: ['http://localhost:3000', 'https://studio.apollographql.com'],
   credentials: true,
 };
 
@@ -50,8 +50,12 @@ async function main() {
     session({
       genid: (req: any) => uuid(),
       secret: SESSION_SECRET,
-      resave: true,
-      saveUninitialized: false,
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        httpOnly: true,
+        secure: true,
+      },
     })
   );
 
