@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import SpotifyLoginButton from "../../components/SpotifyLoginButton";
 import withPrivateRoute from "../../components/withPrivateRoute";
 import useUser from "../../lib/useUser";
 import queries from "../../queries";
@@ -24,6 +25,7 @@ const Me = () => {
         <p>{user.data.getUserById.username}</p>
         <p>{user.data.getUserById.profile_picture}</p>
         <p>{user.data.getUserById.prompts}</p>
+        <SpotifyLoginButton />
       </div>
     );
   } else {
