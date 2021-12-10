@@ -11,10 +11,18 @@ const bcrypt = require("bcrypt");
 // https://jkettmann.com/password-based-authentication-with-graphql-and-passport
 @Resolver((of) => Auth)
 export class AuthResolver {
+
+  @Query((returns) => Boolean)
+  async isAuthenticated(@Ctx() ctx: UserLoginContext): Promise<boolean> {
+    return ctx.req.session.passport?.user ? true : false;
+  }
+
   @Query((returns) => User, {nullable: true})
   async me(@Ctx() ctx: UserLoginContext): Promise<User> {
-    console.log('ctx req user', ctx.req.user);
-    return ctx.req.user as User;
+    if (ctx.req.session.passport?.user) {
+      return userService.getUserById(ctx.req.session.passport.user);
+    }
+    return null;
   }
 
   @Mutation((returns) => User, { nullable: true })
@@ -28,10 +36,6 @@ export class AuthResolver {
       password,
     };
     const { user } = await ctx.authenticate("graphql-local", credentials);
-    ctx.res.cookie("user", user.id, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-    });
     await ctx.login(user);
     return user;
   }
@@ -58,10 +62,7 @@ export class AuthResolver {
 
   @Mutation((returns) => Boolean)
   async logout(@Ctx() ctx: UserLoginContext): Promise<boolean> {
-    console.log('logout before', ctx.isAuthenticated());
     await ctx.logout();
-    console.log('logout after', ctx.isAuthenticated());
-    ctx.res.clearCookie("user");
     return true;
   }
 }

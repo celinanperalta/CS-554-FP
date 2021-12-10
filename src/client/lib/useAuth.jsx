@@ -10,19 +10,31 @@ import { onError } from "@apollo/client/link/error";
 import queries from "../queries";
 import Router from "next/router";
 import client from "../apollo-client";
+import useStorage from "./useStorage";
 
 const AuthContext = React.createContext(undefined);
 
 export function AuthProvider({ children }) {
   const auth = useProvideAuth();
 
-  const provider = (
+  const {getItem} = useStorage();
+
+  React.useEffect(() => {
+    const initializeAuth = async () => {
+      const response = await client.query({
+        query: queries.IS_AUTHENTICATED,
+        });
+        console.log("initializeAuth response:", response);
+      auth.setAuthToken(response.data.isAuthenticated);
+    };
+    initializeAuth();
+  }, []);
+
+  return (
     <AuthContext.Provider value={auth}>
       <ApolloProvider client={client}>{children}</ApolloProvider>
     </AuthContext.Provider>
   );
-
-  return provider;
 }
 
 export const useAuth = () => {
@@ -34,7 +46,7 @@ function useProvideAuth() {
 
   const isSignedIn = () => {
     console.log("isSignedIn authToken:", authToken);
-    return authToken !== null;
+    return authToken;
   };
 
   const getAuthHeaders = () => {
@@ -74,6 +86,7 @@ function useProvideAuth() {
     } catch (error) {
       console.log("signIn error:", error);
     }
+    
   };
 
 

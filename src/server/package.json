@@ -36,6 +36,7 @@
     "@types/express-session": "^1.17.4",
     "@types/node": "^16.11.10",
     "@types/passport": "^1.0.7",
+    "@types/passport-spotify": "^2.0.1",
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",

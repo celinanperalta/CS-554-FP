@@ -50,6 +50,12 @@ const GET_ME = gql`
   }
 `;
 
+const IS_AUTHENTICATED = gql`
+  query Query {
+    isAuthenticated
+  }
+`;
+
 const LOGOUT_USER = gql`
   mutation Mutation {
     logout
@@ -78,5 +84,6 @@ export default {
   REGISTER_USER,
   GET_ME,
   LOGOUT_USER,
-  GET_USER
+  GET_USER,
+  IS_AUTHENTICATED,
 };

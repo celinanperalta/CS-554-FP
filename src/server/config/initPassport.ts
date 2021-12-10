@@ -1,43 +1,41 @@
 import { GraphQLLocalStrategy } from "graphql-passport";
 import { User } from "../schemas/User";
 import userService from "../services/userService";
+import * as passport from "passport";
 
 const bcrypt = require("bcrypt");
-const passport = require("passport");
-const SpotifyStrategy = require("passport-spotify").Strategy;
+import { Strategy } from "passport-spotify";
+import { userPatch } from "./types";
 
-const spotifyCallback = async (req, accessToken, refreshToken, expires_in, profile, done) => {
-    console.log(profile);
-    const users : User[] = await userService.getUsers();
-    const matchingUser = users.find(user => user.id === profile.id);
+const spotifyCallback = async (
+  req,
+  accessToken,
+  refreshToken,
+  expires_in,
+  profile,
+  done
+) => {
+  console.log("spotifyCallback REQ USER:", req.session.passport.user);
+  const user: User = await userService.getUserById(req.session.passport.user);
 
-    if (matchingUser) {
-      done(null, matchingUser);
-      return;
-    }
-
-    console.log('spotifyCallback', req)
-
+  if (user) {
     // To do: Ensure user is authenticated with email/password before spotify authentication.
-    const dummyUser : User = {
-        id: profile._json.uri,
-        username: profile.username,
-        email: profile.emails[0].value,
-        password: "",
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-        prompts: [],
-        profile_picture: profile.photos[0].value,
-        likes: [],
-        votes: [],
-        submissions: []
-    }
+    const updatedUserInto: userPatch = {
+      ...user,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+      profile_picture: profile.photos[0].value,
+    };
+    const updatedUser = await userService.updateUser(updatedUserInto);
+    done(null, updatedUser);
+    return;
+  }
+};
 
+const initPassport = (app) => {
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-    done(null, dummyUser);
-  };
-
-const initPassport = () => {
   passport.use(
     new GraphQLLocalStrategy(
       async (username: string, password: string, done) => {
@@ -70,12 +68,13 @@ const initPassport = () => {
   });
 
   passport.use(
-    new SpotifyStrategy(
+    new Strategy(
       {
         clientID: process.env.SPOTIFY_CLIENT_ID,
         clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
         callbackURL: "http://localhost:4000/auth/spotify/callback",
-        passReqToCallback: true
+        passReqToCallback: true,
+        showDialog: true,
       },
       spotifyCallback
     )
