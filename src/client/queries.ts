@@ -79,6 +79,21 @@ query Query($id: String!) {
 }
 `;
 
+const SEARCH_QUERY = gql`
+query SearchSongs($query: String!, $page: Float!) {
+  searchSongs(query: $query, page: $page) {
+    id
+    spotifyId
+    uri
+    name
+    artist
+    previewUrl
+    album
+    imageUrl
+  }
+}
+`;
+
 export default {
   LOGIN_USER,
   REGISTER_USER,
@@ -86,4 +101,5 @@ export default {
   LOGOUT_USER,
   GET_USER,
   IS_AUTHENTICATED,
+  SEARCH_QUERY
 };

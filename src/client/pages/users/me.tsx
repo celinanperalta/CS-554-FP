@@ -3,6 +3,7 @@ import SpotifyLoginButton from "../../components/SpotifyLoginButton";
 import withPrivateRoute from "../../components/withPrivateRoute";
 import useUser from "../../lib/useUser";
 import queries from "../../queries";
+import SpotifySearch from "../../components/SpotifySearch";
 
 const Me = () => {
   const { data } = useUser({
@@ -17,8 +18,8 @@ const Me = () => {
   });
 
   if (data && user.data) {
-    console.log(user);
     return (
+      <div>
       <div>
         <h1>My Profile</h1>
         <p>{user.data.getUserById.id}</p>
@@ -26,6 +27,12 @@ const Me = () => {
         <p>{user.data.getUserById.profile_picture}</p>
         <p>{user.data.getUserById.prompts}</p>
         <SpotifyLoginButton />
+      </div>
+      {user.data.getUserById.accessToken && (
+      <div>
+        <SpotifySearch />
+      </div>
+      )}
       </div>
     );
   } else {

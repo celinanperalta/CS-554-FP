@@ -47,6 +47,7 @@ type Query {
   getUsers: [User!]
   isAuthenticated: Boolean!
   me: User
+  searchSongs(page: Float!, query: String!): [Song!]
 }
 
 type Song {

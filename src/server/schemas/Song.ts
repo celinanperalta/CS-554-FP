@@ -12,7 +12,7 @@
 import { Field, ID, ObjectType} from 'type-graphql';
 
 @ObjectType()
-export class Song{
+export class Song {
     @Field(() => ID)
     id: string
 
