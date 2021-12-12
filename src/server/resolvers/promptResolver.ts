@@ -45,6 +45,10 @@ export class PromptResolver {
           prompt: prompt
         })
   }
+  @Mutation((returns) => Prompt, {nullable:true})
+  async deletePrompt(@Arg("id") id: string): Promise<Prompt> {
+    return await promptService.deletePrompt(id);
+  }
 }
 
 

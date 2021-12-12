@@ -14,7 +14,7 @@ export class Comment {
     @Field()
     posted_by: string
 
-    @Field()
-    likes: number
+    @Field(() => [String])
+    likes: string[]
 }
 

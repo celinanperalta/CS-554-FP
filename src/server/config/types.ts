@@ -35,8 +35,16 @@ export interface commentPatch {
     prompt_id: string,
     comment?: string,
     posted_by: string,
-    likes? : number
+    likes? : string[]
 
+}
+
+export interface songSubmissionPatch {
+    id: string, 
+    prompt_id: string,
+    song: string,
+    submitted_by: string,
+    votes: string[]
 }
 
 export interface UserLoginContext extends PassportContext<User, UserLogin>{

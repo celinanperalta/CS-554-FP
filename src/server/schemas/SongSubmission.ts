@@ -13,6 +13,6 @@ export class SongSubmission {
   @Field()
   submitted_by: string
 
-  @Field()
-  votes: number
+  @Field(() => [String])
+  votes: string[]
 }
