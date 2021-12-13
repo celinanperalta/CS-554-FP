@@ -68,10 +68,10 @@ const ActivePrompt = (props) => {
                     <Typography className="promptContent" >{props.data.prompt}</Typography>
                 </CardContent>
                 </Link>
-                <IconButton color="" aria-label="like prompt" component="span">
+                <IconButton color="default" aria-label="like prompt" component="span">
                     <Like />
                 </IconButton>
-                <IconButton color="" aria-label="comment on prompt" component="span">
+                <IconButton color="default" aria-label="comment on prompt" component="span">
                     <Comment />
                 </IconButton>
                 <br/>                          
