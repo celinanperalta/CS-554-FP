@@ -9,15 +9,38 @@
     imageUrl: String!
 } */
 
-import { Field, ID, ObjectType} from 'type-graphql';
+import { Field, ID, InputType, ObjectType} from 'type-graphql';
+
 
 @ObjectType()
-export class Song{
+export class Song {
     @Field(() => ID)
     id: string
 
     @Field()
-    spotifyId: string
+    uri: string
+
+    @Field()
+    name: string
+
+    @Field()
+    artist: string
+
+    @Field()
+    previewUrl: string
+
+    @Field()
+    album: string
+
+    @Field()
+    imageUrl: string
+
+}
+
+@InputType()
+export class SongInput{
+    @Field(() => ID)
+    id: string
 
     @Field()
     uri: string

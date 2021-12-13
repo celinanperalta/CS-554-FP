@@ -25,4 +25,13 @@ export class Prompt {
 
     @Field(() => [String])
     comments: string[];
+
+    @Field()
+    datePosted: Date
+
+    @Field()
+    dateCloses: Date
+
+    @Field()
+    isClosed: boolean
 }

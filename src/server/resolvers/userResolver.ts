@@ -50,4 +50,8 @@ export class UserResolver {
         });
     }
 
+    @Mutation(returns => User, {nullable: true})
+    async deleteUser(@Arg("id") id: string){
+        return await userService.deleteUser(id);
+    }
 }
