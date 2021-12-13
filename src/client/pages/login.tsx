@@ -2,9 +2,7 @@ import React from 'react'
 import ActivePrompt from "./activePrompt";
 import DisplaySubmission from "./displaySub";
 import TopSong from "./topSongCard";
-
-
-
+import Profile from "./userProfile";
 
 const  Login = () => {
 
@@ -46,6 +44,7 @@ const  Login = () => {
     <ActivePrompt data={item} />
     <DisplaySubmission data={item} />
     <TopSong data={item} />
+    <Profile data={item} />
     <br />
     <br />
     </div>
