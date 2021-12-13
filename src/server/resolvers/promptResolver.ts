@@ -22,12 +22,14 @@ export class PromptResolver {
     @Arg("posted_by") posted_by: string,
     @Arg("submittedSongs", (type)=>[String]) submittedSongs: string[],
     @Arg("comments", (type) => [String]) comments: string[],
+    @Arg("dateCloses") dateCloses: Date
   ): Promise<Prompt> {
     return await promptService.addPrompt(
       prompt,
       posted_by,
       submittedSongs,
-      comments
+      comments,
+      dateCloses
     );
   }
 

@@ -26,10 +26,10 @@ export class Prompt {
     @Field(() => [String])
     comments: string[];
 
-    @Field()
+    @Field(() => Date)
     datePosted: Date
 
-    @Field()
+    @Field(() => Date)
     dateCloses: Date
 
     @Field()
