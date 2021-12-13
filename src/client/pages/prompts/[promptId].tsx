@@ -6,9 +6,9 @@ import queries from "../../queries";
 import Comment from "../../components/Comment";
 import SongSubmission from "../../components/SongSubmission";
 const Prompt = () => {
-  // const { data } = useUser({
-  //   redirectTo: "/login",
-  // });
+  const userData = useUser({
+    redirectTo: "/login",
+  }).data;
 
 
 
