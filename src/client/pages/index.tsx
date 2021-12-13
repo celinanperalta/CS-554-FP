@@ -4,6 +4,9 @@ import NavBar from '../components/NavBar';
 import ActivePrompt from './components/activePrompt';
 import DisplaySubmission from './components/displaySub';
 import TopSong from './components/topSongCard';
+import Profile from './components/userProfile';
+import ActivityFeed from './components/activityFeed';
+
 
 export default function Home() {
   let item = {id: 12, prompt: "songs thats play when you're on your last final", posted_by: "User3"}
@@ -14,6 +17,9 @@ export default function Home() {
       <ActivePrompt data={item} />
       <DisplaySubmission data={item} />
       <TopSong data={item} />
+      <Profile />
+      <ActivityFeed />
+
       <br/>
     </div>
   )
