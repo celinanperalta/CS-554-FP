@@ -85,8 +85,8 @@ const TopSong = (props) => {
             className={classes.cmedia}
             />
           <div className={classes.songInfo}>
-          <Typography className={classes.songTitle}  variant="h7">Live From Space</Typography>
-          <Typography variant="caption" color="text.secondary">Mac Miller</Typography>
+          <Typography className={classes.songTitle}  variant="h6">Live From Space</Typography>
+          <Typography variant="caption" >Mac Miller</Typography>
           </div>
           </CardContent>                    
           </Card>
