@@ -5,6 +5,7 @@ import React, {useState, useEffect}  from "react";
 import Link from "next/link";
 import Like from '@material-ui/icons/FavoriteBorder';
 import Comment from '@material-ui/icons/ChatBubbleOutline';
+import Play from '@material-ui/icons/PlayCircleOutline';
 
 import {
     Card,
@@ -15,7 +16,8 @@ import {
     makeStyles,
     CardHeader,
     Button,
-    IconButton
+    IconButton,
+    Box
   } from '@material-ui/core';
   
 const useStyles = makeStyles({
@@ -55,6 +57,28 @@ const useStyles = makeStyles({
     //     borderColor: '#333',
     //     boxShadow: 'none',
     //   }
+    card1: {
+        display: 'flex'
+    },
+    box: {
+        display: 'flex',
+        flexDirection: 'row',  
+    },
+    content: {
+        flex: '1 0 auto'
+    },
+    cmedia: {
+        width: '25%',
+        height: '25%',
+        margin: 'auto',
+        padding: 'auto'
+    },
+    songInfo: {
+        display: 'flex',
+        flexDirection: 'column',  
+        paddingLeft: "10px",
+        paddingRight: "10px",
+    }
   });
 
 const DisplaySub = (props) => {
@@ -62,23 +86,36 @@ const DisplaySub = (props) => {
     const [song, setSong] = useState(undefined);
 
     return (
-        <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
-            <Card className={classes.card} variant="outlined">
-                <Link href={`/prompts/${props.data.id}`}>
+        // <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
+        <Card className={classes.card} variant="outlined">
+             <Link href={`/prompts/${props.data.id}`}>
                     <CardHeader className={classes.header} subheader={props.data.prompt} />
                 </Link>
-                <CardContent>
-                    song data
-                </CardContent>
-                <IconButton color="" aria-label="like prompt" component="span">
-                    <Like />
-                </IconButton>
-                <IconButton color="" aria-label="comment on prompt" component="span">
-                    <Comment />
-                </IconButton>
-                <br/>                          
-            </Card>
-        </Grid>
+        <CardContent className="content" >
+
+        <Box className={classes.box}>
+            <CardMedia
+            component="img"
+            image="https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg"
+            alt="Live from space album cover"
+            className={classes.cmedia}
+            />
+        <div className={classes.songInfo}>
+          <Typography component="div" >
+            Live From Space
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary" component="div">
+            Mac Miller
+          </Typography>
+          </div>
+          <IconButton aria-label="play/pause">
+            <Play />
+          </IconButton>
+          </Box>
+        </CardContent>
+    </Card>
+           
+        // </Grid>
     )
   }
 
