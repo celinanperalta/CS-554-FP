@@ -15,7 +15,11 @@ const getPrompts = async () : Promise<Prompt[]> => {
             }
         }
     });
-    return body.hits.hits.map(hit => hit._source)
+    body.hits.hits.forEach(hit => {
+        hit._source.dateCloses = new Date(hit._source.dateCloses);
+        hit._source.datePosted = new Date(hit._source.datePosted);
+    })
+    return body.hits.hits.map(hit=> hit._source);
 }
 
 const getPromptById = async (id: string) : Promise<Prompt> => {
@@ -29,10 +33,12 @@ const getPromptById = async (id: string) : Promise<Prompt> => {
             }
         }
     });
+    body.hits.hits[0]._source.dateCloses = new Date(body.hits.hits[0]._source.dateCloses);
+    body.hits.hits[0]._source.datePosted = new Date(body.hits.hits[0]._source.datePosted);
     return body.hits.hits[0]._source
 }
 
-const addPrompt = async ( prompt: string,  posted_by: string,  submittedSongs: string[], comments: string[]) : Promise<Prompt> => {
+const addPrompt = async ( prompt: string,  posted_by: string,  submittedSongs: string[], comments: string[], dateCloses: Date) : Promise<Prompt> => {
     let new_prompt = new Prompt()
     new_prompt.id = uuid()
     new_prompt.prompt = prompt
@@ -40,9 +46,12 @@ const addPrompt = async ( prompt: string,  posted_by: string,  submittedSongs: s
     new_prompt.comments = comments
     new_prompt.submittedSongs = submittedSongs;
     new_prompt.datePosted = new Date();
-    let now = new Date();
-    now.setDate(now.getDate() + 7);
-    new_prompt.dateCloses = now;
+    if(dateCloses){new_prompt.dateCloses=dateCloses}
+    else{
+        let now = new Date();
+        now.setDate(now.getDate() + 7);
+        new_prompt.dateCloses = now;
+    }
     new_prompt.isClosed = false;
     await client.index({
         index: 'prompts',

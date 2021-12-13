@@ -1,68 +1,47 @@
 import React from "react";
 import { useRouter } from "next/router";
 import useUser from "../../lib/useUser";
-
+import { useQuery } from "@apollo/client";
+import queries from "../../queries";
+import Comment from "../../components/Comment";
+import SongSubmission from "../../components/SongSubmission";
 const Prompt = () => {
-  const { data } = useUser({
-    redirectTo: "/login",
-  });
+  // const { data } = useUser({
+  //   redirectTo: "/login",
+  // });
+
+
 
   const router = useRouter();
   const { promptId } = router.query;
-  const dummyList = [
-    { id: 1, name: "Song1", artist: "Artist1" },
-    { id: 2, name: "Song2", artist: "Artist1" },
-    { id: 3, name: "Song3", artist: "Artist2" },
-    { id: 4, name: "Song4", artist: "Artist3" },
-  ];
+  const { error, loading, data } = useQuery(queries.GET_PROMPT, { variables: {promptId}, pollInterval: 4000 })
 
-  const dummyComments = [
-    {
-      id: 1,
-      prompt_id: promptId,
-      comment: "Wow great suggestion",
-      posted_by: "user1",
-      likes: 3,
-    },
-    {
-      id: 2,
-      prompt_id: promptId,
-      comment: "Wow this sucks!!!",
-      posted_by: "user2",
-      likes: 0,
-    },
-    {
-      id: 3,
-      prompt_id: promptId,
-      comment: "Ehhh",
-      posted_by: "user4",
-      likes: 10,
-    },
-  ];
+  if (loading) {
+    return <div className="app">
+      <h2>Loading Prompts</h2>
+    </div>
+  }
+
+  console.log("here")
+  console.log(data.getPromptById.submittedSongs);
+
   return (
     <div className="app">
-      <h2>Song Suggestions on this page</h2>
-      <ul className="song-suggestions">
-        {dummyList.map((item, index) => (
-          <li key={item.id}>
-            {item.name} - {item.artist}
-          </li>
-        ))}
+      <h2>Prompts on this page</h2>
+      <ul className="prompts">
+        {data && data.getPromptById ?
+        <div>
+          <h1>{data.getPromptById.prompt}</h1>
+          <h2>Song Suggestions</h2>
+          {data.getPromptById.submittedSongs.map((songSub)=>{return <SongSubmission songSubId={songSub}/>})}
+          <h2>Comments</h2>
+          {data.getPromptById.comments.map((comment)=>{return <Comment commentId={comment}/>})}
+        </div>
+        : null}
       </ul>
-      <h2>Comments: </h2>
-      <ul className="comments">
-        {dummyComments.map((item, index) => (
-          <li key={item.id}>
-            <p>
-              {item.comment} - {item.posted_by}
-              <br />
-              {item.likes} likes
-            </p>
-          </li>
-        ))}
-      </ul>
+
     </div>
-  );
+  )
 };
 
 export default Prompt;

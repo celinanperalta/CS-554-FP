@@ -57,6 +57,11 @@ const addSongSubmission = async ( prompt_id: string,  song: SongInput, submitted
         body: songSubmission,
     })
 
+    //update prompts song sub id array to hold this as well
+    let prompt = await promptService.getPromptById(prompt_id);
+    prompt.submittedSongs = [...prompt.submittedSongs,songSubmission.id];
+    await promptService.updatePrompt(prompt);
+
     //updating user's songsub id array to hold this as well
     let user = await userService.getUserById(submitted_by);
     user.submissions = [...user.submissions, songSubmission.id];
