@@ -1,6 +1,7 @@
 import { PassportSubscriptionContext, PassportContext } from 'graphql-passport';
 import { Field } from 'type-graphql';
 import { User } from '../schemas/User';
+import { Song ,SongInput} from '../schemas/Song';
 
 export type UserLogin = {
     username: string;
@@ -42,7 +43,7 @@ export interface commentPatch {
 export interface songSubmissionPatch {
     id: string, 
     prompt_id: string,
-    song: string,
+    song: SongInput,
     submitted_by: string,
     votes: string[]
 }

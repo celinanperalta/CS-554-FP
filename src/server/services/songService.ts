@@ -26,37 +26,23 @@ const getSongById = async (id: string) : Promise<Song> => {
             }
         }
     });
-    return body.hits.hits[0]._source
-}
-
-const getSongBySpotifyId = async (spotifyId: string) : Promise<Song> => {
-    const {body} = await client.search({
-        index: "songs",
-        body: {
-            query: {
-                match: {
-                    spotifyId: spotifyId
-                }
-            }
-        }
-    });
-    return body.hits.hits[0]._source
+    return body.hits.hits[0]?._source
 }
 
 const addSong = async (spotifyId: string, uri: string, name: string, artist: string,  previewUrl: string,  album: string,  imageUrl: string,) : Promise<Song> => {
     let song = new Song()
-    song.id = uuid()
-    song.spotifyId = spotifyId,
-    song.uri=uri,
-    song.name=name,
-    song.artist=artist,
-    song.previewUrl=previewUrl,
-    song.album=album,
+    song.id = spotifyId
+    song.uri=uri
+    song.name=name
+    song.artist=artist
+    song.previewUrl=previewUrl
+    song.album=album
     song.imageUrl=imageUrl
     await client.index({
         index: 'songs',
         id: song.id,
-        body: song
+        body: song,
+        refresh: 'wait_for'
     })
     return song
 }
@@ -65,6 +51,6 @@ const addSong = async (spotifyId: string, uri: string, name: string, artist: str
 export default {
     getSongs,
     getSongById,
-    getSongBySpotifyId,
+
     addSong
 }

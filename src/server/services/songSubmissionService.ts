@@ -1,11 +1,12 @@
 import client from "../config/esConnection";
-import { Song } from "../schemas/Song";
+import { Song, SongInput } from "../schemas/Song";
 import { SongSubmission } from "../schemas/SongSubmission";
 import { User } from "../schemas/User";
 import {v4 as uuid} from 'uuid';
 import { songSubmissionPatch } from "../config/types";
 import userService from "./userService";
 import promptService from "./promptService";
+import songService from "./songService";
 
 
 const getSongSubmissions = async () : Promise<SongSubmission[]> => {
@@ -34,12 +35,21 @@ const getSongSubmissionById = async (id: string) : Promise<SongSubmission> => {
     return body.hits.hits[0]._source
 }
 
-const addSongSubmission = async ( prompt_id: string,  song: string, submitted_by: string) : Promise<SongSubmission> => {
+const addSongSubmission = async ( prompt_id: string,  song: SongInput, submitted_by: string) : Promise<SongSubmission> => {
     let songSubmission = new SongSubmission()
     songSubmission.id = uuid()
     songSubmission.song = song
     songSubmission.submitted_by = submitted_by
     songSubmission.votes = []
+    songSubmission.prompt_id = prompt_id
+
+    
+    let searchResult = await songService.getSongById(song.id);
+    console.log(searchResult);
+    if(!searchResult){
+        await songService.addSong(song.id,song.uri,song.name,song.artist, song.previewUrl, song.album, song.imageUrl)
+    }
+
     await client.index({
         refresh:'wait_for',
         index: 'songsubmissions',
