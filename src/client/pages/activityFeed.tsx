@@ -22,13 +22,15 @@ const useStyles = makeStyles({
     card: {
       maxWidth: 275,
       minHeight: 500,
+      maxHeight: 500,
       height: 'auto',
       marginLeft: 'auto',
       marginRight: 'auto',
       borderRadius: 5,
       border: '1px solid',
       justifyContent: 'center',
-      boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
+      boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);',
+      overflow: 'scroll'
     },
     titleHead: {
       borderBottom: '1px solid #1e8678',
@@ -69,6 +71,9 @@ const ActivityFeed = (props) => {
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box className={classes.card}>
                 <p className={classes.feedHeader}>Activity Feed</p>
+                <ActivityFeedCard data={activity} />
+                <ActivityFeedCard data={activity} />
+                <ActivityFeedCard data={activity} />
                 <ActivityFeedCard data={activity} />
                 <ActivityFeedCard data={activity} />
             </Box>
