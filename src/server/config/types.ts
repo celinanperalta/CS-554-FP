@@ -29,6 +29,9 @@ export interface promptPatch {
     posted_by: string,
     prompt?: string,
     submittedSongs?: string[]
+    datePosted?: Date
+    dateCloses?: Date
+    isClosed?: boolean
 }
 
 export interface commentPatch {

@@ -39,6 +39,11 @@ const addPrompt = async ( prompt: string,  posted_by: string,  submittedSongs: s
     new_prompt.posted_by = posted_by
     new_prompt.comments = comments
     new_prompt.submittedSongs = submittedSongs;
+    new_prompt.datePosted = new Date();
+    let now = new Date();
+    now.setDate(now.getDate() + 7);
+    new_prompt.dateCloses = now;
+    new_prompt.isClosed = false;
     await client.index({
         index: 'prompts',
         id: new_prompt.id,
@@ -65,6 +70,8 @@ const updatePrompt = async ( newPromptInfo : promptPatch) : Promise<Prompt> => {
    if(newPromptInfo.comments){newPrompt.comments=newPromptInfo.comments};
    if(newPromptInfo.prompt){newPrompt.prompt=newPromptInfo.prompt};
    if(newPromptInfo.submittedSongs){newPrompt.submittedSongs=newPromptInfo.submittedSongs};
+   if(newPromptInfo.dateCloses){newPrompt.dateCloses=newPromptInfo.dateCloses};
+   if(newPromptInfo.isClosed){newPrompt.isClosed=newPromptInfo.isClosed};
    await client.update({
     index: 'prompts',
     id: newPrompt.id,

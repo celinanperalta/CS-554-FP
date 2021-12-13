@@ -51,6 +51,5 @@ const addSong = async (spotifyId: string, uri: string, name: string, artist: str
 export default {
     getSongs,
     getSongById,
-
     addSong
 }
