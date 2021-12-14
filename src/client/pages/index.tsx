@@ -12,11 +12,13 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles({
   row: {
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      padding: '20px',
   },
   column: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: '20px',
   }
 
 });
@@ -36,12 +38,18 @@ export default function Home() {
             <div className={classes.row}>
               <TopSong data={item} />
               <TopSong data={item} />
+              <TopSong data={item} />
+              <TopSong data={item} />
+              <TopSong data={item} />
             </div>
             <div className={classes.row}>
               <div className={classes.column}>
                 <ActivePrompt data={item}/>
+                <ActivePrompt data={item}/>
+                <ActivePrompt data={item}/>
               </div>
               <div className={classes.column}>
+                <DisplaySubmission data={item}/>
                 <DisplaySubmission data={item}/>
               </div>
             </div>
