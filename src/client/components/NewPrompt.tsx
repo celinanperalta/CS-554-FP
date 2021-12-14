@@ -4,7 +4,7 @@ import queries from "../queries";
 import { useMutation } from "@apollo/client";
 import useUser from "../lib/useUser";
 
-const NewPromptModal = () => {
+const NewPrompt = () => {
   const [prompt, setPrompt] = useState("");
   const [dateCloses, setDateCloses] = useState("");
   const [timeCloses, setTimeCloses] = useState("");
@@ -57,4 +57,4 @@ const NewPromptModal = () => {
   );
 };
 
-export default NewPromptModal;
+export default NewPrompt;
