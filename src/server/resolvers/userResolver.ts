@@ -1,6 +1,8 @@
-import { Query, Resolver, Mutation, Arg } from 'type-graphql'
+import { Query, Resolver, Mutation, Arg, Ctx } from 'type-graphql'
 import { User } from '../schemas/User'
 import userService from '../services/userService'
+import { UserLoginContext} from "../config/types";
+import { isAuthenticated ,getUserFromContext} from "../util/authUtil";
 @Resolver(of => User) 
 export class UserResolver {
 
@@ -23,6 +25,7 @@ export class UserResolver {
 
     @Mutation(returns => User, {nullable: true})
     async updateUser(@Arg("id")id: string,
+    @Ctx() ctx: UserLoginContext,
     @Arg("username", {nullable:true})username?: string,
     @Arg("email", {nullable:true})email?: string,
     @Arg("hashedPassword", {nullable:true})hashedPassword?: string,
@@ -33,8 +36,9 @@ export class UserResolver {
     @Arg("likes", (type)=>[String], {nullable:true})likes?: string[],
     @Arg("votes", (type)=>[String], {nullable:true})votes?: string[],
     @Arg("submissions", (type)=>[String], {nullable:true}) submissions?: string[],
-    @Arg("comments", (type)=>[String], {nullable:true}) comments?: string[]
+    @Arg("comments", (type)=>[String], {nullable:true}) comments?: string[],
     ) : Promise<User>{
+        if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==id)
         return await userService.updateUser({id: id,
             username: username,
             email: email,
@@ -51,7 +55,8 @@ export class UserResolver {
     }
 
     @Mutation(returns => User, {nullable: true})
-    async deleteUser(@Arg("id") id: string){
+    async deleteUser(@Arg("id") id: string, @Ctx() ctx: UserLoginContext){
+        if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==id)
         return await userService.deleteUser(id);
     }
 }
