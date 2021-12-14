@@ -22,8 +22,8 @@ import {
 
 const useStyles = makeStyles({
     card: {
-      maxWidth: 300,
-      minWidth: 300,
+      maxWidth: 350,
+      minWidth: 350,
       height: 'auto',
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -48,18 +48,15 @@ const useStyles = makeStyles({
     },
     header: {
         backgroundColor: '#333',
-        color: "#FFFFFF"
+    },
+    subheader: {
+      color: 'white'
     },
     button: {
       color: '#04AA6D',
       borderColor: '#04AA6D',
       margin: "10px"
     },
-    // 'button:hover': {
-    //     backgroundColor: '#333',
-    //     borderColor: '#333',
-    //     boxShadow: 'none',
-    //   }
     card1: {
         display: 'flex'
     },
@@ -95,8 +92,8 @@ const SubmissionDisplay = (props) => {
         // <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
         <Card className={classes.card} variant="outlined">
              <Link href={`/prompts/${props.data.id}`}>
-                    <CardHeader className={classes.header} subheader={props.data.prompt} />
-                </Link>
+                <CardHeader className={classes.header} subheader={<Typography className={classes.subheader}> {props.data.prompt} </Typography>} />
+              </Link>
         <CardContent className="content" >
 
         <Box className={classes.box}>
@@ -107,11 +104,11 @@ const SubmissionDisplay = (props) => {
             className={classes.cmedia}
             />
         <div className={classes.songInfo}>
-          <Typography className={classes.songTitle}  variant="h5">Live From Space</Typography>
+          <Typography className={classes.songTitle}  variant="h6">Live From Space</Typography>
           <Typography variant="caption" >Mac Miller</Typography>
           </div>
           <IconButton aria-label="play/pause">
-            <Play />
+            <Play  fontSize="large" />
           </IconButton>
           </Box>
         </CardContent>

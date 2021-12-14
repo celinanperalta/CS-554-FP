@@ -13,12 +13,12 @@ const useStyles = makeStyles({
   row: {
       display: 'flex',
       flexDirection: 'row',
-      padding: '20px'
+      padding: '20px',
   },
   column: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '20px'
+    padding: '20px',
   }
 
 });
