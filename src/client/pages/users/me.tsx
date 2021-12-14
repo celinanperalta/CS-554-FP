@@ -4,6 +4,7 @@ import withPrivateRoute from "../../components/withPrivateRoute";
 import useUser from "../../lib/useUser";
 import queries from "../../queries";
 import SpotifySearch from "../../components/SpotifySearch";
+import NewPrompt from "../../components/NewPrompt";
 
 const Me = () => {
   const { data } = useUser({
@@ -27,6 +28,10 @@ const Me = () => {
         <p>{user.data.getUserById.profile_picture}</p>
         <p>{user.data.getUserById.prompts}</p>
         <SpotifyLoginButton />
+      </div>
+      <div>
+        <h1>My Prompts</h1>
+        <NewPrompt/>
       </div>
       {user.data.getUserById.accessToken && (
       <div>

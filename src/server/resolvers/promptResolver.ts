@@ -1,8 +1,9 @@
-import { Query, Resolver, Mutation, Arg } from "type-graphql";
+import { Query, Resolver, Mutation, Arg, Ctx } from "type-graphql";
 import { User } from "../schemas/User";
 import { Prompt } from "../schemas/Prompt";
 import { Comment } from "../schemas/Comment";
 import promptService from "../services/promptService";
+import { UserLoginContext } from "../config/types";
 
 @Resolver((of) => Prompt)
 export class PromptResolver {
@@ -19,16 +20,13 @@ export class PromptResolver {
   @Mutation((returns) => Prompt, { nullable: true })
   async addPrompt(
     @Arg("prompt") prompt: string,
-    @Arg("posted_by") posted_by: string,
-    @Arg("submittedSongs", (type)=>[String]) submittedSongs: string[],
-    @Arg("comments", (type) => [String]) comments: string[],
-    @Arg("dateCloses") dateCloses: Date
+    @Arg("dateCloses") dateCloses: Date,
+    @Ctx() ctx: UserLoginContext
   ): Promise<Prompt> {
+    // Todo: Add auth check to all of these CUD operations
     return await promptService.addPrompt(
       prompt,
-      posted_by,
-      submittedSongs,
-      comments,
+      ctx.req.session.passport.user,
       dateCloses
     );
   }

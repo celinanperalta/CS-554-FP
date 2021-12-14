@@ -36,6 +36,7 @@ const SpotifySearch = () => {
       {loading ? (
         <div>Loading...</div>
       ) : (
+        data &&
         data.searchSongs && (
           <ul>
             {data.searchSongs.map((song : Song) => (

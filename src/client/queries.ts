@@ -83,7 +83,6 @@ const SEARCH_QUERY = gql`
 query SearchSongs($query: String!, $page: Float!) {
   searchSongs(query: $query, page: $page) {
     id
-    spotifyId
     uri
     name
     artist
@@ -156,6 +155,20 @@ query GetSongSubmissionById($id: String!) {
 }
 `
 
+const ADD_PROMPT = gql`
+mutation Mutation( $prompt: String!, $dateCloses: DateTime!) {
+  addPrompt(prompt: $prompt, dateCloses: $dateCloses) {
+    id
+    prompt
+    submittedSongs
+    posted_by
+    comments
+    datePosted
+    dateCloses
+    isClosed
+  }
+}`
+
 export default {
   LOGIN_USER,
   REGISTER_USER,
@@ -167,5 +180,6 @@ export default {
   GET_PROMPTS,
   GET_PROMPT,
   GET_COMMENT,
-  GET_SONG_SUB
+  GET_SONG_SUB,
+  ADD_PROMPT
 };

@@ -6,28 +6,41 @@
 type Comment {
   comment: String!
   id: String!
-  likes: Float!
+  likes: [String!]!
   posted_by: String!
   prompt_id: String!
 }
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 type Mutation {
   addComment(comment: String!, posted_by: String!, prompt_id: String!): Comment
-  addPrompt(comments: [String!]!, posted_by: String!, prompt: String!, submittedSongs: [String!]!): Prompt
-  addSong(album: String!, artist: String!, imageUrl: String!, name: String!, previewUrl: String!, spotifyId: String!, uri: String!): Song!
-  addSongSubmission(prompt: String!, song: String!, submitted_by: String!, votes: Float!): SongSubmission
+  addPrompt(dateCloses: DateTime!, prompt: String!): Prompt
+  addSong(album: String!, artist: String!, id: String!, imageUrl: String!, name: String!, previewUrl: String!, uri: String!): Song!
+  addSongSubmission(prompt_id: String!, song: SongInput!, submitted_by: String!): SongSubmission
   addUser(email: String!, hashedPassword: String!, username: String!): User
+  deleteComment(id: String!): Comment
+  deletePrompt(id: String!): Prompt
+  deleteSongSubmission(id: String!): SongSubmission
+  deleteUser(id: String!): User
   login(password: String!, username: String!): User
   logout: Boolean!
   register(email: String!, password: String!, username: String!): User!
-  updateComment(comment: String, id: String!, likes: Float, posted_by: String!, prompt_id: String!): Comment
-  updatePrompt(comments: [String!], id: String!, posted_by: String!, prompt: String, submittedSongs: [String!]): Prompt
+  updateComment(comment: String, id: String!, likes: [String!], posted_by: String!, prompt_id: String!): Comment
+  updatePrompt(comments: [String!], dateCloses: DateTime, datePosted: DateTime, id: String!, isClosed: Boolean!, posted_by: String!, prompt: String, submittedSongs: [String!]): Prompt
+  updateSongSubmission(id: String!, prompt_id: String!, song: SongInput, submitted_by: String!, votes: [String!]): SongSubmission
   updateUser(accessToken: String, comments: [String!], email: String, hashedPassword: String, id: String!, likes: [String!], profile_picture: String, prompts: [String!], refreshToken: String, submissions: [String!], username: String, votes: [String!]): User
 }
 
 type Prompt {
   comments: [String!]!
+  dateCloses: DateTime!
+  datePosted: DateTime!
   id: ID!
+  isClosed: Boolean!
   posted_by: String!
   prompt: String!
   submittedSongs: [String!]!
@@ -39,7 +52,6 @@ type Query {
   getPromptById(id: String!): Prompt
   getPrompts: [Prompt!]
   getSongById(id: String!): Song
-  getSongBySpotifyId(spotifyId: String!): Song
   getSongSubmissionById(id: String!): SongSubmission
   getSongSubmissions: [SongSubmission!]
   getSongs: [Song!]
@@ -57,16 +69,25 @@ type Song {
   imageUrl: String!
   name: String!
   previewUrl: String!
-  spotifyId: String!
+  uri: String!
+}
+
+input SongInput {
+  album: String!
+  artist: String!
+  id: ID!
+  imageUrl: String!
+  name: String!
+  previewUrl: String!
   uri: String!
 }
 
 type SongSubmission {
   id: ID!
   prompt_id: String!
-  song: String!
+  song: Song!
   submitted_by: String!
-  votes: Float!
+  votes: [String!]!
 }
 
 type User {
