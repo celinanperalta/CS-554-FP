@@ -17,10 +17,10 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Mutation {
-  addComment(comment: String!, posted_by: String!, prompt_id: String!): Comment
+  addComment(comment: String!, prompt_id: String!): Comment
   addPrompt(dateCloses: DateTime!, prompt: String!): Prompt
   addSong(album: String!, artist: String!, id: String!, imageUrl: String!, name: String!, previewUrl: String!, uri: String!): Song!
-  addSongSubmission(prompt_id: String!, song: SongInput!, submitted_by: String!): SongSubmission
+  addSongSubmission(prompt_id: String!, song: SongInput!): SongSubmission
   addUser(email: String!, hashedPassword: String!, username: String!): User
   deleteComment(id: String!): Comment
   deletePrompt(id: String!): Prompt

@@ -35,7 +35,6 @@ let exportedMethods = {
     token: string,
     page: number = 0,
   ): Promise<Song[]> {
-    console.log(`Song service: searching for ${query}`);
     const response = await axios({
       method: "get",
       url: `${SPOTIFY_ENDPOINT}search`,
