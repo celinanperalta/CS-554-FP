@@ -1,25 +1,22 @@
 import React from 'react'
 import Link from "next/link";
 import NavBar from '../components/NavBar';
-import ActivePrompt from './components/activePrompt';
-import DisplaySubmission from './components/displaySub';
-import TopSong from './components/topSongCard';
-import Profile from './components/userProfile';
-import ActivityFeed from './components/activityFeed';
+import ActivePrompt from '../components/ActivePrompt';
+import DisplaySubmission from '../components/SubmissionDisplay';
+import TopSong from '../components/TopSongCard';
+import Profile from '../components/UserProfile';
+import ActivityFeed from '../components/ActivityFeed';
 
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   row: {
       display: 'flex',
-     // flexGrow: 1,
       flexDirection: 'row'
   },
   column: {
     display: 'flex',
-    //flexGrow: 1,
     flexDirection: 'column'
-    // alignItems: 'center'
   }
 
 });

@@ -72,7 +72,7 @@ const useStyles = makeStyles({
     }
   });
 
-const Profile = (props) => {
+const UserProfile = (props) => {
     const classes = useStyles();
 
     return (
@@ -99,4 +99,4 @@ const Profile = (props) => {
     )
   }
 
-export default Profile;
+export default UserProfile;

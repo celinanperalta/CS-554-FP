@@ -84,7 +84,7 @@ const useStyles = makeStyles({
     }
   });
 
-const DisplaySub = (props) => {
+const SubmissionDisplay = (props) => {
     const classes = useStyles();
     const [song, setSong] = useState(undefined);
 
@@ -118,4 +118,4 @@ const DisplaySub = (props) => {
     )
   }
 
-export default DisplaySub;
+export default SubmissionDisplay;

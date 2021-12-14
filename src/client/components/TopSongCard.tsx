@@ -70,7 +70,7 @@ const useStyles = makeStyles({
   }
   });
 
-const TopSong = (props) => {
+const TopSongCard = (props) => {
     const classes = useStyles();
     const [song, setSong] = useState(undefined);
 
@@ -94,4 +94,4 @@ const TopSong = (props) => {
     )
   }
 
-export default TopSong;
+export default TopSongCard;
