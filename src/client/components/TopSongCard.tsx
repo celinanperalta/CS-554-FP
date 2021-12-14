@@ -28,8 +28,8 @@ const useStyles = makeStyles({
       borderRadius: 5,
       border: '1px solid #1e8678',
       textAlign: "left",
-      marginLeft: '10px',
-      marginRight: '10px',
+      //marginLeft: '10px',
+     // marginRight: '10px',
       boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
     },
     titleHead: {

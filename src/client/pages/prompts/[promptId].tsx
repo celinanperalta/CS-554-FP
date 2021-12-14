@@ -33,9 +33,9 @@ const Prompt = () => {
         <div>
           <h1>{data.getPromptById.prompt}</h1>
           <h2>Song Suggestions</h2>
-          {data.getPromptById.submittedSongs.map((songSub)=>{return <SongSubmission songSubId={songSub}/>})}
+          {data.getPromptById.submittedSongs.map((songSub)=>{return <SongSubmission key={songSub} songSubId={songSub}/>})}
           <h2>Comments</h2>
-          {data.getPromptById.comments.map((comment)=>{return <Comment commentId={comment}/>})}
+          {data.getPromptById.comments.map((comment)=>{return <Comment key={comment} commentId={comment}/>})}
         </div>
         : null}
       </ul>
