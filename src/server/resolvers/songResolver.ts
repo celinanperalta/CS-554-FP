@@ -1,6 +1,9 @@
-import { Query, Resolver, Mutation, Arg } from "type-graphql";
+import { Query, Resolver, Mutation, Arg, Ctx } from "type-graphql";
+import { UserLoginContext } from "../config/types";
 import { Song } from "../schemas/Song";
 import songService from "../services/songService";
+import spotifyService from "../services/spotifyService";
+import userService from "../services/userService";
 
 @Resolver((of) => Song)
 export class SongResolver {
@@ -36,5 +39,25 @@ export class SongResolver {
       album,
       imageUrl
     );
+  }
+
+  @Query((returns) => [Song], { nullable: true })
+  async searchSongs(
+    @Arg("query") query: string,
+    @Arg("page") page: number,
+    @Ctx() ctx: UserLoginContext
+  ): Promise<Song[]> {
+    if (ctx.req.session.passport?.user) {
+      const user = await userService.getUserById(ctx.req.session.passport.user);
+      if (user.accessToken) {
+        const data = await spotifyService.searchSongs(
+          query,
+          user.accessToken,
+          page
+        );
+        return data;
+      }
+    }
+    return [];
   }
 }

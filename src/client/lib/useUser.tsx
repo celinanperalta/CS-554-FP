@@ -18,7 +18,6 @@ export default function useUser({
 
     if (error) {
       // if error, redirect to login page
-      console.error("useUser error: ", error);
       Router.push(redirectTo);
     }
 

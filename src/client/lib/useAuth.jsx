@@ -1,23 +1,15 @@
 import React, { useState, useContext } from "react";
 import {
-  ApolloClient,
-  HttpLink,
-  InMemoryCache,
   ApolloProvider,
-  from,
 } from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
 import queries from "../queries";
 import Router from "next/router";
 import client from "../apollo-client";
-import useStorage from "./useStorage";
 
 const AuthContext = React.createContext(undefined);
 
 export function AuthProvider({ children }) {
   const auth = useProvideAuth();
-
-  const {getItem} = useStorage();
 
   React.useEffect(() => {
     const initializeAuth = async () => {
@@ -45,7 +37,6 @@ function useProvideAuth() {
   const [authToken, setAuthToken] = useState(null);
 
   const isSignedIn = () => {
-    console.log("isSignedIn authToken:", authToken);
     return authToken;
   };
 
@@ -58,7 +49,6 @@ function useProvideAuth() {
   };
 
   const updateCacheAfterLogin = (cache, { data: { login }}) => {
-    console.log("updateCacheAfterLogin login:", login);
     cache.writeQuery({
       query: queries.GET_ME,
       data: { me: {
@@ -77,9 +67,7 @@ function useProvideAuth() {
         update: updateCacheAfterLogin,
       });
 
-      console.log("signIn", result);
       if (result?.data?.login?.id) {
-        console.log("signIn", result.data.login.id);
         setAuthToken(result.data.login.id);
         Router.push("/users/me");
       }
@@ -101,7 +89,6 @@ function useProvideAuth() {
       },
     });
 
-    console.log("signOut", result);
     setAuthToken(null);
 
     Router.push("/");

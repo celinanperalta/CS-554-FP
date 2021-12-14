@@ -1,8 +1,14 @@
-import { Field, ID, InputType, ObjectType} from 'type-graphql';
+import { Field, ID, ObjectType} from 'type-graphql';
 import { SongSubmission } from './SongSubmission';
 import { User } from './User';
 import { Comment } from './Comment';
-
+// {
+//     id: String!
+//     prompt: String!
+//     posted_by: User
+//     submittedSongs: [SongSubmission]
+//     comments: [Comment]
+// }
 @ObjectType()
 export class Prompt {
     @Field(() => ID)
@@ -28,13 +34,4 @@ export class Prompt {
 
     @Field()
     isClosed: boolean
-}
-
-@InputType()
-export class PromptInput {
-    @Field()
-    prompt: string;
-
-    @Field(() => Date)
-    dateCloses: Date;
 }

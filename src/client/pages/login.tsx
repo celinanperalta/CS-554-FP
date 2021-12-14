@@ -9,7 +9,7 @@ const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   
-  const { isSignedIn, signIn, signOut } = useAuth()
+  const { signIn } = useAuth()
 
   async function onSubmit(e) {
     e.preventDefault()
