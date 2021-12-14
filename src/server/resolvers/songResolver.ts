@@ -1,9 +1,6 @@
-import { Query, Resolver, Mutation, Arg, Ctx } from "type-graphql";
-import { UserLoginContext } from "../config/types";
+import { Query, Resolver, Mutation, Arg } from "type-graphql";
 import { Song } from "../schemas/Song";
 import songService from "../services/songService";
-import spotifyService from "../services/spotifyService";
-import userService from "../services/userService";
 
 @Resolver((of) => Song)
 export class SongResolver {
@@ -19,15 +16,10 @@ export class SongResolver {
     return await songService.getSongById(id);
   }
 
-  @Query((returns) => Song, { nullable: true })
-  async getSongBySpotifyId(@Arg("spotifyId") spotifyId: string): Promise<Song> {
-    return await songService.getSongBySpotifyId(spotifyId);
-  }
-
   //uses https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/16.x/api-create.html to create in the es-server
   @Mutation((returns) => Song)
   async addSong(
-    @Arg("spotifyId") spotifyId: string,
+    @Arg("id") id: string,
     @Arg("uri") uri: string,
     @Arg("name") name: string,
     @Arg("artist") artist: string,
@@ -36,7 +28,7 @@ export class SongResolver {
     @Arg("imageUrl") imageUrl: string
   ): Promise<Song> {
     return await songService.addSong(
-      spotifyId,
+      id,
       uri,
       name,
       artist,
@@ -44,20 +36,5 @@ export class SongResolver {
       album,
       imageUrl
     );
-  }
-
-  @Query((returns) => [Song], { nullable: true })
-  async searchSongs(
-    @Arg("query") query: string,
-    @Arg("page") page: number,
-    @Ctx() ctx: UserLoginContext
-  ): Promise<Song[]> {
-    if (ctx.req.session.passport?.user) {
-      const user = await userService.getUserById(ctx.req.session.passport.user);
-      if (user.accessToken) {
-        const data =  await spotifyService.searchSongs(query, user.accessToken, page);
-        return data;
-      }
-    }
   }
 }

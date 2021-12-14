@@ -1,6 +1,7 @@
 import { PassportSubscriptionContext, PassportContext } from 'graphql-passport';
 import { Field } from 'type-graphql';
 import { User } from '../schemas/User';
+import { Song ,SongInput} from '../schemas/Song';
 
 export type UserLogin = {
     username: string;
@@ -28,6 +29,9 @@ export interface promptPatch {
     posted_by: string,
     prompt?: string,
     submittedSongs?: string[]
+    datePosted?: Date
+    dateCloses?: Date
+    isClosed?: boolean
 }
 
 export interface commentPatch {
@@ -35,8 +39,16 @@ export interface commentPatch {
     prompt_id: string,
     comment?: string,
     posted_by: string,
-    likes? : number
+    likes? : string[]
 
+}
+
+export interface songSubmissionPatch {
+    id: string, 
+    prompt_id: string,
+    song: SongInput,
+    submitted_by: string,
+    votes: string[]
 }
 
 export interface UserLoginContext extends PassportContext<User, UserLogin>{

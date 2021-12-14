@@ -30,7 +30,7 @@ export class CommentResolver {
     @Arg("prompt_id") prompt_id: string,
     @Arg("comment", { nullable: true }) comment: string,
     @Arg("posted_by") posted_by: string,
-    @Arg("likes", { nullable: true }) likes: number
+    @Arg("likes", (type)=>[String],{ nullable: true }) likes: string[]
   ): Promise<Comment> {
     return await commentService.updateComment({
       id: id,
@@ -39,5 +39,12 @@ export class CommentResolver {
       comment: comment,
       likes: likes,
     });
+  }
+
+  @Mutation((returns) => Comment, {nullable:true})
+  async deleteComment(
+    @Arg("id") id: string
+  ) : Promise<Comment>{
+    return await commentService.deleteComment(id);
   }
 }

@@ -93,6 +93,68 @@ query SearchSongs($query: String!, $page: Float!) {
   }
 }
 `;
+const GET_PROMPTS = gql`
+query Query {
+  getPrompts {
+    comments
+    posted_by
+    id
+    prompt
+    isClosed
+    dateCloses
+    datePosted
+    submittedSongs
+  }
+}
+`
+const GET_PROMPT = gql`
+  query GetPromptById($promptId: String!) {
+    getPromptById(id: $promptId) {
+      id
+      posted_by
+      dateCloses
+      datePosted
+      isClosed
+      prompt
+      submittedSongs
+      comments
+  }
+}
+
+`
+
+const GET_COMMENT = gql`
+query GetCommentById($commentId: String!) {
+  getCommentById(id: $commentId) {
+    id
+    likes
+    posted_by
+    comment
+    prompt_id
+  }
+}
+
+`
+
+const GET_SONG_SUB = gql`
+query GetSongSubmissionById($id: String!) {
+  getSongSubmissionById(id: $id) {
+    id
+    prompt_id
+    song {
+      imageUrl
+      album
+      previewUrl
+      artist
+      name
+      uri
+      id
+    }
+    submitted_by
+    votes
+  }
+}
+`
 
 export default {
   LOGIN_USER,
@@ -101,5 +163,9 @@ export default {
   LOGOUT_USER,
   GET_USER,
   IS_AUTHENTICATED,
-  SEARCH_QUERY
+  SEARCH_QUERY,
+  GET_PROMPTS,
+  GET_PROMPT,
+  GET_COMMENT,
+  GET_SONG_SUB
 };

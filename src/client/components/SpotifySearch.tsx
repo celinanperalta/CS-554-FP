@@ -2,6 +2,8 @@ import { useQuery } from "@apollo/client";
 import React, { useCallback, useState } from "react";
 import queries from "../queries";
 import _, { debounce } from "lodash";
+import { Song } from "../model/Song";
+import SpotifySearchResult from "./SpotifySearchResult";
 
 const SpotifySearch = () => {
   const [search, setSearch] = useState("");
@@ -12,15 +14,14 @@ const SpotifySearch = () => {
       query: search,
       page: 0,
     },
-
   });
 
   const debounceFn = useCallback(_.debounce(handleDebounceFn, 300), []);
 
   function handleDebounceFn(inputValue) {
-      setSearch(inputValue);
-    }
-    
+    setSearch(inputValue);
+  }
+
   function handleChange(event) {
     debounceFn(event.target.value);
   }
@@ -30,18 +31,15 @@ const SpotifySearch = () => {
       <h1>Spotify Search</h1>
       <label>
         Search:
-        <input 
-        type="text"
-        onChange={handleChange} />
+        <input type="text" onChange={handleChange} />
       </label>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        data &&
         data.searchSongs && (
           <ul>
-            {data.searchSongs.map((song) => (
-              <li key={song.id}>{song.name}</li>
+            {data.searchSongs.map((song : Song) => (
+              <li key={song.id}><SpotifySearchResult song={song}/></li>
             ))}
           </ul>
         )
