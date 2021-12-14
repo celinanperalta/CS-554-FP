@@ -6,6 +6,7 @@ import { Auth } from "../schemas/Auth";
 import { User } from "../schemas/User";
 import { UserLoginContext } from "../config/types";
 import userService from "../services/userService";
+import { isAuthenticated } from "../util/authUtil";
 const bcrypt = require("bcrypt");
 
 // https://jkettmann.com/password-based-authentication-with-graphql-and-passport
@@ -14,12 +15,12 @@ export class AuthResolver {
 
   @Query((returns) => Boolean)
   async isAuthenticated(@Ctx() ctx: UserLoginContext): Promise<boolean> {
-    return ctx.req.session.passport?.user ? true : false;
+    return isAuthenticated(ctx);
   }
 
   @Query((returns) => User, {nullable: true})
   async me(@Ctx() ctx: UserLoginContext): Promise<User> {
-    if (ctx.req.session.passport?.user) {
+    if (isAuthenticated(ctx)) {
       return userService.getUserById(ctx.req.session.passport.user);
     }
     return null;

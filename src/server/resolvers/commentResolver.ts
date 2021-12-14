@@ -1,7 +1,9 @@
-import { Query, Resolver, Mutation, Arg } from "type-graphql";
+import { Query, Resolver, Mutation, Arg, Ctx } from "type-graphql";
 import { User } from "../schemas/User";
 import { Comment } from "../schemas/Comment";
 import commentService from "../services/commentService";
+import { getUserFromContext, isAuthenticated } from "../util/authUtil";
+import { UserLoginContext } from "../config/types";
 
 @Resolver((of) => Comment)
 export class CommentResolver {
@@ -19,9 +21,10 @@ export class CommentResolver {
   async addComment(
     @Arg("prompt_id") prompt_id: string,
     @Arg("comment") comment: string,
-    @Arg("posted_by") posted_by: string
+    @Ctx() ctx: UserLoginContext
   ): Promise<Comment> {
-    return await commentService.addComment(prompt_id, comment, posted_by);
+    if (isAuthenticated(ctx))
+    return await commentService.addComment(prompt_id, comment, getUserFromContext(ctx));
   }
 
   @Mutation((returns) => Comment, { nullable: true })
@@ -32,6 +35,7 @@ export class CommentResolver {
     @Arg("posted_by") posted_by: string,
     @Arg("likes", (type)=>[String],{ nullable: true }) likes: string[]
   ): Promise<Comment> {
+    // Todo: check if user is authorized to update comment
     return await commentService.updateComment({
       id: id,
       prompt_id: prompt_id,
