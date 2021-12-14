@@ -7,8 +7,7 @@ const SPOTIFY_ENDPOINT = "https://api.spotify.com/v1/";
 
 const toSong = (song: any): Song => {
   return {
-    id: uuid(),
-    spotifyId: song.id,
+    id: song.id,
     uri: song.uri,
     name: song.name,
     artist: song.artists[0].name,

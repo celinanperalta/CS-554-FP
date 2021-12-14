@@ -11,7 +11,6 @@
 
 import { Field, ID, InputType, ObjectType} from 'type-graphql';
 
-
 @ObjectType()
 export class Song {
     @Field(() => ID)
