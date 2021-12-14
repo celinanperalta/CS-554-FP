@@ -3,7 +3,7 @@
 // import noImage from '../noImage.jpg';
 import React, {useState, useEffect}  from "react";
 import Link from "next/link";
-import ActivityFeedCard from "./activityFeedCard";
+import ActivityFeedCard from "./ActivityFeedCard";
 
 import {
     Card,
