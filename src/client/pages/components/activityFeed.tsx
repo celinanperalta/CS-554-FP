@@ -21,6 +21,7 @@ import {
 const useStyles = makeStyles({
     card: {
       maxWidth: 275,
+      minWidth: 280,
       minHeight: 500,
       maxHeight: 500,
       height: 'auto',

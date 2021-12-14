@@ -7,18 +7,19 @@ import TopSong from './components/topSongCard';
 import Profile from './components/userProfile';
 import ActivityFeed from './components/activityFeed';
 
-import { makeStyles, Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   row: {
       display: 'flex',
-      flexGrow: 1,
+     // flexGrow: 1,
       flexDirection: 'row'
   },
   column: {
     display: 'flex',
-    flexGrow: 1,
+    //flexGrow: 1,
     flexDirection: 'column'
+    // alignItems: 'center'
   }
 
 });
@@ -29,7 +30,7 @@ export default function Home() {
   
   return (
     <div className= "app">
-      <Box className={classes.row}>
+      <div className={classes.row}>
           <div className={classes.column}>
             <Profile />
             <ActivityFeed />
@@ -48,7 +49,7 @@ export default function Home() {
               </div>
             </div>
         </div>
-      </Box>
+      </div>
     </div>
   )
 }
