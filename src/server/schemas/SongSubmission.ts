@@ -5,15 +5,15 @@ export class SongSubmission {
   @Field(() => ID)
   id: string
 
-  @Field()
-  prompt_id: string
+  @Field({ nullable: true })
+  prompt_id?: string
 
-  @Field(() => Song)
-  song: Song
+  @Field(() => Song, { nullable: true })
+  song ?: Song
 
-  @Field()
-  submitted_by: string
+  @Field({ nullable: true })
+  submitted_by ?: string
 
-  @Field(() => [String])
-  votes: string[]
+  @Field(() => [String], { nullable: true })
+  votes ?: string[]
 }

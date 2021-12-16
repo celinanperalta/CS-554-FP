@@ -5,36 +5,36 @@ export class User {
   @Field(() => ID)
   id: string
 
-  @Field()
-  username?: string
+  @Field({ nullable: true })
+  username ?: string
 
-  @Field()
-  email?: string
+  @Field({ nullable: true })
+  email ?: string
 
-  @Field()
-  password: string
+  @Field({ nullable: true })
+  password ?: string
 
-  @Field(() => [String])
-  prompts?: string[]
-  
-  @Field()
-  accessToken?: string
+  @Field(() => [String], { nullable: true })
+  prompts ?: string[]
 
-  @Field()
-  refreshToken?: string
+  @Field({ nullable: true })
+  accessToken ?: string
 
-  @Field()
-  profile_picture?: string
+  @Field({ nullable: true })
+  refreshToken ?: string
 
-  @Field(() => [String])
-  likes?: string[]
+  @Field({ nullable: true })
+  profile_picture ?: string
 
-  @Field(() => [String])
-  votes?: string[]
+  @Field(() => [String], { nullable: true })
+  likes ?: string[]
 
-  @Field(() => [String])
-  submissions?: string[]
+  @Field(() => [String], { nullable: true })
+  votes ?: string[]
 
-  @Field(()=> [String])
-  comments?: string[]
+  @Field(() => [String], { nullable: true })
+  submissions ?: string[]
+
+  @Field(()=> [String], { nullable: true })
+  comments ?: string[]
 }

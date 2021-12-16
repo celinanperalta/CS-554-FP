@@ -4,7 +4,7 @@
     uri: String!
     name: String!
     artist: String!
-    previewUrl: String! 
+    previewUrl: String!
     album: String!
     imageUrl: String!
 } */
@@ -16,23 +16,23 @@ export class Song {
     @Field(() => ID)
     id: string
 
-    @Field()
-    uri: string
+    @Field({ nullable: true })
+    uri ?: string
 
-    @Field()
-    name: string
+    @Field({ nullable: true })
+    name ?: string
 
-    @Field()
-    artist: string
+    @Field({ nullable: true })
+    artist ?: string
 
-    @Field()
-    previewUrl: string
+    @Field({ nullable: true })
+    previewUrl ?: string
 
-    @Field()
-    album: string
+    @Field({ nullable: true })
+    album ?: string
 
-    @Field()
-    imageUrl: string
+    @Field({ nullable: true })
+    imageUrl ?: string
 
 }
 
@@ -41,22 +41,22 @@ export class SongInput{
     @Field(() => ID)
     id: string
 
-    @Field()
-    uri: string
+    @Field({ nullable: true })
+    uri ?: string
 
-    @Field()
-    name: string
+    @Field({ nullable: true })
+    name ?: string
 
-    @Field()
-    artist: string
+    @Field({ nullable: true })
+    artist ?: string
 
-    @Field()
-    previewUrl: string
+    @Field({ nullable: true })
+    previewUrl ?: string
 
-    @Field()
-    album: string
+    @Field({ nullable: true })
+    album ?: string
 
-    @Field()
-    imageUrl: string
+    @Field({ nullable: true })
+    imageUrl ?: string
 
 }
