@@ -28,7 +28,7 @@ const useStyles = makeStyles({
       marginLeft: 'auto',
       marginRight: 'auto',
       borderRadius: 5,
-      border: '1px solid',
+      border: '0px solid',
       justifyContent: 'center',
       boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);',
       overflow: 'scroll'
