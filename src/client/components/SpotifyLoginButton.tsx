@@ -1,7 +1,16 @@
 import useUser from "../lib/useUser";
 import axios from "axios";
+import { makeStyles, Modal, Box, Button } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    button: {
+        color: 'dark grey',
+        borderColor: 'dark grey'
+    }
+});
 
 const SpotifyLoginButton = () => {
+    const classes = useStyles();
 
 //   TODO: Once we have a user, we need to send them to the Spotify API to get their access token.
 //          We can then use that access token to make requests to the Spotify API.
@@ -11,7 +20,7 @@ const SpotifyLoginButton = () => {
 
     return (
         <div>
-            <button><a href="http://localhost:4000/auth/spotify">Login with Spotify</a></button>
+            <Button variant="outlined" className={classes.button}><a href="http://localhost:4000/auth/spotify">Login with Spotify</a></Button>
         </div>
     );
 };

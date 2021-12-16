@@ -132,9 +132,27 @@ query GetCommentById($commentId: String!) {
     prompt_id
   }
 }
-
 `
 
+const GET_SONG_SUBS = gql`
+query GetSongSubmissions {
+  getSongSubmissions {
+    id
+    prompt_id
+    song {
+      imageUrl
+      album
+      previewUrl
+      artist
+      name
+      uri
+      id
+    }
+    submitted_by
+    votes
+  }
+}
+`
 const GET_SONG_SUB = gql`
 query GetSongSubmissionById($id: String!) {
   getSongSubmissionById(id: $id) {
@@ -191,6 +209,7 @@ export default {
   GET_PROMPT,
   GET_COMMENT,
   GET_SONG_SUB,
+  GET_SONG_SUBS,
   ADD_PROMPT,
   UPDATE_USER
 };
