@@ -7,7 +7,6 @@ import Winner from '@material-ui/icons/EmojiEvents';
 import Likes from '@material-ui/icons/FavoriteBorder';
 import queries from "../queries";
 import { useQuery } from "@apollo/client";
-import SpotifyLoginButton from "../components/SpotifyLoginButton";
 
 import {
     Card,
@@ -40,8 +39,8 @@ const useStyles = makeStyles({
       flexDirection: 'row'
     },
     media: {
-      height: '75%',
-      width: '75%',
+      height: '50%',
+      width: '50%',
       borderRadius: '50%',
       paddingBottom: '10px',
       margin: 'auto'
@@ -75,7 +74,7 @@ const useStyles = makeStyles({
     }
   });
 
-const UserProfile = (props) => {
+const HomeProfile = (props) => {
     const classes = useStyles();
 
     const {loading, error, data} = useQuery(queries.GET_USER, {variables: {id:props.user.id}, pollInterval: 10000})
@@ -85,7 +84,9 @@ const UserProfile = (props) => {
     }
 
     if(data && data.getUserById){
-     
+      console.log("--------------")
+      console.log(data.getUserById)
+      console.log("--------------")
 
     return (
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
@@ -98,9 +99,7 @@ const UserProfile = (props) => {
                     alt="Live from space album cover"
                     className={classes.media}
                     />
-                    <br />
-                    <Typography variant="h5">@{data.getUserById.username}</Typography>
-                    <br />
+                    <Typography className="promptContent" >@{data.getUserById.username}</Typography>
                 </CardContent>
                     <div className={classes.status}>
                         <Winner />
@@ -108,12 +107,11 @@ const UserProfile = (props) => {
                         <Likes />
                         <p className={classes.values}>5</p>
                     </div>
-                <br/>   
-                <SpotifyLoginButton />                       
+                <br/>                          
             </Card>
         </Grid>
     )
     }
   }
 
-export default UserProfile;
+export default HomeProfile;

@@ -36,7 +36,7 @@ const NewPromptModal = () => {
 
   return (
     <div>
-      <h1>New Prompt</h1>
+      {/* <h1>New Prompt</h1> */}
       {open && (
         <form onSubmit={handleSubmit}>
           <label>
@@ -52,7 +52,7 @@ const NewPromptModal = () => {
           <input type="submit" value="Submit" />
         </form>
       )}
-      <button onClick={() => setOpen(!open)}>Open Modal</button>
+      <button onClick={() => setOpen(!open)}>New Prompt</button>
     </div>
   );
 };

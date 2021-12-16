@@ -1,6 +1,6 @@
 import queries from "../queries";
 import { useQuery } from "@apollo/client";
-import User from "./User";
+import User from "./HomeProfile";
 
 import {
     Card,
