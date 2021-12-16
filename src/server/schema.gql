@@ -29,10 +29,12 @@ type Mutation {
   login(password: String!, username: String!): User
   logout: Boolean!
   register(email: String!, password: String!, username: String!): User!
+  unvoteSongSubmission(id: String!): SongSubmission
   updateComment(comment: String, id: String!, likes: [String!], posted_by: String!, prompt_id: String!): Comment
   updatePrompt(comments: [String!], dateCloses: DateTime, datePosted: DateTime, id: String!, isClosed: Boolean!, posted_by: String!, prompt: String, submittedSongs: [String!]): Prompt
   updateSongSubmission(id: String!, prompt_id: String!, song: SongInput, submitted_by: String!, votes: [String!]): SongSubmission
-  updateUser(accessToken: String, comments: [String!], email: String, hashedPassword: String, id: String!, likes: [String!], profile_picture: String, prompts: [String!], refreshToken: String, submissions: [String!], username: String, votes: [String!]): User
+  updateUser(accessToken: String, comments: [String!], email: String, id: String!, likes: [String!], password: String, profile_picture: String, prompts: [String!], refreshToken: String, submissions: [String!], username: String, votes: [String!]): User
+  voteSongSubmission(id: String!): SongSubmission
 }
 
 type Prompt {

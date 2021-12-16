@@ -150,10 +150,48 @@ const deleteSongSubmission = async (id : string) : Promise<SongSubmission> =>{
     return songSubmission;
 }
 
+const voteSongSubmission = async (id: string, userId: string) : Promise<SongSubmission> =>{
+    if(!id || !userId){
+        throw "Must provide id and userId to like song submission";
+    }
+    let songSubmission = await getSongSubmissionById(id);
+    let indexOfUserId = songSubmission.votes.indexOf(userId);
+    if(indexOfUserId === -1){
+        songSubmission.votes.push(userId);
+    }
+    await client.update({
+        refresh:'wait_for',
+        index: 'songsubmissions',
+        id: songSubmission.id,
+        body: {doc: songSubmission},
+    });
+    return songSubmission;
+}
+
+const unvoteSongSubmission = async (id: string, userId: string) : Promise<SongSubmission> =>{
+    if(!id || !userId){
+        throw "Must provide id and userId to dislike song submission";
+    }
+    let songSubmission = await getSongSubmissionById(id);
+    let indexOfUserId = songSubmission.votes.indexOf(userId);
+    if(indexOfUserId !== -1){
+        songSubmission.votes.splice(indexOfUserId,1);
+    }
+    await client.update({
+        refresh:'wait_for',
+        index: 'songsubmissions',
+        id: songSubmission.id,
+        body: {doc: songSubmission},
+    });
+    return songSubmission;
+}
+
 export default {
     getSongSubmissions,
     getSongSubmissionById,
     addSongSubmission,
     updateSongSubmission,
-    deleteSongSubmission
+    deleteSongSubmission,
+    voteSongSubmission,
+    unvoteSongSubmission
 }
