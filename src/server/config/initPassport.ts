@@ -60,13 +60,11 @@ const initPassport = (app) => {
     )
   );
   passport.serializeUser(function (user: User, done) {
-    console.log("serializeUser", user.id);
     done(null, user.id);
   });
 
   passport.deserializeUser(async (id: string, done) => {
     const user = await userService.getUserById(id);
-    console.log("deserializeUser", id);
     done(null, user);
   });
 
