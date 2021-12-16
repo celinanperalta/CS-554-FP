@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 
 const PromptPage = () => {
   const classes = useStyles();
+  const [isNewComments, setIsNewComments] = React.useState(false);
 
   const { data: userData } = useUser({
     redirectTo: "/login",
@@ -33,14 +34,19 @@ const PromptPage = () => {
 
   const router = useRouter();
   const { promptId } = router.query;
-  const { error, loading, data } = useQuery(queries.GET_PROMPT, {
+  const { error, loading, data, refetch} = useQuery(queries.GET_PROMPT, {
     variables: { promptId },
+    fetchPolicy: 'network-only'
   });
+
+  if(isNewComments){
+    refetch();
+  }
 
   if (loading) {
     return (
       <div className="app">
-        <h2>Loading Prompts</h2>
+        <h2>Loading Prompt</h2>
       </div>
     );
   }
@@ -54,6 +60,10 @@ const PromptPage = () => {
     );
   }
 
+  const refreshComments = async (value) => {
+    console.log("outside here");
+		setIsNewComments(value);
+	};
 
   return (
     <div className="app">
@@ -62,7 +72,7 @@ const PromptPage = () => {
           <div className={classes.row}>
             {/* <h1>{data.getPromptById.prompt}</h1> */}
             <div className={classes.column}>
-              <Prompt data={data.getPromptById} />
+              <Prompt refreshComments={refreshComments} data={data.getPromptById} />
               {<CommentFeed comments={data.getPromptById.comments} />}
             </div>
             <div className={classes.column}>

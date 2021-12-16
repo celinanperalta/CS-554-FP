@@ -56,6 +56,7 @@ const Comment = (props) => {
   const { loading, error, data } = useQuery(queries.GET_COMMENT, {
     variables: { commentId: props.commentId },
     pollInterval: 10000,
+    fetchPolicy: 'network-only'
   });
 
   if (loading) {

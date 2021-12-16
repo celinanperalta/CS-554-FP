@@ -85,6 +85,7 @@ const SongSubmission = (props) => {
   const { loading, error, data } = useQuery(queries.GET_SONG_SUB, {
     variables: { id: props.songSubId },
     pollInterval: 5000,
+    fetchPolicy: 'network-only'
   });
 
   if (loading) {

@@ -16,7 +16,8 @@ const getSongSubmissions = async () : Promise<SongSubmission[]> => {
             query: {
                 match_all: {}
             }
-        }
+        },
+        size: 100
     });
     return body.hits.hits.map(hit => hit._source)
 }

@@ -8,7 +8,7 @@ import Likes from "@material-ui/icons/FavoriteBorder";
 import queries from "../queries";
 import { useQuery } from "@apollo/client";
 import {User} from "../model/User";
-
+import useUser from "../lib/useUser";
 import {
   Card,
   CardContent,
@@ -81,6 +81,9 @@ const useStyles = makeStyles({
 
 const HomeProfile = ({ user }: HomeProfileProps) => {
   const classes = useStyles();
+  const { data: userData } = useUser({
+    redirectTo: "/login",
+  });
   
   console.log("USER", user)
     return (

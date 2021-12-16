@@ -6,7 +6,7 @@ import Link from "next/link";
 import Like from '@material-ui/icons/FavoriteBorder';
 import Comment from '@material-ui/icons/ChatBubbleOutline';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-
+import useUser from "../lib/useUser";
 
 import {
     Card,
@@ -92,6 +92,15 @@ const Prompt = (props) => {
     const [submitOpen, setSubmitOpen] = useState(false);
     const handleClose = () => setOpen(false);
 
+    const { data: userData } = useUser({
+      redirectTo: "/login",
+    });
+
+    const refreshComments = async (value) =>{
+      console.log("inside here");
+      props.refreshComments(value);
+    }
+
     return (
         <div>
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
@@ -120,7 +129,7 @@ const Prompt = (props) => {
         >
           {/* onSubmit={handleSubmit} */}
         <Box className={classes.modalBox} >
-          <NewComment promptId={props.data.id}/>
+          <NewComment refreshComments={refreshComments} promptId={props.data.id}/>
         </Box>
       </Modal>
       

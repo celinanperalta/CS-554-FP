@@ -22,7 +22,11 @@ export class UserResolver {
 
     @Mutation(returns => User, {nullable:true})
     async addUser(@Arg('username')username: string, @Arg('email') email: string, @Arg('hashedPassword')hashedPassword: string): Promise<User>{
+        try{
         return await userService.addUser(username,email,hashedPassword);
+        }catch(e){
+            console.log(e);
+          }
     }
 
     @Mutation(returns => User, {nullable: true})
@@ -42,6 +46,7 @@ export class UserResolver {
     ) : Promise<User>{
         if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==id){throw "Error: must be authenticated/can't update another user"}
         const hashedPassword = password? await bcrypt.hash(password, 10) : undefined;
+        try{
         return await userService.updateUser({id: id,
             username: username,
             email: email,
@@ -54,12 +59,19 @@ export class UserResolver {
             votes: votes,
             submissions: submissions,
             comments:comments
-        });
+        });}
+        catch(e){
+            console.log(e);
+          }
     }
 
     @Mutation(returns => User, {nullable: true})
     async deleteUser(@Arg("id") id: string, @Ctx() ctx: UserLoginContext){
         if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==id){throw "Error can't delete user"}
+        try{
         return await userService.deleteUser(id);
+        }catch(e){
+            console.log(e);
+          }
     }
 }

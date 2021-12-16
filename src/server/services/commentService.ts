@@ -14,7 +14,8 @@ const getComments = async () : Promise<Comment[]> => {
             query: {
                 match_all: {}
             }
-        }
+        },
+        size: 100
     });
     console.log("hi");
     console.log(body.hits.hits.map(hit => hit._source));

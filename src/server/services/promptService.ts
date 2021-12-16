@@ -15,6 +15,7 @@ const getPrompts = async (): Promise<Prompt[]> => {
         match_all: {},
       },
     },
+    size: 100
   });
   let results : Prompt[] = body.hits.hits.map((hit) => hit._source);
   // sort results by date posted
@@ -87,6 +88,7 @@ const updatePrompt = async (newPromptInfo: promptPatch): Promise<Prompt> => {
   if (!newPromptInfo.id || !newPromptInfo.posted_by) {
     throw "Must provide prompt ID and userposted to update prompt";
   }
+  console.log("update:");
   console.log(newPromptInfo);
   let oldPrompt = await getPromptById(newPromptInfo.id);
   let newPrompt: Prompt = { ...oldPrompt };
