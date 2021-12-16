@@ -15,20 +15,23 @@ const spotifyCallback = async (
   profile,
   done
 ) => {
-  console.log("spotifyCallback REQ USER:", req.session.passport.user);
-  const user: User = await userService.getUserById(req.session.passport.user);
+  if (req.session.passport?.user) {
+    const user: User = await userService.getUserById(req.session.passport.user);
 
-  if (user) {
-    // To do: Ensure user is authenticated with email/password before spotify authentication.
-    const updatedUserInto: userPatch = {
-      ...user,
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-      profile_picture: profile.photos[0].value,
-    };
-    const updatedUser = await userService.updateUser(updatedUserInto);
-    done(null, updatedUser);
-    return;
+    if (user) {
+      // To do: Ensure user is authenticated with email/password before spotify authentication.
+      const updatedUserInto: userPatch = {
+        ...user,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        profile_picture: profile.photos[0].value,
+      };
+      const updatedUser = await userService.updateUser(updatedUserInto);
+      done(null, updatedUser);
+      return;
+    }
+  } else {
+    done(new Error("User not found."), false);
   }
 };
 

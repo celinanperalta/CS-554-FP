@@ -1,6 +1,5 @@
 import queries from "../queries";
 import { useQuery } from "@apollo/client";
-import User from "./HomeProfile";
 import Like from '@material-ui/icons/FavoriteBorder';
 
 import {
@@ -97,7 +96,6 @@ const SongSubmission = (props) =>{
                 <CardContent className={classes.content}>
                 <Typography>{data.getSongSubmissionById.song.name} by {data.getSongSubmissionById.song.artist}</Typography>
                     <div>
-                        <User className={classes.userName} userId={data.getSongSubmissionById.submitted_by}/>
                         <div className={classes.status}>
                             <Like />
                             <p className={classes.values}> {data.getSongSubmissionById.votes.length}</p> 

@@ -3,7 +3,7 @@
 // import noImage from '../noImage.jpg';
 import React, {useState, useEffect}  from "react";
 import Link from "next/link";
-import ActivePrompt from "../components/ActivePrompt";
+import Prompt from "./Prompt";
 import NewPrompt from "../components/NewPrompt";
 import { useQuery } from "@apollo/client";
 import queries from "../queries";
@@ -92,7 +92,7 @@ const PromptFeed = (props) => {
                 <h2 className={classes.promptHeader}>My Prompts</h2>
                 <NewPrompt />
                 </div>
-                {props.prompts.map((prompt)=>{return <ActivePrompt data={getPrompt(prompt)}/>})}
+                {props.prompts.map((prompt)=>{return <Prompt data={getPrompt(prompt)}/>})}
             </Box>
         </Grid>
     )

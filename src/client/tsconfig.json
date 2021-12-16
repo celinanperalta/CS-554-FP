@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "lib/auth.js", "lib/auth.js", "lib/auth.js", "lib/auth.js", "lib/useAuth.jsx"  ],
+, "lib/auth.js", "lib/auth.js", "lib/auth.js", "lib/auth.js", "lib/useAuth.jsx", "components/SpotifySearch.jsx"  ],
   "exclude": [
     "node_modules"
   ]

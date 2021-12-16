@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 });
 
 
-const NewPromptModal = () => {
+const NewPrompt = () => {
   const classes = useStyles();
 
   const [prompt, setPrompt] = useState("");
@@ -109,4 +109,4 @@ const NewPromptModal = () => {
   );
 };
 
-export default NewPromptModal;
+export default NewPrompt;

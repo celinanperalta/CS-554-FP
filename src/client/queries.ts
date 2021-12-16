@@ -187,6 +187,16 @@ mutation Mutation( $prompt: String!, $dateCloses: DateTime!) {
   }
 }`
 
+const ADD_COMMENT = gql`
+mutation Mutation($comment: String!, $promptId: String!) {
+  addComment(comment: $comment, prompt_id: $promptId) {
+    id
+    prompt_id
+    comment
+    posted_by
+    likes
+  }
+}`
 const UPDATE_USER = gql`
 mutation UpdateUser($id: String!, $username: String, $email: String, $password: String) {
   updateUser(id: $id, username: $username, email: $email, password: $password) {
@@ -209,6 +219,7 @@ export default {
   GET_PROMPT,
   GET_COMMENT,
   GET_SONG_SUB,
+  ADD_COMMENT,
   GET_SONG_SUBS,
   ADD_PROMPT,
   UPDATE_USER

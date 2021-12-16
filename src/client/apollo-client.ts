@@ -6,6 +6,7 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 const createApolloClient = () => {
   const httpLink = new HttpLink({
@@ -24,7 +25,21 @@ const createApolloClient = () => {
   });
 
   return new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            searchSongs: {
+              ...offsetLimitPagination(),
+              keyArgs: false,
+              merge(existing = [], incoming) {
+                return [...existing, ...incoming];
+              },
+            }
+          }
+        }
+      },
+    }),
     link: from([errorLink, httpLink]),
   });
 };
