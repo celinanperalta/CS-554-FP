@@ -132,9 +132,27 @@ query GetCommentById($commentId: String!) {
     prompt_id
   }
 }
-
 `
 
+const GET_SONG_SUBS = gql`
+query GetSongSubmissions {
+  getSongSubmissions {
+    id
+    prompt_id
+    song {
+      imageUrl
+      album
+      previewUrl
+      artist
+      name
+      uri
+      id
+    }
+    submitted_by
+    votes
+  }
+}
+`
 const GET_SONG_SUB = gql`
 query GetSongSubmissionById($id: String!) {
   getSongSubmissionById(id: $id) {
@@ -179,6 +197,15 @@ mutation Mutation($comment: String!, $promptId: String!) {
     likes
   }
 }`
+const UPDATE_USER = gql`
+mutation UpdateUser($id: String!, $username: String, $email: String, $password: String) {
+  updateUser(id: $id, username: $username, email: $email, password: $password) {
+    id
+    username
+    email
+  }
+}
+`
 
 export default {
   LOGIN_USER,
@@ -192,6 +219,8 @@ export default {
   GET_PROMPT,
   GET_COMMENT,
   GET_SONG_SUB,
+  ADD_COMMENT,
+  GET_SONG_SUBS,
   ADD_PROMPT,
-  ADD_COMMENT
+  UPDATE_USER
 };

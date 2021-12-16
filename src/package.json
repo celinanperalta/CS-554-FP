@@ -1,0 +1,17 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "concurrently \"cd server && npm install\" \"cd client && npm install\"",
+    "start": "concurrently \"cd server && npm install && npm start\" \"cd client && npm install && npm run dev\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "zip": "zip -r Peralta_Celina.zip * -x package-lock.json -x \"**/node_modules/*\" -x \"node_modules/*\" -x \"**/package-lock.json\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.4.0"
+  }
+}

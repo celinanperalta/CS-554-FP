@@ -3,7 +3,7 @@
 // import noImage from '../noImage.jpg';
 import React, {useState, useEffect}  from "react";
 import Link from "next/link";
-import ActivityFeedCard from "./ActivityFeedCard";
+import SongSubmission from "../components/SongSubmission";
 
 import {
     Card,
@@ -20,10 +20,10 @@ import {
 
 const useStyles = makeStyles({
     card: {
-      maxWidth: 300,
-      minWidth: 300,
-      minHeight: 500,
-      maxHeight: 500,
+      maxWidth: 500,
+      minWidth: 500,
+      minHeight: 650,
+      maxHeight: 650,
       height: 'auto',
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -62,24 +62,18 @@ const useStyles = makeStyles({
     }
   });
 
-const ActivityFeed = (props) => {
+const SubmissionFeed = (props) => {
     const classes = useStyles();
-
-    let activity = {action: "new submission", prompt: "songs thats play when you're on your last final"}
 
 
     return (
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box className={classes.card}>
-                <p className={classes.feedHeader}>Activity Feed</p>
-                <ActivityFeedCard data={activity} />
-                <ActivityFeedCard data={activity} />
-                <ActivityFeedCard data={activity} />
-                <ActivityFeedCard data={activity} />
-                <ActivityFeedCard data={activity} />
+                <p className={classes.feedHeader}>Song Submissions</p>
+                {props.songs.map((songSub)=>{return <SongSubmission songSubId={songSub}/>})}
             </Box>
         </Grid>
     )
   }
 
-export default ActivityFeed;
+export default SubmissionFeed;

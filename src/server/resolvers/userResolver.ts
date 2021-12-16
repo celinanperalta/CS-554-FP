@@ -3,6 +3,8 @@ import { User } from '../schemas/User'
 import userService from '../services/userService'
 import { UserLoginContext} from "../config/types";
 import { isAuthenticated ,getUserFromContext} from "../util/authUtil";
+const bcrypt = require("bcrypt");
+
 @Resolver(of => User) 
 export class UserResolver {
 
@@ -28,7 +30,7 @@ export class UserResolver {
     @Ctx() ctx: UserLoginContext,
     @Arg("username", {nullable:true})username?: string,
     @Arg("email", {nullable:true})email?: string,
-    @Arg("hashedPassword", {nullable:true})hashedPassword?: string,
+    @Arg("password", {nullable:true})password?: string,
     @Arg("prompts", (type)=>[String], {nullable:true})prompts?: string[],
     @Arg("accessToken", {nullable:true})accessToken?: string,
     @Arg("refreshToken", {nullable:true})refreshToken?: string,
@@ -38,7 +40,8 @@ export class UserResolver {
     @Arg("submissions", (type)=>[String], {nullable:true}) submissions?: string[],
     @Arg("comments", (type)=>[String], {nullable:true}) comments?: string[],
     ) : Promise<User>{
-        if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==id)
+        if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==id){throw "Error: must be authenticated/can't update another user"}
+        const hashedPassword = password? await bcrypt.hash(password, 10) : undefined;
         return await userService.updateUser({id: id,
             username: username,
             email: email,
@@ -56,7 +59,7 @@ export class UserResolver {
 
     @Mutation(returns => User, {nullable: true})
     async deleteUser(@Arg("id") id: string, @Ctx() ctx: UserLoginContext){
-        if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==id)
+        if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==id){throw "Error can't delete user"}
         return await userService.deleteUser(id);
     }
 }

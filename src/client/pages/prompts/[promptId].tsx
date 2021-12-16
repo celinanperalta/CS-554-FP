@@ -5,43 +5,77 @@ import { useQuery } from "@apollo/client";
 import queries from "../../queries";
 import Comment from "../../components/Comment";
 import SongSubmission from "../../components/SongSubmission";
-const Prompt = () => {
-  const userData = useUser({
+import Prompt from "../../components/Prompt";
+import CommentFeed from "../../components/CommentFeed";
+import SubmissionFeed from "../../components/SubmissionFeed";
+
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    padding: "20px",
+  },
+  column: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "20px",
+  },
+});
+
+const PromptPage = () => {
+  const classes = useStyles();
+
+  const { data: userData } = useUser({
     redirectTo: "/login",
-  }).data;
-
-
+  });
 
   const router = useRouter();
   const { promptId } = router.query;
-  const { error, loading, data } = useQuery(queries.GET_PROMPT, { variables: {promptId}, pollInterval: 4000 })
+  const { error, loading, data } = useQuery(queries.GET_PROMPT, {
+    variables: { promptId },
+    pollInterval: 4000,
+  });
 
   if (loading) {
-    return <div className="app">
-      <h2>Loading Prompts</h2>
-    </div>
+    return (
+      <div className="app">
+        <h2>Loading Prompts</h2>
+      </div>
+    );
   }
 
-  console.log("here")
+  if (error) {
+    return (
+      <div className="app">
+        <h2>Error</h2>
+        <p>{error.message}</p>
+      </div>
+    );
+  }
+
+  console.log("here");
   console.log(data.getPromptById.submittedSongs);
 
   return (
     <div className="app">
-      <h2>Prompts on this page</h2>
       <ul className="prompts">
-        {data && data.getPromptById ?
-        <div>
-          <h1>{data.getPromptById.prompt}</h1>
-          <h2>Song Suggestions</h2>
-          {data.getPromptById.submittedSongs.map((songSub)=>{return <SongSubmission songSubId={songSub}/>})}
-          <h2>Comments</h2>
-          {data.getPromptById.comments.map((comment)=>{return <Comment commentId={comment}/>})}
-        </div>
-        : null}
+        {data && data.getPromptById ? (
+          <div className={classes.row}>
+            {/* <h1>{data.getPromptById.prompt}</h1> */}
+            <div className={classes.column}>
+              <Prompt data={data.getPromptById} />
+              {<CommentFeed comments={data.getPromptById.comments} />}
+            </div>
+            <div className={classes.column}>
+              {<SubmissionFeed songs={data.getPromptById.submittedSongs} />}
+            </div>
+          </div>
+        ) : null}
       </ul>
-
     </div>
-  )
+  );
 };
 
-export default Prompt;
+export default PromptPage;

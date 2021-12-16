@@ -10,13 +10,13 @@ const NavBar = () => {
   return (
     <div className="app">
       <ul className="NavBar">
-        <li>
-          <Link href="/">
-            <a className={router.asPath == "/" ? "active" : ""}>Home</a>
-          </Link>
-        </li>
         {isSignedIn() && (
           <div>
+            <li>
+              <Link href="/">
+                <a className={router.asPath == "/" ? "active" : ""}>Home</a>
+              </Link>
+            </li>
             <li>
               <Link href="/prompts">
                 <a className={router.asPath == "/prompts" ? "active" : ""}>
@@ -28,6 +28,13 @@ const NavBar = () => {
               <Link href="/users/me">
                 <a className={router.asPath == "/users/me" ? "active" : ""}>
                   My Profile
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/settings">
+                <a className={router.asPath == "/settings" ? "active" : ""}>
+                  Settings
                 </a>
               </Link>
             </li>

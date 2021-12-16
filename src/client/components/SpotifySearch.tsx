@@ -11,7 +11,7 @@ const SpotifySearch = () => {
   const [results, setResults] = useState([]);
   const [page, setPage] = useState(0);
 
-  const { data, loading, error , fetchMore} = useQuery(queries.SEARCH_QUERY, {
+  const { data, loading, error, fetchMore } = useQuery(queries.SEARCH_QUERY, {
     variables: {
       query: search,
       page: page,
@@ -20,8 +20,10 @@ const SpotifySearch = () => {
 
   const debounceFn = useCallback(_.debounce(handleDebounceFn, 300), []);
 
+  // Todo: Clear search results when search term changes
   function handleDebounceFn(inputValue) {
     setSearch(inputValue);
+    setPage(0);
   }
 
   function handleChange(event) {
@@ -30,7 +32,10 @@ const SpotifySearch = () => {
 
   const loadMore = (event: React.UIEvent<HTMLDivElement>) => {
     event.preventDefault();
-    if (event.currentTarget.scrollTop + event.currentTarget.clientHeight === event.currentTarget.scrollHeight) {
+    if (
+      event.currentTarget.scrollTop + event.currentTarget.clientHeight ===
+      event.currentTarget.scrollHeight
+    ) {
       console.log("loading more");
       fetchMore({
         variables: {
@@ -38,9 +43,8 @@ const SpotifySearch = () => {
         },
       });
       setPage(page + 1);
-      
     }
-  }
+  };
 
   return (
     <Card>
@@ -64,7 +68,7 @@ const SpotifySearch = () => {
               }}
             >
               {data.searchSongs.map((song: Song) => (
-                  <SpotifySearchResult key={song.id} song={song} />
+                <SpotifySearchResult key={song.id} song={song} />
               ))}
             </div>
           )

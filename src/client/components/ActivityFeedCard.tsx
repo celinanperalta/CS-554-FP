@@ -62,7 +62,7 @@ const ActivityFeedCard = (props) => {
             <Card className={classes.card} variant="outlined">
                 <Link href={`/prompts/${props.data.id}`}>
                 <CardContent>
-                    <Typography className="promptContent" ><b>{props.data.action}: </b>"{props.data.prompt}"</Typography>
+                    <Typography className="promptContent" ><b>{props.data.action}: </b>&ldquo;{props.data.prompt}&rdquo;</Typography>
                 </CardContent>
                 </Link>
             </Card>

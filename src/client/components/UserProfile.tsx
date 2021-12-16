@@ -5,6 +5,9 @@ import React, {useState, useEffect}  from "react";
 import Link from "next/link";
 import Winner from '@material-ui/icons/EmojiEvents';
 import Likes from '@material-ui/icons/FavoriteBorder';
+import queries from "../queries";
+import { useQuery } from "@apollo/client";
+import SpotifyLoginButton from "../components/SpotifyLoginButton";
 
 import {
     Card,
@@ -37,8 +40,8 @@ const useStyles = makeStyles({
       flexDirection: 'row'
     },
     media: {
-      height: '50%',
-      width: '50%',
+      height: '75%',
+      width: '75%',
       borderRadius: '50%',
       paddingBottom: '10px',
       margin: 'auto'
@@ -75,6 +78,15 @@ const useStyles = makeStyles({
 const UserProfile = (props) => {
     const classes = useStyles();
 
+    const {loading, error, data} = useQuery(queries.GET_USER, {variables: {id:props.user.id}, pollInterval: 10000})
+
+    if (loading) {
+      return <li>Loading user</li>
+    }
+
+    if(data && data.getUserById){
+     
+
     return (
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Card className={classes.card} variant="outlined">
@@ -82,10 +94,13 @@ const UserProfile = (props) => {
                     <CardMedia
                     component="img"
                     image="https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg"
+                    // image={data.getUserById.profile_picture}
                     alt="Live from space album cover"
                     className={classes.media}
                     />
-                    <Typography className="promptContent" >Kaiqi Chee</Typography>
+                    <br />
+                    <Typography variant="h5">@{data.getUserById.username}</Typography>
+                    <br />
                 </CardContent>
                     <div className={classes.status}>
                         <Winner />
@@ -93,10 +108,12 @@ const UserProfile = (props) => {
                         <Likes />
                         <p className={classes.values}>5</p>
                     </div>
-                <br/>                          
+                <br/>   
+                <SpotifyLoginButton />                       
             </Card>
         </Grid>
     )
+    }
   }
 
 export default UserProfile;

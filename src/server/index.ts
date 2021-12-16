@@ -93,7 +93,7 @@ async function main() {
     }),
     function (req, res) {
       // Successful authentication, redirect home.
-      console.log(req.user);
+      //console.log(req.user);
       res.redirect("http://localhost:3000/users/me");
     }
   );

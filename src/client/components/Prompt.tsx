@@ -15,16 +15,19 @@ import {
     makeStyles,
     CardHeader,
     Button,
-    IconButton
+    IconButton,
+    Modal, Box,
+    TextField
   } from '@material-ui/core';
+import NewComment from "./NewComment";
 
 const useStyles = makeStyles({
     card: {
       maxWidth: 350,
       minWidth: 350,
       height: 'auto',
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      marginLeft: '10px',
+      marginRight: '10px',
       marginTop: '10px',
       marginBottom: '10px',
       borderRadius: 5,
@@ -58,29 +61,65 @@ const useStyles = makeStyles({
     //     borderColor: '#333',
     //     boxShadow: 'none',
     //   }
+    modalBox:{
+      maxWidth: 300,
+      minWidth: 300,
+      minHeight: 200,
+      maxHeight: 200,
+      borderRadius: 5,
+      border: '1px solid',
+      zIndex: 1300,
+      backgroundColor: 'white',
+      margin: 'auto',
+      marginTop: '30vh',
+      padding: '20px'
+    },
+    inputFields: {
+      marginBottom: '10px'
+    }
+    // button: {
+    //   color: 'white',
+    //   borderColor: 'white'
+    // }
   });
 
-const ActivePrompt = (props) => {
+const Prompt = (props) => {
     const classes = useStyles();
+    const [open, setOpen] = useState(false);
+    const handleClose = () => setOpen(false);
 
     return (
+        <div>
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Card className={classes.card} variant="outlined">
                 <Link href={`/prompts/${props.data.id}`}>
                 <CardContent>
-                    <Typography className="promptContent" >{props.data.prompt}</Typography>
+                    <Typography className="promptContent">{props.data.prompt}</Typography>
+                    <Typography>{props.data.dateCloses}</Typography>
                 </CardContent>
                 </Link>
                 <IconButton color="default" aria-label="like prompt" component="span">
                     <Like />
                 </IconButton>
-                <IconButton color="default" aria-label="comment on prompt" component="span">
+                <IconButton onClick={() => setOpen(!open)} color="default" aria-label="comment on prompt" component="span">
                     <Comment />
                 </IconButton>
                 <br/>                          
             </Card>
         </Grid>
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+          {/* onSubmit={handleSubmit} */}
+        <Box className={classes.modalBox} >
+          <NewComment promptId={props.data.id}/>
+        </Box>
+      </Modal>
+      </div>
     )
   }
 
-export default ActivePrompt;
+export default Prompt;
