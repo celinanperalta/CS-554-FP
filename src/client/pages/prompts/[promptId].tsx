@@ -60,6 +60,7 @@ const Prompt = () => {
           <div className={classes.column}>
           {<SubmissionFeed songs={data.getPromptById.submittedSongs} />}
           </div>
+
         </div>
         : null}
       </ul>

@@ -4,6 +4,7 @@ import { Comment } from "../schemas/Comment";
 import commentService from "../services/commentService";
 import { getUserFromContext, isAuthenticated } from "../util/authUtil";
 import { UserLoginContext } from "../config/types";
+import promptService from "../services/promptService";
 
 @Resolver((of) => Comment)
 export class CommentResolver {
@@ -33,9 +34,11 @@ export class CommentResolver {
     @Arg("prompt_id") prompt_id: string,
     @Arg("comment", { nullable: true }) comment: string,
     @Arg("posted_by") posted_by: string,
-    @Arg("likes", (type)=>[String],{ nullable: true }) likes: string[]
+    @Arg("likes", (type)=>[String],{ nullable: true }) likes: string[],
+    @Ctx() ctx: UserLoginContext
   ): Promise<Comment> {
-    // Todo: check if user is authorized to update comment
+    // check if user is authorized to update comment
+    if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==posted_by){throw "Error, must authenticate/can't update another users comment"}
     return await commentService.updateComment({
       id: id,
       prompt_id: prompt_id,
@@ -47,8 +50,12 @@ export class CommentResolver {
 
   @Mutation((returns) => Comment, {nullable:true})
   async deleteComment(
-    @Arg("id") id: string
+    @Arg("id") id: string,
+    @Ctx() ctx: UserLoginContext
   ) : Promise<Comment>{
+    let comment = await commentService.getCommentById(id);
+    let prompt = await promptService.getPromptById(comment.prompt_id);
+    if(!isAuthenticated(ctx) && prompt.posted_by !== getUserFromContext(ctx) && comment.posted_by !== getUserFromContext(ctx)){throw "Error, can't delete comment."}
     return await commentService.deleteComment(id);
   }
 }

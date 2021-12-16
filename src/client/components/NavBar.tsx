@@ -31,6 +31,13 @@ const NavBar = () => {
                 </a>
               </Link>
             </li>
+            <li>
+              <Link href="/settings">
+                <a className={router.asPath == "/settings" ? "active" : ""}>
+                  Settings
+                </a>
+              </Link>
+            </li>
             <li onClick={async () => await signOut()}>
               <a>Logout</a>
             </li>

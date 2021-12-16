@@ -187,6 +187,16 @@ mutation Mutation( $prompt: String!, $dateCloses: DateTime!) {
   }
 }`
 
+const UPDATE_USER = gql`
+mutation UpdateUser($id: String!, $username: String, $email: String, $password: String) {
+  updateUser(id: $id, username: $username, email: $email, password: $password) {
+    id
+    username
+    email
+  }
+}
+`
+
 export default {
   LOGIN_USER,
   REGISTER_USER,
@@ -200,5 +210,6 @@ export default {
   GET_COMMENT,
   GET_SONG_SUB,
   GET_SONG_SUBS,
-  ADD_PROMPT
+  ADD_PROMPT,
+  UPDATE_USER
 };

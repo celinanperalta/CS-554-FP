@@ -3,7 +3,8 @@ import { User } from "../schemas/User";
 import { Prompt } from "../schemas/Prompt";
 import { Comment } from "../schemas/Comment";
 import promptService from "../services/promptService";
-import { UserLoginContext } from "../config/types";
+import { UserLoginContext} from "../config/types";
+import { isAuthenticated ,getUserFromContext} from "../util/authUtil";
 
 @Resolver((of) => Prompt)
 export class PromptResolver {
@@ -24,6 +25,7 @@ export class PromptResolver {
     @Ctx() ctx: UserLoginContext
   ): Promise<Prompt> {
     // Todo: Add auth check to all of these CUD operations
+    if(!isAuthenticated(ctx)){throw "Error must authenticate to add prompt"};
     return await promptService.addPrompt(
       prompt,
       ctx.req.session.passport.user,
@@ -39,8 +41,10 @@ export class PromptResolver {
   @Arg("comments", (type) => [String], {nullable:true}) comments: string[],
   @Arg("datePosted", (type)=>Date, {nullable:true}) datePosted: Date,
   @Arg("dateCloses", (type)=>Date, {nullable:true}) dateCloses: Date,
-  @Arg("isClosed") isClosed: boolean
+  @Arg("isClosed") isClosed: boolean,
+  @Ctx() ctx: UserLoginContext
   ) : Promise<Prompt> {
+      if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==posted_by){throw "Error, must authenticate/can't update another users prompt"}
       return promptService.updatePrompt(
           {id:id,
           posted_by: posted_by,
@@ -53,7 +57,9 @@ export class PromptResolver {
         })
   }
   @Mutation((returns) => Prompt, {nullable:true})
-  async deletePrompt(@Arg("id") id: string): Promise<Prompt> {
+  async deletePrompt(@Arg("id") id: string, @Ctx() ctx: UserLoginContext): Promise<Prompt> {
+    let prompt = await promptService.getPromptById(id);
+    if(!isAuthenticated(ctx) && getUserFromContext(ctx)!==prompt.posted_by){throw "Error, can't delete prompt"}
     return await promptService.deletePrompt(id);
   }
 }
