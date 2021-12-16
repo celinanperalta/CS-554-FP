@@ -6,17 +6,25 @@ import { Song } from "../model/Song";
 import SpotifySearchResult from "./SpotifySearchResult";
 import { Card, CardContent, List } from "@material-ui/core";
 
-const SpotifySearch = () => {
+interface SpotifySearchProps {
+  handleSelect: (song: Song) => void;
+}
+
+const SpotifySearch = ({ handleSelect }: SpotifySearchProps) => {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const [page, setPage] = useState(0);
 
-  const { data, loading, error, fetchMore } = useQuery(queries.SEARCH_QUERY, {
-    variables: {
-      query: search,
-      page: page,
-    },
-  });
+  const { data, loading, error, fetchMore, refetch } = useQuery(
+    queries.SEARCH_QUERY,
+    {
+      skip: !search,
+      variables: {
+        query: search,
+        page: page,
+      },
+    }
+  );
 
   const debounceFn = useCallback(_.debounce(handleDebounceFn, 300), []);
 
@@ -24,6 +32,10 @@ const SpotifySearch = () => {
   function handleDebounceFn(inputValue) {
     setSearch(inputValue);
     setPage(0);
+    refetch({
+      query: inputValue,
+      page: 0,
+    });
   }
 
   function handleChange(event) {
@@ -36,7 +48,6 @@ const SpotifySearch = () => {
       event.currentTarget.scrollTop + event.currentTarget.clientHeight ===
       event.currentTarget.scrollHeight
     ) {
-      console.log("loading more");
       fetchMore({
         variables: {
           page: page + 1,
@@ -44,6 +55,39 @@ const SpotifySearch = () => {
       });
       setPage(page + 1);
     }
+  };
+
+  const searchResults = () => {
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    }
+    if (data && search) {
+      if (data.searchSongs.length === 0) {
+        return <div>No results found</div>;
+      }
+      return (
+        <div
+          onScroll={loadMore}
+          style={{
+            maxHeight: "300px",
+            overflow: "scroll",
+            marginTop: "10px",
+          }}
+        >
+          {data.searchSongs.map((song: Song) => (
+            <SpotifySearchResult
+              key={song.id}
+              song={song}
+              handleSelect={handleSelect}
+            />
+          ))}
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -54,25 +98,7 @@ const SpotifySearch = () => {
           Search:
           <input type="text" onChange={handleChange} />
         </label>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          data &&
-          data.searchSongs && (
-            <div
-              onScroll={loadMore}
-              style={{
-                maxHeight: "300px",
-                overflow: "scroll",
-                marginTop: "10px",
-              }}
-            >
-              {data.searchSongs.map((song: Song) => (
-                <SpotifySearchResult key={song.id} song={song} />
-              ))}
-            </div>
-          )
-        )}
+        {searchResults()}
       </CardContent>
     </Card>
   );

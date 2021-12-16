@@ -14,6 +14,7 @@ import { Field, ID, InputType, ObjectType} from 'type-graphql';
 
 @ObjectType()
 export class Song {
+    [x: string]: any;
     @Field(() => ID)
     id: string
 

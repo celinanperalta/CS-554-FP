@@ -35,7 +35,6 @@ const PromptPage = () => {
   const { promptId } = router.query;
   const { error, loading, data } = useQuery(queries.GET_PROMPT, {
     variables: { promptId },
-    pollInterval: 4000,
   });
 
   if (loading) {
@@ -55,8 +54,6 @@ const PromptPage = () => {
     );
   }
 
-  console.log("here");
-  console.log(data.getPromptById.submittedSongs);
 
   return (
     <div className="app">
