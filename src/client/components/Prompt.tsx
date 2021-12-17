@@ -16,6 +16,7 @@ import {
 import NewComment from "./NewComment";
 import NewSubmission from "./NewSubmission";
 import { useQuery } from "@apollo/client";
+import TopSongCard from "./TopSongCard";
 
 const useStyles = makeStyles({
   card: {
@@ -91,7 +92,7 @@ const Prompt = ({ id }) => {
     fetchPolicy: "network-only",
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading || !data) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
@@ -113,6 +114,7 @@ const Prompt = ({ id }) => {
             <NewSubmission promptId={id} />
           </Grid>
         </Grid>
+        <TopSongCard promptId={id}/>
       </Card>
     </Grid>
   );
