@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     flexDirection: "row",
     margin: "auto",
     justifyContent: "center",
+    maxWidth: '100%'
   },
 });
 

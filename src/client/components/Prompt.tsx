@@ -20,7 +20,7 @@ import { useQuery } from "@apollo/client";
 const useStyles = makeStyles({
   card: {
     maxWidth: 350,
-    minWidth: 350,
+    minWidth: 200,
     height: "auto",
     marginLeft: "10px",
     marginRight: "10px",
@@ -38,6 +38,7 @@ const useStyles = makeStyles({
   grid: {
     flexGrow: 1,
     flexDirection: "row",
+    maxWidth: '100%'
   },
   media: {
     height: "100%",
