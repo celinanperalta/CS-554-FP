@@ -8,7 +8,7 @@ const UnLikeSubmission = ({ submission }) => {
 
   const [unLikeSubmission] = useMutation(queries.REMOVE_SONG_SUB_VOTE, {
     variables: {
-      submissionId: submission.id,
+      id: submission.id,
     },
     refetchQueries: [
         {

@@ -123,8 +123,8 @@ const GET_PROMPT = gql`
 `
 
 const GET_COMMENT = gql`
-query GetCommentById($commentId: String!) {
-  getCommentById(id: $commentId) {
+query GetCommentById($id: String!) {
+  getCommentById(id: $id) {
     id
     likes
     posted_by
@@ -197,6 +197,18 @@ mutation Mutation($comment: String!, $promptId: String!) {
     likes
   }
 }`
+
+const DELETE_COMMENT = gql`
+mutation Mutation($id: String!) {
+  deleteComment(id: $id) {
+    id
+    prompt_id
+    comment
+    posted_by
+    likes
+  }
+}`
+
 const UPDATE_USER = gql`
 mutation UpdateUser($id: String!, $username: String, $email: String, $password: String) {
   updateUser(id: $id, username: $username, email: $email, password: $password) {
@@ -228,8 +240,8 @@ mutation AddSongSubmission($song: SongInput!, $promptId: String!) {
 `
 
 const ADD_SONG_SUB_VOTE = gql`
-mutation Mutation($submissionId: String!) {
-  voteSongSubmission(id: $submissionId) {
+mutation Mutation($id: String!) {
+  voteSongSubmission(id: $id) {
     id
     votes
   }
@@ -237,8 +249,8 @@ mutation Mutation($submissionId: String!) {
 `;
 
 const REMOVE_SONG_SUB_VOTE = gql`
-mutation UnvoteSongSubmission($submissionId: String!) {
-  unvoteSongSubmission(id: $submissionId) {
+mutation UnvoteSongSubmission($id: String!) {
+  unvoteSongSubmission(id: $id) {
     id
     votes
   }
@@ -246,8 +258,8 @@ mutation UnvoteSongSubmission($submissionId: String!) {
 `
 
 const ADD_COMMENT_LIKE = gql`
-mutation LikeComment($commentId: String!) {
-  likeComment(id: $commentId) {
+mutation LikeComment($id: String!) {
+  likeComment(id: $id) {
     id
     likes
   }
@@ -255,8 +267,8 @@ mutation LikeComment($commentId: String!) {
 `
 
 const REMOVE_COMMENT_LIKE = gql`
-mutation UnLikeComment($uncommentId: String!) {
-  unLikeComment(id: $uncommentId) {
+mutation UnLikeComment($id: String!) {
+  unLikeComment(id: $id) {
     id
     likes
   }
@@ -284,5 +296,6 @@ export default {
   ADD_SONG_SUB_VOTE,
   REMOVE_SONG_SUB_VOTE,
   ADD_COMMENT_LIKE,
-  REMOVE_COMMENT_LIKE
+  REMOVE_COMMENT_LIKE,
+  DELETE_COMMENT,
 };

@@ -8,7 +8,7 @@ const LikeSubmission = ({ submission }) => {
 
   const [likeSubmission] = useMutation(queries.ADD_SONG_SUB_VOTE, {
     variables: {
-      submissionId: submission.id,
+      id: submission.id,
     },
     refetchQueries: [
         {

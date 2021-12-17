@@ -8,7 +8,7 @@ const LikeComment = (props) => {
 
   const [likeComment] = useMutation(queries.ADD_COMMENT_LIKE, {
     variables: {
-      commentId: props.id,
+      id: props.id,
     },
     refetchQueries: [
         {

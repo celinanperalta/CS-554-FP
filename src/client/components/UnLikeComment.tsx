@@ -8,11 +8,11 @@ const UnLikeComment = (props) => {
 
   const [unLikeComment] = useMutation(queries.REMOVE_COMMENT_LIKE, {
     variables: {
-      commentId: props.id,
+      id: props.id,
     },
     refetchQueries: [
         {
-            query: queries.GET_SONG_SUB,
+            query: queries.GET_COMMENT,
             variables: {
                 id: props.id,
             },

@@ -70,7 +70,7 @@ const CommentFeed = (props) => {
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box className={classes.card}>
                 <p className={classes.feedHeader}>Comments</p>
-                {props.comments.map((comment)=>{return <Comment commentId={comment}/>})}
+                {props.comments.map((id)=>{return <Comment key={id} id={id} promptId={props.promptId}/>})}
             </Box>
         </Grid>
     )
