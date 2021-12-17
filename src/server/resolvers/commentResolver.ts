@@ -70,4 +70,40 @@ export class CommentResolver {
       console.log(e);
     }
   }
+
+  @Mutation((returns) => Comment, { nullable: true })
+  async likeComment(
+    @Arg("id") id: string,
+    @Ctx() ctx: UserLoginContext
+  ): Promise<Comment> {
+    if (!isAuthenticated(ctx)) {
+      throw "Must authenticate to like";
+    }
+    try{
+    return await commentService.likeComment(
+      id,
+      getUserFromContext(ctx)
+    );
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+    @Mutation((returns) => Comment, { nullable: true })
+    async unLikeComment(
+        @Arg("id") id: string,
+        @Ctx() ctx: UserLoginContext
+    ): Promise<Comment> {
+        if (!isAuthenticated(ctx)) {
+            throw "Must authenticate to unlike";
+        }
+        try{
+        return await commentService.unLikeComment(
+            id,
+            getUserFromContext(ctx)
+        );
+        }catch(e){
+          console.log(e);
+        }
+    }
 }

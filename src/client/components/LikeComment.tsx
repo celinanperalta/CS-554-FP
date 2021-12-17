@@ -4,25 +4,25 @@ import queries from "../queries";
 import Like from "@material-ui/icons/FavoriteBorder";
 import { IconButton } from "@material-ui/core";
 
-const LikeSubmission = ({ submission }) => {
+const LikeComment = (props) => {
 
-  const [likeSubmission] = useMutation(queries.ADD_SONG_SUB_VOTE, {
+  const [likeComment] = useMutation(queries.ADD_COMMENT_LIKE, {
     variables: {
-      submissionId: submission.id,
+      commentId: props.id,
     },
     refetchQueries: [
         {
             query: queries.GET_SONG_SUB,
             variables: {
-                id: submission.id,
+                id: props.id,
             },
         },
     ],
   });
 
   const handleLike = () => {
-    console.log("like")
-    likeSubmission();
+    console.log("like comment")
+    likeComment();
   };
 
   return (
@@ -32,4 +32,4 @@ const LikeSubmission = ({ submission }) => {
   );
 };
 
-export default LikeSubmission;
+export default LikeComment;

@@ -147,6 +147,41 @@ const deleteComment = async (commentId : string) : Promise<Comment> =>{
     return comment;
 }
 
+const likeComment = async (id: string, userId: string) : Promise<Comment> =>{
+    if(!id || !userId){
+        throw "Must provide id and userId to like song submission";
+    }
+    let comment = await getCommentById(id);
+    let indexOfUserId = comment.likes.indexOf(userId);
+    if(indexOfUserId === -1){
+        comment.likes.push(userId);
+    }
+    await client.update({
+        refresh:'wait_for',
+        index: 'comments',
+        id: comment.id,
+        body: {doc: comment},
+    });
+    return comment;
+}
+
+const unLikeComment = async (id: string, userId: string) : Promise<Comment> =>{
+    if(!id || !userId){
+        throw "Must provide id and userId to dislike song submission";
+    }
+    let comment = await getCommentById(id);
+    let indexOfUserId = comment.likes.indexOf(userId);
+    if(indexOfUserId !== -1){
+        comment.likes.splice(indexOfUserId,1);
+    }
+    await client.update({
+        refresh:'wait_for',
+        index: 'comments',
+        id: comment.id,
+        body: {doc: comment},
+    });
+    return comment;
+}
 
 
 export default {
@@ -154,5 +189,7 @@ export default {
     getCommentById,
     addComment,
     updateComment,
-    deleteComment
+    deleteComment,
+    likeComment,
+    unLikeComment
 }

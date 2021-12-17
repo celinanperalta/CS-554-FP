@@ -236,6 +236,34 @@ mutation Mutation($submissionId: String!) {
 }
 `;
 
+const REMOVE_SONG_SUB_VOTE = gql`
+mutation UnvoteSongSubmission($submissionId: String!) {
+  unvoteSongSubmission(id: $submissionId) {
+    id
+    votes
+  }
+}
+`
+
+const ADD_COMMENT_LIKE = gql`
+mutation LikeComment($commentId: String!) {
+  likeComment(id: $commentId) {
+    id
+    likes
+  }
+}
+`
+
+const REMOVE_COMMENT_LIKE = gql`
+mutation UnLikeComment($uncommentId: String!) {
+  unLikeComment(id: $uncommentId) {
+    id
+    likes
+  }
+}
+`
+
+
 export default {
   LOGIN_USER,
   REGISTER_USER,
@@ -253,5 +281,8 @@ export default {
   ADD_PROMPT,
   UPDATE_USER,
   ADD_SONG_SUB,
-  ADD_SONG_SUB_VOTE
+  ADD_SONG_SUB_VOTE,
+  REMOVE_SONG_SUB_VOTE,
+  ADD_COMMENT_LIKE,
+  REMOVE_COMMENT_LIKE
 };

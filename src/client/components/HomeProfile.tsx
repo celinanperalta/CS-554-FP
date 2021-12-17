@@ -85,6 +85,9 @@ const HomeProfile = ({ user }: HomeProfileProps) => {
     redirectTo: "/login",
   });
   
+  if(!userData){
+    return <div>loading</div>
+  }
   console.log("USER", user)
     return (
       <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>

@@ -1,6 +1,6 @@
 import queries from "../queries";
 import { useQuery } from "@apollo/client";
-
+import User from "./User";
 import {
   Card,
   CardContent,
@@ -12,6 +12,9 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
+import LikeComment from "./LikeComment";
+import UnLikeComment from "./UnLikeComment";
+import useUser from "../lib/useUser";
 
 const useStyles = makeStyles({
   card: {
@@ -53,11 +56,13 @@ const useStyles = makeStyles({
 
 const Comment = (props) => {
   const classes = useStyles();
+  const user = useUser().data;
   const { loading, error, data } = useQuery(queries.GET_COMMENT, {
     variables: { commentId: props.commentId },
     pollInterval: 10000,
     fetchPolicy: 'network-only'
   });
+
 
   if (loading) {
     return (
@@ -74,9 +79,12 @@ const Comment = (props) => {
             {data.getCommentById.comment}
           </Typography>
           <Typography>
-            {data.getCommentById.posted_by} 
+            <User userId={data.getCommentById.posted_by}/>
           </Typography>
-          {data.getCommentById.likes.length} likes
+          {user && data.getCommentById.likes.includes(user.me.id) ? 
+              <UnLikeComment id={data.getCommentById.id} /> : 
+              <LikeComment id={data.getCommentById.id} />}
+          {data.getCommentById.likes.length}
         </CardContent>
       </Card>
     </Grid>

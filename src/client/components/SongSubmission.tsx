@@ -14,6 +14,8 @@ import {
   IconButton,
 } from "@material-ui/core";
 import LikeSubmission from "./LikeSubmission";
+import useUser from "../lib/useUser";
+import UnLikeSubmission from "./UnLikeSubmission";
 
 const useStyles = makeStyles({
   card: {
@@ -81,6 +83,7 @@ const useStyles = makeStyles({
 });
 
 const SongSubmission = (props) => {
+  const user = useUser().data;
   const classes = useStyles();
   const { loading, error, data } = useQuery(queries.GET_SONG_SUB, {
     variables: { id: props.songSubId },
@@ -121,7 +124,9 @@ const SongSubmission = (props) => {
           </Typography>
           <div>
             <div className={classes.status}>
-              <LikeSubmission submission={data.getSongSubmissionById} />
+              {user && data.getSongSubmissionById.votes.includes(user.me.id) ? 
+              <UnLikeSubmission submission={data.getSongSubmissionById} /> : 
+              <LikeSubmission submission={data.getSongSubmissionById} />}
               <p className={classes.values}>
                 {" "}
                 {data.getSongSubmissionById.votes.length}
