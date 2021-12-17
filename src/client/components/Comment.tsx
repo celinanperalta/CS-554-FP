@@ -16,7 +16,6 @@ import {
   IconButton,
 } from "@material-ui/core";
 import LikeComment from "./LikeComment";
-import UnLikeComment from "./UnLikeComment";
 import useUser from "../lib/useUser";
 
 const useStyles = makeStyles({
@@ -137,12 +136,13 @@ const Comment = (props) => {
           <Typography>
             <User userId={data.getCommentById.posted_by} />
           </Typography>
-          {user && data.getCommentById.likes.includes(user.me.id) ? (
-            <UnLikeComment id={data.getCommentById.id} />
-          ) : (
-            <LikeComment id={data.getCommentById.id} />
+          {user && (
+            <LikeComment
+              id={data.getCommentById.id}
+              numLikes={data.getCommentById.likes.length}
+              liked={data.getCommentById.likes.includes(user.me.id)}
+            />
           )}
-          {data.getCommentById.likes.length}
         </CardContent>
       </Card>
     </Grid>

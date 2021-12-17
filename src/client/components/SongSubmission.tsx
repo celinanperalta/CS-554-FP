@@ -1,21 +1,14 @@
 import queries from "../queries";
 import { useQuery } from "@apollo/client";
-import Like from "@material-ui/icons/FavoriteBorder";
-
 import {
   Card,
   CardContent,
-  CardMedia,
   Grid,
   Typography,
   makeStyles,
-  CardHeader,
-  Button,
-  IconButton,
 } from "@material-ui/core";
 import LikeSubmission from "./LikeSubmission";
 import useUser from "../lib/useUser";
-import UnLikeSubmission from "./UnLikeSubmission";
 
 const useStyles = makeStyles({
   card: {
@@ -124,13 +117,13 @@ const SongSubmission = (props) => {
           </Typography>
           <div>
             <div className={classes.status}>
-              {user && data.getSongSubmissionById.votes.includes(user.me.id) ? 
-              <UnLikeSubmission submission={data.getSongSubmissionById} /> : 
-              <LikeSubmission submission={data.getSongSubmissionById} />}
-              <p className={classes.values}>
-                {" "}
-                {data.getSongSubmissionById.votes.length}
-              </p>
+              {user && (
+            <LikeSubmission
+              id={data.getSongSubmissionById.id}
+              numLikes={data.getSongSubmissionById.votes.length}
+              liked={data.getSongSubmissionById.votes.includes(user.me.id)}
+            />
+          )}
             </div>
           </div>
         </CardContent>
