@@ -5,16 +5,15 @@ export class Comment {
     @Field()
     id: string
 
-    @Field()
-    prompt_id: string
+    @Field({ nullable: true })
+    prompt_id ?: string
 
-    @Field()
-    comment: string
+    @Field({ nullable: true })
+    comment ?: string
 
-    @Field()
-    posted_by: string
+    @Field({ nullable: true })
+    posted_by ?: string
 
-    @Field(() => [String])
-    likes: string[]
+    @Field(() => [String], { nullable: true })
+    likes ?: string[]
 }
-

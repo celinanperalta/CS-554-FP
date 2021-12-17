@@ -8,26 +8,26 @@ export class Prompt {
     @Field(() => ID)
     id: string;
 
-    @Field()
-    prompt: string;
+    @Field({ nullable: true })
+    prompt?: string;
 
-    @Field()
-    posted_by: string
+    @Field({ nullable: true })
+    posted_by?: string
 
-    @Field(() => [String])
-    submittedSongs: string[];
+    @Field(() => [String], { nullable: true })
+    submittedSongs?: string[];
 
-    @Field(() => [String])
-    comments: string[];
+    @Field(() => [String], { nullable: true })
+    comments ?: string[];
 
-    @Field(() => Date)
-    datePosted: Date
+    @Field(() => Date, { nullable: true })
+    datePosted ?: Date
 
-    @Field(() => Date)
-    dateCloses: Date
+    @Field(() => Date, { nullable: true })
+    dateCloses ?: Date
 
-    @Field()
-    isClosed: boolean
+    @Field({ nullable: true })
+    isClosed ?: boolean
 }
 
 @InputType()
