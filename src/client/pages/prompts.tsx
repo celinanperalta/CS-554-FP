@@ -32,13 +32,7 @@ const Prompts = () => {
       <h2>Prompts on this page</h2>
       <Grid container className={classes.grid} spacing={5}>
         {data &&
-          data.getPrompts.map((item, index) => (
-            <Link key={index} as={`/prompts/${item.id}`} href="/prompts/[promptId]">
-              <a>
-                <Prompt data={item} key={index} />
-              </a>
-            </Link>
-          ))}
+          data.getPrompts.map((item, index) => (<Prompt data={item} key={index} />))}
       </Grid>
       <br />
     </div>
