@@ -197,6 +197,18 @@ mutation Mutation($comment: String!, $promptId: String!) {
     likes
   }
 }`
+
+const DELETE_COMMENT = gql`
+mutation Mutation($id: String!) {
+  deleteComment(id: $id) {
+    id
+    prompt_id
+    comment
+    posted_by
+    likes
+  }
+}`
+
 const UPDATE_USER = gql`
 mutation UpdateUser($id: String!, $username: String, $email: String, $password: String) {
   updateUser(id: $id, username: $username, email: $email, password: $password) {
@@ -222,5 +234,6 @@ export default {
   ADD_COMMENT,
   GET_SONG_SUBS,
   ADD_PROMPT,
-  UPDATE_USER
+  UPDATE_USER,
+  DELETE_COMMENT
 };
