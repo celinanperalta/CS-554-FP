@@ -5,6 +5,7 @@ import { promptPatch } from "../config/types";
 import userService from "./userService";
 import songSubmissionService from "./songSubmissionService";
 import commentService from "./commentService";
+import * as _ from "lodash"
 
 const getPrompts = async (): Promise<Prompt[]> => {
   const { body } = await client.search({
@@ -15,11 +16,16 @@ const getPrompts = async (): Promise<Prompt[]> => {
       },
     },
   });
-  body.hits.hits.forEach((hit) => {
-    hit._source.dateCloses = new Date(hit._source.dateCloses);
-    hit._source.datePosted = new Date(hit._source.datePosted);
+  let results : Prompt[] = body.hits.hits.map((hit) => hit._source);
+  // sort results by date posted
+  
+  results.forEach((result : Prompt) => {
+    result.dateCloses = new Date(result.dateCloses);
+    result.datePosted = new Date(result.datePosted);
   });
-  return body.hits.hits.map((hit) => hit._source);
+  
+  _.sortBy(results, ["datePosted", "dateCloses"]);
+  return results;
 };
 
 const getPromptById = async (id: string): Promise<Prompt> => {

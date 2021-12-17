@@ -6,11 +6,14 @@ import { Typography } from "@material-ui/core";
 
 interface SpotifySearchResultProps {
   song: Song;
+  handleSelect: (song: Song) => void;
 }
 
-const SpotifySearchResult = ({ song }: SpotifySearchResultProps) => {
-  const handleSelect = () => {
+const SpotifySearchResult = ({ song, handleSelect }: SpotifySearchResultProps) => {
+
+  const onSelect = () => {
     console.log(song);
+    handleSelect(song);
   };
 
   return (
@@ -34,7 +37,7 @@ const SpotifySearchResult = ({ song }: SpotifySearchResultProps) => {
           </React.Fragment>
         }
       />
-      <button className="spotify-search-result-button" onClick={handleSelect}>
+      <button className="spotify-search-result-button" onClick={onSelect}>
         Select
       </button>
     </ListItem>

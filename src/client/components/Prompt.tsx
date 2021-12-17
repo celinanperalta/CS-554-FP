@@ -5,6 +5,8 @@ import React, {useState, useEffect}  from "react";
 import Link from "next/link";
 import Like from '@material-ui/icons/FavoriteBorder';
 import Comment from '@material-ui/icons/ChatBubbleOutline';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+
 
 import {
     Card,
@@ -20,6 +22,7 @@ import {
     TextField
   } from '@material-ui/core';
 import NewComment from "./NewComment";
+import NewSubmission from "./NewSubmission";
 
 const useStyles = makeStyles({
     card: {
@@ -86,6 +89,7 @@ const useStyles = makeStyles({
 const Prompt = (props) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+    const [submitOpen, setSubmitOpen] = useState(false);
     const handleClose = () => setOpen(false);
 
     return (
@@ -104,6 +108,7 @@ const Prompt = (props) => {
                 <IconButton onClick={() => setOpen(!open)} color="default" aria-label="comment on prompt" component="span">
                     <Comment />
                 </IconButton>
+                <NewSubmission promptId={props.data.id}/>
                 <br/>                          
             </Card>
         </Grid>
@@ -118,6 +123,7 @@ const Prompt = (props) => {
           <NewComment promptId={props.data.id}/>
         </Box>
       </Modal>
+      
       </div>
     )
   }

@@ -218,6 +218,26 @@ mutation UpdateUser($id: String!, $username: String, $email: String, $password: 
   }
 }
 `
+const ADD_SONG_SUB = gql`
+mutation AddSongSubmission($song: SongInput!, $promptId: String!) {
+  addSongSubmission(song: $song, prompt_id: $promptId) {
+    id
+    prompt_id
+    submitted_by
+    votes
+    song {
+      id
+      uri
+      name
+      artist
+      previewUrl
+      album
+      imageUrl
+    }
+    
+  }
+}
+`
 
 export default {
   LOGIN_USER,
@@ -235,5 +255,6 @@ export default {
   GET_SONG_SUBS,
   ADD_PROMPT,
   UPDATE_USER,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  ADD_SONG_SUB
 };
