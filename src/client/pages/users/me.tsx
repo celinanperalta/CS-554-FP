@@ -59,7 +59,6 @@ const Me = () => {
       </div>
       {user.data.getUserById.accessToken && (
       <div className={classes.row}>
-        <SpotifySearch />
       </div>
       )}
       </div>

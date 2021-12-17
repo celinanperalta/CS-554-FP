@@ -44,6 +44,7 @@ export default function Home() {
     loading: promptLoading,
     error: promptError,
   } = useQuery(queries.GET_PROMPTS);
+
   const {
     data: subData,
     loading: subLoading,
@@ -85,7 +86,7 @@ export default function Home() {
     //console.log(activePrompts);
     //prompt={getPrompt(sub.prompt_id)}
 
-    if (userData) {
+    if (userData && userData.me) {
       return (
         <div className="app">
           <div className={classes.row}>
@@ -105,7 +106,7 @@ export default function Home() {
                 <div className={classes.column}>
                   {activePrompts &&
                     activePrompts.map((prompt, i) => {
-                      return <Prompt data={prompt} key={i} />;
+                      return <Prompt id={prompt} key={i} />;
                     })}
                 </div>
                 <div className={classes.column}>

@@ -123,8 +123,8 @@ const GET_PROMPT = gql`
 `
 
 const GET_COMMENT = gql`
-query GetCommentById($commentId: String!) {
-  getCommentById(id: $commentId) {
+query GetCommentById($id: String!) {
+  getCommentById(id: $id) {
     id
     likes
     posted_by
@@ -239,6 +239,43 @@ mutation AddSongSubmission($song: SongInput!, $promptId: String!) {
 }
 `
 
+const ADD_SONG_SUB_VOTE = gql`
+mutation Mutation($id: String!) {
+  voteSongSubmission(id: $id) {
+    id
+    votes
+  }
+}
+`;
+
+const REMOVE_SONG_SUB_VOTE = gql`
+mutation UnvoteSongSubmission($id: String!) {
+  unvoteSongSubmission(id: $id) {
+    id
+    votes
+  }
+}
+`
+
+const ADD_COMMENT_LIKE = gql`
+mutation LikeComment($id: String!) {
+  likeComment(id: $id) {
+    id
+    likes
+  }
+}
+`
+
+const REMOVE_COMMENT_LIKE = gql`
+mutation UnLikeComment($id: String!) {
+  unLikeComment(id: $id) {
+    id
+    likes
+  }
+}
+`
+
+
 export default {
   LOGIN_USER,
   REGISTER_USER,
@@ -255,6 +292,10 @@ export default {
   GET_SONG_SUBS,
   ADD_PROMPT,
   UPDATE_USER,
+  ADD_SONG_SUB,
+  ADD_SONG_SUB_VOTE,
+  REMOVE_SONG_SUB_VOTE,
+  ADD_COMMENT_LIKE,
+  REMOVE_COMMENT_LIKE,
   DELETE_COMMENT,
-  ADD_SONG_SUB
 };

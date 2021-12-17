@@ -32,7 +32,7 @@ const Prompts = () => {
       <h2>Prompts on this page</h2>
       <Grid container className={classes.grid} spacing={5}>
         {data &&
-          data.getPrompts.map((item, index) => (<Prompt data={item} key={index} />))}
+          data.getPrompts.map((item, index) => (<Prompt id={item.id} key={index} />))}
       </Grid>
       <br />
     </div>

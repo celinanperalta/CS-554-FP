@@ -1,7 +1,8 @@
 import queries from "../queries";
+import User from "./User";
 import { useQuery, useMutation } from "@apollo/client";
-import Close from '@material-ui/icons/Close';
-import Like from '@material-ui/icons/FavoriteBorder';
+import Close from "@material-ui/icons/Close";
+import Like from "@material-ui/icons/FavoriteBorder";
 
 import {
   Card,
@@ -14,6 +15,8 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
+import LikeComment from "./LikeComment";
+import useUser from "../lib/useUser";
 
 const useStyles = makeStyles({
   card: {
@@ -47,50 +50,62 @@ const useStyles = makeStyles({
     margin: "10px",
   },
   close: {
-    display: 'flex',
-    padding: '0px',
-    margin: '0px',
-    justifyContent: 'right',
-    marginTop: '5px',
-    marginRight: '7px',
+    display: "flex",
+    padding: "0px",
+    margin: "0px",
+    justifyContent: "right",
+    marginTop: "5px",
+    marginRight: "7px",
   },
   icon: {
-    padding: '0px',
-    margin: '0px'
+    padding: "0px",
+    margin: "0px",
   },
   status: {
-        display: 'flex',
-        flexDirection: 'row',
-        padding: '0px',
-        margin: '0px',
-        justifyContent: 'left',
-        marginTop: '5px'
-    },
-    values: {
-        padding: '0px',
-        margin: '0px',
-        paddingLeft: '10px',
-        paddingRight: '10px'
-    },
+    display: "flex",
+    flexDirection: "row",
+    padding: "0px",
+    margin: "0px",
+    justifyContent: "left",
+    marginTop: "5px",
+  },
+  values: {
+    padding: "0px",
+    margin: "0px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
+  },
 });
 
 const Comment = (props) => {
   const classes = useStyles();
-  const [deleteComment] = useMutation(queries.DELETE_COMMENT);
+  const [deleteComment] = useMutation(queries.DELETE_COMMENT, {
+    refetchQueries: [
+      {
+        query: queries.GET_PROMPT,
+        variables: {
+          promptId: props.promptId,
+        },
+      },
+    ],
+  });
+
+  const { data: user } = useUser();
 
   const { loading, error, data } = useQuery(queries.GET_COMMENT, {
-    variables: { commentId: props.commentId },
+    variables: { id: props.id },
     pollInterval: 10000,
+    fetchPolicy: "network-only",
   });
 
   const handleDelete = () => {
-    console.log("deleting now")
+    console.log("deleting now");
     console.log();
     deleteComment({
-      variables: {id: data.getCommentById.id}
+      variables: { id: data.getCommentById.id },
     });
-    console.log("deleted done")
-  }
+    console.log("deleted done");
+  };
 
   if (loading) {
     return (
@@ -104,7 +119,13 @@ const Comment = (props) => {
     <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
       <Card className={classes.card} variant="outlined">
         <div className={classes.close}>
-          <IconButton className={classes.icon} onClick={handleDelete} color="default" aria-label="like prompt" component="span">
+          <IconButton
+            className={classes.icon}
+            onClick={handleDelete}
+            color="default"
+            aria-label="like prompt"
+            component="span"
+          >
             <Close />
           </IconButton>
         </div>
@@ -113,13 +134,15 @@ const Comment = (props) => {
             {data.getCommentById.comment}
           </Typography>
           <Typography>
-            {data.getCommentById.posted_by} 
+            <User userId={data.getCommentById.posted_by} />
           </Typography>
-          <div className={classes.status}>
-              <Like />
-              {console.log(data.getCommentById)}
-              <p className={classes.values}> {data.getCommentById.likes.length}</p> 
-          </div>
+          {user && (
+            <LikeComment
+              id={data.getCommentById.id}
+              numLikes={data.getCommentById.likes.length}
+              liked={data.getCommentById.likes.includes(user.me.id)}
+            />
+          )}
         </CardContent>
       </Card>
     </Grid>
