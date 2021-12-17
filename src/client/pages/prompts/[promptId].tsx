@@ -72,10 +72,7 @@ const PromptPage = () => {
           <div className={classes.row}>
             {/* <h1>{data.getPromptById.prompt}</h1> */}
             <div className={classes.column}>
-              <Prompt
-                refreshComments={refreshComments}
-                data={data.getPromptById}
-              />
+              <Prompt id={data.getPromptById.id} />
               {
                 <CommentFeed
                   promptId={promptId}
