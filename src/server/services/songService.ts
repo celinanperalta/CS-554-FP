@@ -9,7 +9,8 @@ const getSongs = async () : Promise<Song[]> => {
             query: {
                 match_all: {}
             }
-        }
+        },
+        size: 100
     });
     return body.hits.hits.map(hit => hit._source)
 }

@@ -27,11 +27,15 @@ export class SongSubmissionResolver {
     if (!isAuthenticated(ctx)) {
       throw "Must Authenticate to add song sub";
     }
+    try{
     return await songSubmissionService.addSongSubmission(
       prompt_id,
       song,
       getUserFromContext(ctx)
     );
+    }catch(e){
+      console.log(e);
+    }
   }
 
   @Mutation((returns) => SongSubmission, { nullable: true })
@@ -46,6 +50,7 @@ export class SongSubmissionResolver {
     if (!isAuthenticated(ctx) || getUserFromContext(ctx) !== submitted_by) {
       throw "Error: must authenticate/can't update another users song sub";
     }
+    try{
     return await songSubmissionService.updateSongSubmission({
       id: id,
       prompt_id: prompt_id,
@@ -53,6 +58,9 @@ export class SongSubmissionResolver {
       submitted_by: submitted_by,
       votes: votes,
     });
+  }catch(e){
+    console.log(e);
+  }
   }
 
   @Mutation((returns) => SongSubmission, { nullable: true })
@@ -69,7 +77,11 @@ export class SongSubmissionResolver {
     ) {
       throw "Can't delete song sub";
     }
+    try{
     return await songSubmissionService.deleteSongSubmission(id);
+    }catch(e){
+      console.log(e);
+    }
   }
 
   @Mutation((returns) => SongSubmission, { nullable: true })
@@ -80,10 +92,14 @@ export class SongSubmissionResolver {
     if (!isAuthenticated(ctx)) {
       throw "Must authenticate to vote";
     }
+    try{
     return await songSubmissionService.voteSongSubmission(
       id,
       getUserFromContext(ctx)
     );
+    }catch(e){
+      console.log(e);
+    }
   }
 
     @Mutation((returns) => SongSubmission, { nullable: true })
@@ -94,9 +110,13 @@ export class SongSubmissionResolver {
         if (!isAuthenticated(ctx)) {
             throw "Must authenticate to unvote";
         }
+        try{
         return await songSubmissionService.unvoteSongSubmission(
             id,
             getUserFromContext(ctx)
         );
+        }catch(e){
+          console.log(e);
+        }
     }
 }

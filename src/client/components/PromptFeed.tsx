@@ -77,7 +77,7 @@ const PromptFeed = (props) => {
     const classes = useStyles();
     console.log("prompt feed: ", props.prompts)
     const getPrompt = (id) => {
-      let {loading, error, data} = useQuery(queries.GET_PROMPT, { variables: {promptId: id}, pollInterval: 4000 })
+      let {loading, error, data} = useQuery(queries.GET_PROMPT, { variables: {promptId: id}, pollInterval: 4000, fetchPolicy: 'network-only' })
       if (data) {
         return data.getPromptById;
       }
