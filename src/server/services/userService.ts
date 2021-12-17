@@ -1,7 +1,7 @@
 import client from "../config/esConnection";
 import { User } from "../schemas/User";
 import { v4 as uuid } from "uuid";
-import { userPatch } from "../config/types";
+import { songSubmissionPatch, userPatch } from "../config/types";
 import promptService from "./promptService";
 import commentService from "./commentService";
 import songSubmissionService from "./songSubmissionService";
@@ -130,7 +130,7 @@ const deleteUser = async (userId : string) : Promise<User> =>{
       throw "Error, couldn't find index of user in votes of song sub"
     }
     songSub.votes.splice(index,1);
-    let updatedSongSub = await songSubmissionService.updateSongSubmission(songSub);
+    let updatedSongSub = await songSubmissionService.updateSongSubmission(songSub as songSubmissionPatch);
   }
 
   //update comments to remove user id from likes

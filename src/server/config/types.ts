@@ -26,7 +26,7 @@ export interface userPatch  {
 export interface promptPatch {
     id: string,
     comments?: string[],
-    posted_by: string,
+    posted_by?: string,
     prompt?: string,
     submittedSongs?: string[]
     datePosted?: Date
@@ -38,9 +38,8 @@ export interface commentPatch {
     id: string,
     prompt_id: string,
     comment?: string,
-    posted_by: string,
+    posted_by?: string,
     likes? : string[]
-
 }
 
 export interface songSubmissionPatch {
@@ -48,7 +47,7 @@ export interface songSubmissionPatch {
     prompt_id: string,
     song: SongInput,
     submitted_by: string,
-    votes: string[]
+    votes?: string[]
 }
 
 export interface UserLoginContext extends PassportContext<User, UserLogin>{

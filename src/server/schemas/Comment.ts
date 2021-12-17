@@ -5,8 +5,8 @@ export class Comment {
     @Field()
     id: string
 
-    @Field({ nullable: true })
-    prompt_id ?: string
+    @Field()
+    prompt_id: string
 
     @Field({ nullable: true })
     comment ?: string

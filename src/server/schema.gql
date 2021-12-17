@@ -4,10 +4,10 @@
 # -----------------------------------------------
 
 type Comment {
-  comment: String!
+  comment: String
   id: String!
-  likes: [String!]!
-  posted_by: String!
+  likes: [String!]
+  posted_by: String
   prompt_id: String!
 }
 
@@ -26,9 +26,11 @@ type Mutation {
   deletePrompt(id: String!): Prompt
   deleteSongSubmission(id: String!): SongSubmission
   deleteUser(id: String!): User
+  likeComment(id: String!): Comment
   login(password: String!, username: String!): User
   logout: Boolean!
   register(email: String!, password: String!, username: String!): User!
+  unLikeComment(id: String!): Comment
   unvoteSongSubmission(id: String!): SongSubmission
   updateComment(comment: String, id: String!, likes: [String!], posted_by: String!, prompt_id: String!): Comment
   updatePrompt(comments: [String!], dateCloses: DateTime, datePosted: DateTime, id: String!, isClosed: Boolean!, posted_by: String!, prompt: String, submittedSongs: [String!]): Prompt
@@ -38,14 +40,14 @@ type Mutation {
 }
 
 type Prompt {
-  comments: [String!]!
-  dateCloses: DateTime!
-  datePosted: DateTime!
+  comments: [String!]
+  dateCloses: DateTime
+  datePosted: DateTime
   id: ID!
-  isClosed: Boolean!
-  posted_by: String!
-  prompt: String!
-  submittedSongs: [String!]!
+  isClosed: Boolean
+  posted_by: String
+  prompt: String
+  submittedSongs: [String!]
 }
 
 type Query {
@@ -65,23 +67,23 @@ type Query {
 }
 
 type Song {
-  album: String!
-  artist: String!
+  album: String
+  artist: String
   id: ID!
-  imageUrl: String!
-  name: String!
-  previewUrl: String!
-  uri: String!
+  imageUrl: String
+  name: String
+  previewUrl: String
+  uri: String
 }
 
 input SongInput {
-  album: String!
-  artist: String!
+  album: String
+  artist: String
   id: ID!
-  imageUrl: String!
-  name: String!
-  previewUrl: String!
-  uri: String!
+  imageUrl: String
+  name: String
+  previewUrl: String
+  uri: String
 }
 
 type SongSubmission {
@@ -89,20 +91,20 @@ type SongSubmission {
   prompt_id: String!
   song: Song!
   submitted_by: String!
-  votes: [String!]!
+  votes: [String!]
 }
 
 type User {
-  accessToken: String!
-  comments: [String!]!
-  email: String!
+  accessToken: String
+  comments: [String!]
+  email: String
   id: ID!
-  likes: [String!]!
-  password: String!
-  profile_picture: String!
-  prompts: [String!]!
-  refreshToken: String!
-  submissions: [String!]!
-  username: String!
-  votes: [String!]!
+  likes: [String!]
+  password: String
+  profile_picture: String
+  prompts: [String!]
+  refreshToken: String
+  submissions: [String!]
+  username: String
+  votes: [String!]
 }
