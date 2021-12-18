@@ -6,7 +6,15 @@ import queries from "../queries";
 import { useAuth} from "../lib/useAuth";
 import { Grid, makeStyles, CardHeader, Button , TextField} from "@material-ui/core";
 
+const useStyles = makeStyles({
+  submitButton: {
+    color: 'dark grey',
+    borderColor: 'dark grey',
+    marginTop: '25px'
+  }
+});
 const settings = () => {
+  const classes = useStyles();
   const router = useRouter();
   const [updateUser] = useMutation(queries.UPDATE_USER);
   const [formValues, setFormValues] = useState({username:"", email: "", password:"", passwordReenter: ""});
@@ -112,7 +120,7 @@ const settings = () => {
               />
             </Grid>
             <br />
-            <Button variant="contained" color="primary" type="submit">
+            <Button className={classes.submitButton} variant="contained" type="submit">
             Submit
             </Button>
           </Grid>

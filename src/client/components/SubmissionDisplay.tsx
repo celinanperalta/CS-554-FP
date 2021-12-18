@@ -33,7 +33,7 @@ const useStyles = makeStyles({
       marginTop: '10px',
       marginBottom: '10px',
       borderRadius: 5,
-      border: '1px solid #1e8678',
+      border: '0px solid #1e8678',
       textAlign: "left",
       boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
     },
