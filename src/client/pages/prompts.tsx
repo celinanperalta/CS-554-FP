@@ -8,18 +8,18 @@ import { Grid, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles({
   grid: {
     flexGrow: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     margin: "auto",
     justifyContent: "center",
-    maxWidth: '100%'
+    alignItems: "center",
+    maxWidth: '100%',
+    width: '100%'
   },
 });
 
 const Prompts = () => {
   const classes = useStyles();
-  const { loading, error, data } = useQuery(queries.GET_PROMPTS, {
-    pollInterval: 4000,
-  });
+  const { loading, error, data, refetch } = useQuery(queries.GET_PROMPTS);
 
   if (loading) {
     return (
@@ -31,7 +31,7 @@ const Prompts = () => {
   return (
     <div className="app">
       <h2>Prompts</h2>
-      <Grid container className={classes.grid} spacing={5}>
+      <Grid container className={classes.grid} spacing={1} sm={12}>
         {data &&
           data.getPrompts.map((item, index) => (<Prompt id={item.id} key={index} />))}
       </Grid>

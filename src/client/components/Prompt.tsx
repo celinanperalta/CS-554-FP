@@ -14,29 +14,28 @@ import {
   Typography,
   makeStyles,
   IconButton,
+  CardActions,
+  CardHeader,
+  Box,
 } from "@material-ui/core";
 import NewComment from "./NewComment";
 import NewSubmission from "./NewSubmission";
 import { useQuery } from "@apollo/client";
 import TopSongCard from "./TopSongCard";
 
-// interface HomeProfileProps {
-//   user: User;
-// }
-
 const useStyles = makeStyles({
   card: {
-    maxWidth: 350,
     minWidth: 350,
     height: "auto",
-    marginLeft: "10px",
-    marginRight: "10px",
+    width: 750,
+    margin: "auto",
     marginTop: "10px",
     marginBottom: "10px",
     borderRadius: 5,
     border: "1px solid #ededed",
     textAlign: "left",
     boxShadow: "0px 10px 12px rgba(0,0,0,0.22);",
+    padding: "10px",
   },
   titleHead: {
     borderBottom: "1px solid #1e8678",
@@ -45,7 +44,8 @@ const useStyles = makeStyles({
   grid: {
     flexGrow: 1,
     flexDirection: "row",
-    maxWidth: '100%'
+    maxWidth: "100%",
+    width: "1000px",
   },
   media: {
     height: "100%",
@@ -60,11 +60,7 @@ const useStyles = makeStyles({
     borderColor: "#04AA6D",
     margin: "10px",
   },
-  // 'button:hover': {
-  //     backgroundColor: '#333',
-  //     borderColor: '#333',
-  //     boxShadow: 'none',
-  //   }
+
   modalBox: {
     maxWidth: 300,
     minWidth: 300,
@@ -82,9 +78,9 @@ const useStyles = makeStyles({
     marginBottom: "10px",
   },
   content: {
-    paddingTop: '20px',
-    paddingBottom: '5px'
-  }
+    paddingTop: "20px",
+    paddingBottom: "5px",
+  },
 });
 
 const Prompt = ({ id }) => {
@@ -107,31 +103,45 @@ const Prompt = ({ id }) => {
   if (loading || !data) return <p></p>;
   if (error) return <p></p>;
 
-  console.log(data.getPromptById, userData.me.id)
   return (
-    <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
+    <Grid item className={classes.grid}>
       <Card className={classes.card} variant="outlined">
-        <Link href={`/prompts/${id}`} passHref>
-          <CardContent className={classes.content}>
-            <Typography className="promptContent">
-              {data.getPromptById.prompt}
-            </Typography>
-            <Typography variant="subtitle2">Closes on: {data.getPromptById.dateCloses.slice(0,10)}</Typography>
-          </CardContent>
-        </Link>
-        {data.getPromptById.posted_by != userData.me.id ?
-          (<Grid container>
-            <Grid item>
-              <NewComment promptId={id} />
-            </Grid>
-            <Grid item>
-              <NewSubmission promptId={id} />
-            </Grid>
-          </Grid>) : null}
-          <TopSongCard promptId={id}/>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
+          <Grid item xs={4}>
+            <CardHeader
+              title={
+                <Link href={`/prompts/${id}`} passHref>
+                  <Typography variant="h5" component="h1">
+                    {data.getPromptById.prompt}
+                  </Typography>
+                </Link>
+              }
+              subheader={
+                <Typography variant="h6" component="h6">
+                  {`Open until: ${data.getPromptById.dateCloses.slice(0, 10)}`}
+                </Typography>
+              }
+            />
+            {data.getPromptById.posted_by !== userData?.me.id ? (
+              <CardActions disableSpacing>
+                <NewComment promptId={id} />
+                <NewSubmission promptId={id} />
+              </CardActions>
+            ) : null}
+          </Grid>
+          <Grid item xs={8}>
+            <CardContent className={classes.content}>
+              <TopSongCard promptId={id} />
+            </CardContent>
+          </Grid>
+        </Grid>
       </Card>
     </Grid>
   );
 };
-
 export default Prompt;
