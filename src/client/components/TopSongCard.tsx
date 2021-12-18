@@ -21,12 +21,13 @@ import {
 
 const useStyles = makeStyles({
     card: {
-      maxWidth: 200,
+      maxWidth: 175,
+      minWidth: 175,
       height: 'auto',
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      marginLeft: '10px',
+      marginRight: '10px',
       borderRadius: 5,
-      border: '1px solid #1e8678',
+      border: '0px solid #1e8678',
       textAlign: "left",
       //marginLeft: '10px',
      // marginRight: '10px',

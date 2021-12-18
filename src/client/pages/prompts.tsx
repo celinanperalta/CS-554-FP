@@ -24,13 +24,13 @@ const Prompts = () => {
   if (loading) {
     return (
       <div className="app">
-        <h2>Loading Prompts</h2>
+        <h2>Loading Prompts...</h2>
       </div>
     );
   }
   return (
     <div className="app">
-      <h2>Prompts on this page</h2>
+      <h2>Prompts</h2>
       <Grid container className={classes.grid} spacing={5}>
         {data &&
           data.getPrompts.map((item, index) => (<Prompt id={item.id} key={index} />))}

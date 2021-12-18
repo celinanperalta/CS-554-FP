@@ -20,16 +20,16 @@ import { useQuery } from "@apollo/client";
 const useStyles = makeStyles({
   card: {
     maxWidth: 350,
-    minWidth: 200,
+    minWidth: 350,
     height: "auto",
     marginLeft: "10px",
     marginRight: "10px",
     marginTop: "10px",
     marginBottom: "10px",
     borderRadius: 5,
-    border: "1px solid #1e8678",
+    border: "1px solid #ededed",
     textAlign: "left",
-    boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);",
+    boxShadow: "0px 10px 12px rgba(0,0,0,0.22);",
   },
   titleHead: {
     borderBottom: "1px solid #1e8678",
@@ -74,10 +74,10 @@ const useStyles = makeStyles({
   inputFields: {
     marginBottom: "10px",
   },
-  // button: {
-  //   color: 'white',
-  //   borderColor: 'white'
-  // }
+  content: {
+    paddingTop: '20px',
+    paddingBottom: '5px'
+  }
 });
 
 const Prompt = ({ id }) => {
@@ -92,18 +92,19 @@ const Prompt = ({ id }) => {
     fetchPolicy: "network-only",
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  //took out the statements so it doesn't appear on the page
+  if (loading) return <p></p>;
+  if (error) return <p></p>;
 
   return (
     <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
       <Card className={classes.card} variant="outlined">
         <Link href={`/prompts/${id}`} passHref>
-          <CardContent>
+          <CardContent className={classes.content}>
             <Typography className="promptContent">
               {data.getPromptById.prompt}
             </Typography>
-            <Typography>{data.getPromptById.dateCloses}</Typography>
+            <Typography variant="subtitle2">Closes on: {data.getPromptById.dateCloses.slice(0,10)}</Typography>
           </CardContent>
         </Link>
         <Grid container>
