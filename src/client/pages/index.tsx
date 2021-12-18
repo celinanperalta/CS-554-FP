@@ -23,6 +23,9 @@ const useStyles = makeStyles({
     flexDirection: "column",
     padding: "20px",
   },
+  mainRow: {
+    maxWidth: '100%'
+  }
 });
 
 export default function Home() {
@@ -89,14 +92,13 @@ export default function Home() {
     if (userData && userData.me) {
       return (
         <div className="app">
-          <div className={classes.row}>
+          <div className={`${classes.row} ${classes.mainRow}`}>
             <div className={classes.column}>
               <HomeProfile user={userData.me} />
               <ActivityFeed />
             </div>
             <div className={classes.column}>
               <div className={classes.row}>
-                <TopSong data={item} />
                 <TopSong data={item} />
                 <TopSong data={item} />
                 <TopSong data={item} />

@@ -1,7 +1,7 @@
 import React from "react";
 import queries from "../queries";
 import { useQuery, useMutation } from "@apollo/client";
-import { makeStyles, Modal, Box, IconButton } from "@material-ui/core";
+import { makeStyles, Modal, Box, IconButton, TextField, Button } from "@material-ui/core";
 import { Comment } from "@material-ui/icons";
 
 const useStyles = makeStyles({
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     minHeight: 200,
     maxHeight: 200,
     borderRadius: 5,
-    border: "1px solid",
+    border: "1px solid #ededed",
     zIndex: 1300,
     backgroundColor: "white",
     margin: "auto",
@@ -55,6 +55,14 @@ const useStyles = makeStyles({
   inputFields: {
     marginBottom: "10px",
   },
+  submitButton: {
+    color: 'dark grey',
+    borderColor: 'dark grey',
+    marginTop: '25px'
+  },
+  input: {
+    marginBottom: '10px'
+  }
 });
 
 const NewComment = (props) => {
@@ -105,12 +113,13 @@ const NewComment = (props) => {
       >
         <Box className={classes.modalBox}>
           <form onSubmit={handleSubmit}>
-            <input
+            <p className={classes.input} >Comment:</p>
+            <TextField
               type="text"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
-            <button type="submit">Add Comment</button>
+            <Button className={classes.submitButton} variant="outlined" type="submit">Add Comment</Button>
           </form>
         </Box>
       </Modal>

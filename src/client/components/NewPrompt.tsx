@@ -3,16 +3,16 @@ import { Prompt } from "../model/Prompt";
 import queries from "../queries";
 import { useMutation } from "@apollo/client";
 import useUser from "../lib/useUser";
-import { makeStyles, Modal, Box, Button } from '@material-ui/core';
+import { makeStyles, Modal, Box, Button, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles({
   modalBox:{
     maxWidth: 300,
     minWidth: 300,
-    minHeight: 200,
-    maxHeight: 200,
+    minHeight: 225,
+    maxHeight: 225,
     borderRadius: 5,
-    border: '1px solid',
+    border: '1px solid #ededed',
     zIndex: 1300,
     backgroundColor: 'white',
     margin: 'auto',
@@ -25,6 +25,18 @@ const useStyles = makeStyles({
   button: {
     color: 'white',
     borderColor: 'white'
+  },
+  submitButton: {
+    color: 'dark grey',
+    borderColor: 'dark grey',
+    marginTop: '25px'
+  },
+  input: {
+    margin: '0px',
+  },
+  date: {
+    marginTop: '10px',
+    marginBottom: '2px'
   }
 });
 
@@ -75,35 +87,20 @@ const NewPrompt = () => {
         <Box className={classes.modalBox} >
           <form onSubmit={handleSubmit}>
             <label className={classes.inputFields}>
-              Prompt:
-              <input type="text" name="prompt" onChange={(e) => setPrompt(e.target.value)}/>
+              <p className={classes.input} >Prompt:</p>
+              <TextField type="text" name="prompt" onChange={(e) => setPrompt(e.target.value)}/>
             </label>
             {/* Date Picker */}
             <br />
-            <label>
-              Date:
-              <input type="datetime-local" name="date" onChange={(e) => setDateCloses(e.target.value)}/>
+            <label >
+              <p className={classes.date} >Date:</p>
+              <TextField type="datetime-local" name="date" onChange={(e) => setDateCloses(e.target.value)}/>
             </label>
             {/* Submit Button */}
-            <input type="submit" value="Submit" />
+            <Button className={classes.submitButton} variant="outlined" type="submit"  value="Submit">Submit</Button>
           </form>
         </Box>
       </Modal>
-      {/* {open && (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Prompt:
-            <input type="text" name="prompt" onChange={(e) => setPrompt(e.target.value)}/>
-          </label> */}
-          {/* Date Picker */}
-          {/* <label>
-            Date:
-            <input type="datetime-local" name="date" onChange={(e) => setDateCloses(e.target.value)}/>
-          </label> */}
-          {/* Submit Button */}
-          {/* <input type="submit" value="Submit" />
-        </form>
-      )} */}
       <Button variant="outlined" className={classes.button} onClick={() => setOpen(!open)}>New Prompt</Button>
     </div>
   );

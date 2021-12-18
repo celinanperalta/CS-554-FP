@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     border: "0px solid",
     justifyContent: "center",
     boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);",
-    overflow: "scroll",
+    overflowY: "scroll",
   },
   titleHead: {
     borderBottom: "1px solid #1e8678",
