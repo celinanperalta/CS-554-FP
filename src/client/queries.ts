@@ -274,6 +274,19 @@ mutation UnLikeComment($id: String!) {
   }
 }
 `
+const GET_TOP_SONG = gql`
+query GetTopSong($promptId: String!) {
+  getTopSong(promptId: $promptId) {
+    id
+    uri
+    artist
+    previewUrl
+    name
+    album
+    imageUrl
+  }
+}
+`
 
 
 export default {
@@ -298,4 +311,5 @@ export default {
   ADD_COMMENT_LIKE,
   REMOVE_COMMENT_LIKE,
   DELETE_COMMENT,
+  GET_TOP_SONG
 };

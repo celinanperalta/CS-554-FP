@@ -5,7 +5,8 @@ import React, {useState, useEffect}  from "react";
 import Link from "next/link";
 import Like from '@material-ui/icons/FavoriteBorder';
 import Comment from '@material-ui/icons/ChatBubbleOutline';
-
+import { useQuery } from "@apollo/client";
+import queries from "../queries";
 import {
     Card,
     CardContent,
@@ -75,21 +76,25 @@ const useStyles = makeStyles({
 
 const TopSongCard = (props) => {
     const classes = useStyles();
-    const [song, setSong] = useState(undefined);
+    const {loading, error, data} = useQuery(queries.GET_TOP_SONG, {fetchPolicy: 'network-only', variables: {promptId: props.promptId}})
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+
+    if(!data.getTopSong) return <p>No Top Song</p>
     return (
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
           <Card className={classes.card} variant="outlined">
             <CardContent className="">
             <CardMedia
             component="img"
-            image="https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg"
-            alt="Live from space album cover"
+            image={data.getTopSong.imageUrl}
+            alt={data.getTopSong.title}
             className={classes.cmedia}
             />
           <div className={classes.songInfo}>
-          <Typography className={classes.songTitle}  variant="h6">Live From Space</Typography>
-          <Typography variant="caption" >Mac Miller</Typography>
+          <Typography className={classes.songTitle}  variant="h6">{data.getTopSong.name}</Typography>
+          <Typography variant="caption" >{data.getTopSong.artist}</Typography>
           </div>
           </CardContent>                    
           </Card>

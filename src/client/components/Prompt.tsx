@@ -18,6 +18,7 @@ import {
 import NewComment from "./NewComment";
 import NewSubmission from "./NewSubmission";
 import { useQuery } from "@apollo/client";
+import TopSongCard from "./TopSongCard";
 
 interface HomeProfileProps {
   user: User;

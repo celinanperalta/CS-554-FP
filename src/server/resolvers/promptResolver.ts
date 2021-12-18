@@ -5,6 +5,7 @@ import { Comment } from "../schemas/Comment";
 import promptService from "../services/promptService";
 import { UserLoginContext} from "../config/types";
 import { isAuthenticated ,getUserFromContext} from "../util/authUtil";
+import { Song } from "../schemas/Song";
 
 @Resolver((of) => Prompt)
 export class PromptResolver {
@@ -70,6 +71,16 @@ export class PromptResolver {
     if(!isAuthenticated(ctx) && getUserFromContext(ctx)!==prompt.posted_by){throw "Error, can't delete prompt"}
     try{
     return await promptService.deletePrompt(id);
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  @Query((returns) => Song, {nullable:true})
+  async getTopSong(@Arg("promptId")promptId:string, @Ctx() ctx: UserLoginContext): Promise<Song> {
+    if(!isAuthenticated(ctx)){throw "must authenticate to get top song"};
+    try{
+      return await promptService.getTopSong(promptId);
     }catch(e){
       console.log(e);
     }
