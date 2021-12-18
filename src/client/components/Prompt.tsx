@@ -20,9 +20,9 @@ import NewSubmission from "./NewSubmission";
 import { useQuery } from "@apollo/client";
 import TopSongCard from "./TopSongCard";
 
-interface HomeProfileProps {
-  user: User;
-}
+// interface HomeProfileProps {
+//   user: User;
+// }
 
 const useStyles = makeStyles({
   card: {
@@ -104,7 +104,7 @@ const Prompt = ({ id }) => {
   });
 
   //took out the statements so it doesn't appear on the page
-  if (loading) return <p></p>;
+  if (loading || !data) return <p></p>;
   if (error) return <p></p>;
 
   console.log(data.getPromptById, userData.me.id)
@@ -128,6 +128,7 @@ const Prompt = ({ id }) => {
               <NewSubmission promptId={id} />
             </Grid>
           </Grid>) : null}
+          <TopSongCard promptId={id}/>
       </Card>
     </Grid>
   );
