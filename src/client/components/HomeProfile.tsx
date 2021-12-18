@@ -79,13 +79,16 @@ const useStyles = makeStyles({
   },
 });
 
-const HomeProfile = ({ user }: HomeProfileProps) => {
+const HomeProfile = (props) => {
   const classes = useStyles();
-  const { data: userData } = useUser({
+  const { data: user } = useUser({
     redirectTo: "/login",
   });
+
+  const {loading, error, data} = useQuery(queries.GET_USER, {variables: {id: props.id}})
+
   
-  if(!userData){
+  if(!user || !data){
     return <div>loading</div>
   }
   console.log("USER", user)
@@ -95,21 +98,20 @@ const HomeProfile = ({ user }: HomeProfileProps) => {
           <CardContent className={classes.content}>
             <CardMedia
               component="img"
-              image="https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg"
+              image={data.getUserById.profile_picture}
               // image={data.getUserById.profile_picture}
-              alt="Live from space album cover"
+              alt="profile picture"
               className={classes.media}
             />
             <Typography className="promptContent">
-              {console.log(user)}
-              @{user.username}
+              @{data.getUserById.username}
             </Typography>
           </CardContent>
           <div className={classes.status}>
             <Winner />
-            <p className={classes.values}>5</p>
+            <p className={classes.values}>{data.getUserById.submissions.length}</p>
             <Likes />
-            <p className={classes.values}>5</p>
+            <p className={classes.values}>{data.getUserById.votes.length}</p>
           </div>
           <br />
         </Card>

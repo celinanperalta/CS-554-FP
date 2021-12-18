@@ -288,6 +288,26 @@ query GetTopSong($promptId: String!) {
 }
 `
 
+const DELETE_USER = gql`
+mutation DeleteUser($id: String!) {
+  deleteUser(id: $id) {
+    id
+    username
+    email
+  }
+}
+`
+const GET_COMMENTS = gql`
+query GetComments {
+  getComments {
+    posted_by
+    id
+    prompt_id
+    likes
+    comment
+  }
+}
+`
 
 export default {
   LOGIN_USER,
@@ -311,5 +331,7 @@ export default {
   ADD_COMMENT_LIKE,
   REMOVE_COMMENT_LIKE,
   DELETE_COMMENT,
-  GET_TOP_SONG
+  GET_TOP_SONG,
+  DELETE_USER,
+  GET_COMMENTS
 };
