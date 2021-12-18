@@ -4,11 +4,18 @@ import { useAuth } from '../lib/useAuth.jsx'
 import useUser from '../lib/useUser'
 import queries from '../queries'
 import Router from "next/router";
+import { Grid, makeStyles, CardHeader, Button , TextField} from "@material-ui/core";
 
-
+const useStyles = makeStyles({
+  submitButton: {
+    color: 'dark grey',
+    borderColor: 'dark grey',
+    marginTop: '25px'
+  }
+});
 
 const Register = () => {
-
+  const classes = useStyles();
   const { data } = useUser({
     redirectTo: '/users/me',
     redirectIfFound: true
@@ -35,22 +42,37 @@ const Register = () => {
     <div className= "app">
       <h2>Sign Up</h2>
       <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="username"
-          onChange={(e) => setUsername(e.target.value)}
-        ></input>
-        <input
-          type="text"
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-        <input
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-        <button type="submit">Sign In</button>
+        <Grid
+            container
+            alignItems="center"
+            justifyContent="center"
+            direction="column"
+          >
+          <Grid item>
+            <TextField
+              type="text"
+              placeholder="username"
+              onChange={(e) => setUsername(e.target.value)}
+            ></TextField>
+          </Grid>
+          <br/>
+          <Grid item>
+            <TextField
+              type="text"
+              placeholder="email"
+              onChange={(e) => setEmail(e.target.value)}
+            ></TextField>
+          </Grid>
+          <br/>
+          <Grid item>
+            <TextField
+              type="password"
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+            ></TextField>
+          </Grid>
+          <Button className={classes.submitButton} variant="contained" type="submit">Register</Button>
+        </Grid>
       </form>
     </div>
 
