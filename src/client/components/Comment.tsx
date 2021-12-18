@@ -136,13 +136,13 @@ const Comment = (props) => {
           <Typography>
             <User userId={data.getCommentById.posted_by} />
           </Typography>
-          {user && (
+          {user && (data.getCommentById.posted_by!=user.me.id) ? (
             <LikeComment
               id={data.getCommentById.id}
               numLikes={data.getCommentById.likes.length}
               liked={data.getCommentById.likes.includes(user.me.id)}
             />
-          )}
+          ) : null}
         </CardContent>
       </Card>
     </Grid>

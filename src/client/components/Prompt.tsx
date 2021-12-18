@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Like from "@material-ui/icons/FavoriteBorder";
 import queries from "../queries";
+import useUser from "../lib/useUser";
+
 import {
   Card,
   CardContent,
@@ -16,6 +18,10 @@ import {
 import NewComment from "./NewComment";
 import NewSubmission from "./NewSubmission";
 import { useQuery } from "@apollo/client";
+
+interface HomeProfileProps {
+  user: User;
+}
 
 const useStyles = makeStyles({
   card: {
@@ -92,10 +98,15 @@ const Prompt = ({ id }) => {
     fetchPolicy: "network-only",
   });
 
+  const { data: userData } = useUser({
+    redirectTo: "/login",
+  });
+
   //took out the statements so it doesn't appear on the page
   if (loading) return <p></p>;
   if (error) return <p></p>;
 
+  console.log(data.getPromptById, userData.me.id)
   return (
     <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
       <Card className={classes.card} variant="outlined">
@@ -107,14 +118,15 @@ const Prompt = ({ id }) => {
             <Typography variant="subtitle2">Closes on: {data.getPromptById.dateCloses.slice(0,10)}</Typography>
           </CardContent>
         </Link>
-        <Grid container>
-          <Grid item>
-            <NewComment promptId={id} />
-          </Grid>
-          <Grid item>
-            <NewSubmission promptId={id} />
-          </Grid>
-        </Grid>
+        {data.getPromptById.posted_by != userData.me.id ?
+          (<Grid container>
+            <Grid item>
+              <NewComment promptId={id} />
+            </Grid>
+            <Grid item>
+              <NewSubmission promptId={id} />
+            </Grid>
+          </Grid>) : null}
       </Card>
     </Grid>
   );
