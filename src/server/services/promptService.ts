@@ -5,7 +5,7 @@ import { promptPatch } from "../config/types";
 import userService from "./userService";
 import songSubmissionService from "./songSubmissionService";
 import commentService from "./commentService";
-import * as _ from "lodash"
+import * as _ from "lodash";
 import songService from "./songService";
 import { Song } from "../schemas/Song";
 import { SongSubmission } from "../schemas/SongSubmission";
@@ -18,16 +18,16 @@ const getPrompts = async (): Promise<Prompt[]> => {
         match_all: {},
       },
     },
-    size: 100
+    size: 100,
   });
-  let results : Prompt[] = body.hits.hits.map((hit) => hit._source);
+  let results: Prompt[] = body.hits.hits.map((hit) => hit._source);
   // sort results by date posted
-  
-  results.forEach((result : Prompt) => {
+
+  results.forEach((result: Prompt) => {
     result.dateCloses = new Date(result.dateCloses);
     result.datePosted = new Date(result.datePosted);
   });
-  
+
   _.sortBy(results, ["datePosted", "dateCloses"]);
   return results;
 };
@@ -163,21 +163,22 @@ const deletePrompt = async (promptId: string): Promise<Prompt> => {
   return prompt;
 };
 
-const getTopSong = async (promptId: string) : Promise<SongSubmission> =>{
+const getTopSong = async (promptId: string): Promise<SongSubmission> => {
   if (!promptId) {
     throw "Error: must provide id to delete prompt";
   }
   let prompt = await getPromptById(promptId);
   let mostVotes = -1;
-  let topSong : SongSubmission; 
-  for(let songSubId of prompt.submittedSongs){
+  let topSong: SongSubmission;
+  for (let songSubId of prompt.submittedSongs) {
     let songsub = await songSubmissionService.getSongSubmissionById(songSubId);
-    if(songsub.votes.length > mostVotes){
+    if (songsub.votes.length > mostVotes) {
       topSong = songsub;
+      mostVotes = songsub.votes.length;
     }
   }
   return topSong;
-}
+};
 
 export default {
   getPrompts,
@@ -185,5 +186,5 @@ export default {
   addPrompt,
   updatePrompt,
   deletePrompt,
-  getTopSong
+  getTopSong,
 };
