@@ -1,11 +1,17 @@
 "use strict";
 
-import { Client, ApiResponse, RequestParams } from "@elastic/elasticsearch";
+import { Client, ApiResponse, RequestParams, errors} from "@elastic/elasticsearch";
 require('dotenv').config();
-const client = new Client({ node: process.env.ES_HOST });
-
+const client = new Client({
+  cloud: {
+    id: process.env.CLOUD_ID
+  },
+  auth: {
+    apiKey: process.env.APIKEY
+  }
+});
 async function run(): Promise<void> {
-  const indices = ["users", "songs", "submissions", "comments", "prompts"];
+  const indices = ["users", "songs", "songsubmissions", "comments", "prompts"];
   for (const index of indices) {
     if (!(await client.indices.exists({ index: index }))) {
       const createUsersIndexResponse: ApiResponse = await client.indices.create(

@@ -93,7 +93,7 @@ const UserProfile = (props) => {
                 <CardContent className={classes.content}>
                     <CardMedia
                     component="img"
-                    image="https://i.mdel.net/i/db/2019/12/1255378/1255378-800w.jpg"
+                    image={data.getUserById.profile_picture}
                     // image={data.getUserById.profile_picture}
                     alt="Live from space album cover"
                     className={classes.media}

@@ -119,7 +119,7 @@ const Comment = (props) => {
     <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
       <Card className={classes.card} variant="outlined">
         <div className={classes.close}>
-          <IconButton
+          {(user && data.getCommentById.posted_by==user.me.id) ? <IconButton
             className={classes.icon}
             onClick={handleDelete}
             color="default"
@@ -127,7 +127,7 @@ const Comment = (props) => {
             component="span"
           >
             <Close />
-          </IconButton>
+          </IconButton> : null}
         </div>
         <CardContent>
           <Typography className="promptContent">
