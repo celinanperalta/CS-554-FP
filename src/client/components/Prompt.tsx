@@ -6,7 +6,7 @@ import Link from "next/link";
 import Like from "@material-ui/icons/FavoriteBorder";
 import queries from "../queries";
 import useUser from "../lib/useUser";
-
+import PromptMenu from "./PromptMenu";
 import {
   Card,
   CardContent,
@@ -111,6 +111,7 @@ const Prompt = ({ id }) => {
   return (
     <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
       <Card className={classes.card} variant="outlined">
+        <PromptMenu promptId={data.getPromptById.id} isClosed={data.getPromptById.isClosed} dateCloses={data.getPromptById.dateCloses} posted_by={data.getPromptById.posted_by}/>
         <Link href={`/prompts/${id}`} passHref>
           <CardContent className={classes.content}>
             <Typography className="promptContent">

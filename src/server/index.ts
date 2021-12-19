@@ -21,6 +21,8 @@ import * as passport from "passport";
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+var fs = require('fs')
+var gm = require('gm').subClass({imageMagick: true});
 
 const corsOptions = {
   origin: [
@@ -108,6 +110,14 @@ async function main() {
   server.applyMiddleware({ app, cors: false });
 
   await seed();
+  // let dir = __dirname;
+
+  // gm(dir + '../client/public/defaultSong.png')
+  // .resize(64, 64)
+  // .write(dir + '../client/public/defaultSong.png', function (err) {
+  //  if(err) console.log(err);
+  // if (!err) console.log('done');
+  // });
 
   app.listen(PORT, () =>
     console.log(`Server is running on http://localhost:${PORT}/graphql`)
