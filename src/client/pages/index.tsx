@@ -1,13 +1,12 @@
-import React, {  } from "react";
 import Prompt from "../components/Prompt";
-import DisplaySubmission from "../components/SubmissionDisplay";
-import TopSong from "../components/TopSongCard";
+import React, { useState, useEffect } from "react";
 import HomeProfile from "../components/HomeProfile";
-import ActivityFeed from "../components/ActivityFeed";
 import queries from "../queries";
 import { useQuery } from "@apollo/client";
 import useUser from "../lib/useUser";
-
+import AllCommentsFeed from "../components/AllCommentsFeed";
+import AllPromptsFeed from "../components/AllPromptsFeed";
+import AllSongSubFeed from "../components/AllSongSubFeed";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -52,6 +51,12 @@ export default function Home() {
     error: subError,
   } = useQuery(queries.GET_SONG_SUBS);
 
+  const {
+    data: commentData,
+    loading: commentLoading,
+    error: commentError,
+  } = useQuery(queries.GET_SONG_SUBS);
+
   if (promptLoading || subLoading) {
     console.log("THERE IS NO DATA PLS HOLD");
     return <p>Loading Homepage</p>;
@@ -79,33 +84,18 @@ export default function Home() {
         <div className="app">
           <div className={`${classes.row} ${classes.mainRow}`}>
             <div className={classes.column}>
-              <HomeProfile user={userData.me} />
-              <ActivityFeed />
+              <HomeProfile id={userData.me.id} />
             </div>
             <div className={classes.column}>
-              <div className={classes.row}>
-                <TopSong data={item} />
-                <TopSong data={item} />
-                <TopSong data={item} />
-                <TopSong data={item} />
-              </div>
-              <div className={classes.row}>
-                <div className={classes.column}>
-                  {activePrompts &&
-                    activePrompts.map((prompt, i) => {
-                      return <Prompt id={prompt} key={i} />;
-                    })}
-                </div>
-                <div className={classes.column}>
-                  {displaySubmissions &&
-                    displaySubmissions.map((sub, i) => {
-                      return <DisplaySubmission data={sub} key={i} />;
-                    })}
-                  {/* <DisplaySubmission data={item}/>
-                <DisplaySubmission data={item}/> */}
-                </div>
-              </div>
+              <AllPromptsFeed/>
             </div>
+            <div className={classes.column}>
+              <AllSongSubFeed/>
+            </div>
+            <div className={classes.column}>
+              <AllCommentsFeed/>
+            </div>
+            
           </div>
         </div>
       );

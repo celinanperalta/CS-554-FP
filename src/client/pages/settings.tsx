@@ -5,11 +5,16 @@ import { useQuery, useMutation } from "@apollo/client";
 import queries from "../queries";
 import { useAuth} from "../lib/useAuth";
 import { Grid, makeStyles, CardHeader, Button , TextField} from "@material-ui/core";
-
+import DeleteAccountModal from "../components/DeleteAccountModal";
 const useStyles = makeStyles({
   submitButton: {
     color: 'dark grey',
     borderColor: 'dark grey',
+    marginTop: '25px'
+  }, 
+  deleteButton: {
+    color: 'red',
+    borderColor: 'dark red',
     marginTop: '25px'
   }
 });
@@ -59,7 +64,7 @@ const settings = () => {
             return;
         }
     }
-    updateUser( {variables: {id: data.me.id, username:updatedUsername, email: updatedUsername, password: updatedPassword} });
+    updateUser( {variables: {id: data.me.id, username:updatedUsername, email: updatedEmail, password: updatedPassword} });
     if(updatedPassword){signOut()}
     else{router.push('/users/me');}
     console.log(formValues);
@@ -124,8 +129,17 @@ const settings = () => {
             Submit
             </Button>
           </Grid>
-          
         </form>
+        <Grid
+            container
+            alignItems="center"
+            justifyContent="center"
+            direction="column"
+          >
+          <Grid item >
+            <DeleteAccountModal/>
+            </Grid>  
+          </Grid>
       </div>
     );
   } else {
