@@ -71,7 +71,6 @@ const useStyles = makeStyles({
 const TopSongCard = (props) => {
   const classes = useStyles();
   const { loading, error, data } = useQuery(queries.GET_TOP_SONG, {
-    fetchPolicy: "no-cache",
     variables: { promptId: props.promptId },
   });
 

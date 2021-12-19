@@ -20,8 +20,7 @@ import useUser from "../lib/useUser";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 450,
-    minWidth: 450,
+    width: "100%",
     height: "auto",
     margin: "10px",
     borderRadius: 5,
@@ -116,7 +115,6 @@ const Comment = (props) => {
   }
 
   return (
-    <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
       <Card className={classes.card} variant="outlined">
         <div className={classes.close}>
           <IconButton
@@ -145,7 +143,6 @@ const Comment = (props) => {
           ) : null}
         </CardContent>
       </Card>
-    </Grid>
   );
 };
 

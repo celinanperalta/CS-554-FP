@@ -19,11 +19,13 @@ import {
   CardHeader,
   Box,
   Avatar,
+  Collapse,
 } from "@material-ui/core";
 import NewComment from "./NewComment";
 import NewSubmission from "./NewSubmission";
 import { useQuery } from "@apollo/client";
 import TopSongCard from "./TopSongCard";
+import Comment from "./Comment";
 
 const useStyles = makeStyles({
   card: {
@@ -90,6 +92,7 @@ const useStyles = makeStyles({
 const Prompt = ({ id }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [submitOpen, setSubmitOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
@@ -142,9 +145,18 @@ const Prompt = ({ id }) => {
           }
         />
         <CardContent>
-          <Grid container justifyContent="center" direction="column" alignItems="center">
+          <Grid
+            container
+            justifyContent="center"
+            direction="column"
+            alignItems="center"
+          >
             <Link href={`/prompts/${id}`} passHref>
-              <Typography variant="h5" component="h1" className={classes.titleHead}>
+              <Typography
+                variant="h5"
+                component="h1"
+                className={classes.titleHead}
+              >
                 {data.getPromptById.prompt}
               </Typography>
             </Link>
@@ -155,8 +167,16 @@ const Prompt = ({ id }) => {
           <CardActions disableSpacing>
             <NewComment promptId={id} />
             <NewSubmission promptId={id} />
+            <button onClick={() => setExpanded(!expanded)}>Expand</button>
           </CardActions>
         ) : null}
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            {data.getPromptById.comments.map((commentId) => {
+              return <Comment key={commentId} id={commentId} promptId={id} />;
+            })}
+          </CardContent>
+        </Collapse>
       </Card>
     </Grid>
   );
