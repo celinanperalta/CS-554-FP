@@ -19,7 +19,9 @@ const useStyles = makeStyles({
 
 const Prompts = () => {
   const classes = useStyles();
-  const { loading, error, data, refetch } = useQuery(queries.GET_PROMPTS);
+  const { loading, error, data, refetch } = useQuery(queries.GET_PROMPTS,{
+    fetchPolicy: "no-cache",
+  });
 
   if (loading) {
     return (

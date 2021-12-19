@@ -60,11 +60,6 @@ const PromptPage = () => {
     );
   }
 
-  const refreshComments = async (value) => {
-    console.log("outside here");
-    setIsNewComments(value);
-  };
-
   return (
     <div className="app">
       <ul className="prompts">

@@ -275,15 +275,21 @@ mutation UnLikeComment($id: String!) {
 }
 `
 const GET_TOP_SONG = gql`
-query GetTopSong($promptId: String!) {
+query Query($promptId: String!) {
   getTopSong(promptId: $promptId) {
     id
-    uri
-    artist
-    previewUrl
-    name
-    album
-    imageUrl
+    prompt_id
+    song {
+      id
+      uri
+      name
+      artist
+      previewUrl
+      album
+      imageUrl
+    }
+    submitted_by
+    votes
   }
 }
 `

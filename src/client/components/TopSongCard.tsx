@@ -19,6 +19,7 @@ import {
   IconButton,
   Box,
 } from "@material-ui/core";
+import UserAvatar from "./UserAvatar";
 
 const useStyles = makeStyles({
   card: {
@@ -39,8 +40,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
   },
   grid: {
-    flexGrow: 1,
-    flexDirection: "row",
+    
   },
   media: {
     height: "100%",
@@ -71,47 +71,50 @@ const useStyles = makeStyles({
 const TopSongCard = (props) => {
   const classes = useStyles();
   const { loading, error, data } = useQuery(queries.GET_TOP_SONG, {
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
     variables: { promptId: props.promptId },
   });
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
   if (!data.getTopSong) return <p>No Top Song</p>;
   return (
-    <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
+    // <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
       <Card className={classes.card} variant="outlined">
+        <UserAvatar userId={data.getTopSong.submitted_by} />
         <CardContent className="">
           <Grid
             container
             direction="row"
-            justify="flex-start"
+            justifyContent="flex-start"
             alignItems="center"
             spacing={2}
           >
-            <Grid item xs="auto" >
+            <Grid item xs="auto">
               <CardMedia
                 component="img"
-                image={data.getTopSong.imageUrl}
-                alt={data.getTopSong.title}
+                image={data.getTopSong.song.imageUrl}
+                alt={data.getTopSong.song.title}
                 className={classes.cmedia}
               />
             </Grid>
             <Grid item xs={8} >
               <div className={classes.songInfo}>
                 <Typography className={classes.songTitle}>
-                  {data.getTopSong.name}
+                  {data.getTopSong.song.name}
                 </Typography>
                 <Typography variant="caption">
-                  {data.getTopSong.artist}
+                  {data.getTopSong.song.artist}
                 </Typography>
               </div>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
-    </Grid>
+    // </Grid>
   );
 };
 

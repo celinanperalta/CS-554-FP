@@ -1,7 +1,14 @@
 import React from "react";
 import queries from "../queries";
 import { useQuery, useMutation } from "@apollo/client";
-import { makeStyles, Modal, Box, IconButton, TextField, Button } from "@material-ui/core";
+import {
+  makeStyles,
+  Modal,
+  Box,
+  IconButton,
+  TextField,
+  Button,
+} from "@material-ui/core";
 import { Comment } from "@material-ui/icons";
 
 const useStyles = makeStyles({
@@ -56,40 +63,43 @@ const useStyles = makeStyles({
     marginBottom: "10px",
   },
   submitButton: {
-    color: 'dark grey',
-    borderColor: 'dark grey',
-    marginTop: '25px'
+    color: "dark grey",
+    borderColor: "dark grey",
+    marginTop: "25px",
   },
   input: {
-    marginBottom: '10px'
-  }
+    marginBottom: "10px",
+  },
 });
 
 const NewComment = (props) => {
-  const [addComment, { data }] = useMutation(queries.ADD_COMMENT, {
-    update(cache, { data: { addComment } }) {
-        const { getPromptById } = cache.readQuery({
-            query: queries.GET_PROMPT,
-            variables: {
-                promptId: props.promptId
-            },
-        });
-        cache.writeQuery({
-            query: queries.GET_PROMPT,
-            variables: {
-                promptId: props.promptId
-            },
-            data: { getPromptById: {
-                ...getPromptById,
-                comments: [...getPromptById.comments, addComment]
-            } },
-        });
-        }
-  });
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const [comment, setComment] = React.useState("");
+  
+  const [addComment, { data }] = useMutation(queries.ADD_COMMENT, {
+    update(cache, { data: { addComment } }) {
+      const { getPromptById } = cache.readQuery({
+        query: queries.GET_PROMPT,
+        variables: {
+          promptId: props.promptId,
+        },
+      });
+      cache.writeQuery({
+        query: queries.GET_PROMPT,
+        variables: {
+          promptId: props.promptId,
+        },
+        data: {
+          getPromptById: {
+            ...getPromptById,
+            comments: [...getPromptById.comments, addComment],
+          },
+        },
+      });
+    },
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -113,13 +123,19 @@ const NewComment = (props) => {
       >
         <Box className={classes.modalBox}>
           <form onSubmit={handleSubmit}>
-            <p className={classes.input} >Comment:</p>
+            <p className={classes.input}>Comment:</p>
             <TextField
               type="text"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
-            <Button className={classes.submitButton} variant="outlined" type="submit">Add Comment</Button>
+            <Button
+              className={classes.submitButton}
+              variant="outlined"
+              type="submit"
+            >
+              Add Comment
+            </Button>
           </form>
         </Box>
       </Modal>

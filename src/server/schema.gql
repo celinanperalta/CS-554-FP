@@ -59,7 +59,7 @@ type Query {
   getSongSubmissionById(id: String!): SongSubmission
   getSongSubmissions: [SongSubmission!]
   getSongs: [Song!]
-  getTopSong(promptId: String!): Song
+  getTopSong(promptId: String!): SongSubmission
   getUserById(id: String!): User
   getUsers: [User!]
   isAuthenticated: Boolean!

@@ -8,6 +8,7 @@ import commentService from "./commentService";
 import * as _ from "lodash"
 import songService from "./songService";
 import { Song } from "../schemas/Song";
+import { SongSubmission } from "../schemas/SongSubmission";
 
 const getPrompts = async (): Promise<Prompt[]> => {
   const { body } = await client.search({
@@ -162,18 +163,17 @@ const deletePrompt = async (promptId: string): Promise<Prompt> => {
   return prompt;
 };
 
-const getTopSong = async (promptId: string) : Promise<Song> =>{
+const getTopSong = async (promptId: string) : Promise<SongSubmission> =>{
   if (!promptId) {
     throw "Error: must provide id to delete prompt";
   }
   let prompt = await getPromptById(promptId);
   let mostVotes = -1;
-  let topSong : Song; 
+  let topSong : SongSubmission; 
   for(let songSubId of prompt.submittedSongs){
     let songsub = await songSubmissionService.getSongSubmissionById(songSubId);
     if(songsub.votes.length > mostVotes){
-      mostVotes = songsub.votes.length;
-      topSong = songsub.song;
+      topSong = songsub;
     }
   }
   return topSong;

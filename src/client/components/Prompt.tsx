@@ -6,6 +6,7 @@ import Link from "next/link";
 import Like from "@material-ui/icons/FavoriteBorder";
 import queries from "../queries";
 import useUser from "../lib/useUser";
+import Image from "next/image";
 
 import {
   Card,
@@ -17,6 +18,7 @@ import {
   CardActions,
   CardHeader,
   Box,
+  Avatar,
 } from "@material-ui/core";
 import NewComment from "./NewComment";
 import NewSubmission from "./NewSubmission";
@@ -35,11 +37,10 @@ const useStyles = makeStyles({
     border: "1px solid #ededed",
     textAlign: "left",
     boxShadow: "0px 10px 12px rgba(0,0,0,0.22);",
-    padding: "10px",
   },
   titleHead: {
-    borderBottom: "1px solid #1e8678",
     fontWeight: "bold",
+    marginBottom: "10px",
   },
   grid: {
     flexGrow: 1,
@@ -79,7 +80,10 @@ const useStyles = makeStyles({
   },
   content: {
     paddingTop: "20px",
-    paddingBottom: "5px",
+    paddingBottom: "20px",
+    alignItems: "center",
+    margin: "auto",
+    textAlign: "center",
   },
 });
 
@@ -89,14 +93,23 @@ const Prompt = ({ id }) => {
   const [submitOpen, setSubmitOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
+  const { data: userData } = useUser({
+    redirectTo: "/login",
+  });
+
   let { loading, error, data } = useQuery(queries.GET_PROMPT, {
     variables: { promptId: id },
     pollInterval: 4000,
     fetchPolicy: "network-only",
   });
 
-  const { data: userData } = useUser({
-    redirectTo: "/login",
+  let {
+    loading: userLoading,
+    error: userError,
+    data: userData2,
+  } = useQuery(queries.GET_USER, {
+    skip: !data,
+    variables: { id: data?.getPromptById.posted_by },
   });
 
   //took out the statements so it doesn't appear on the page
@@ -106,40 +119,44 @@ const Prompt = ({ id }) => {
   return (
     <Grid item className={classes.grid}>
       <Card className={classes.card} variant="outlined">
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="center"
-        >
-          <Grid item xs={4}>
-            <CardHeader
-              title={
-                <Link href={`/prompts/${id}`} passHref>
-                  <Typography variant="h5" component="h1">
-                    {data.getPromptById.prompt}
-                  </Typography>
-                </Link>
-              }
-              subheader={
-                <Typography variant="h6" component="h6">
-                  {`Open until: ${data.getPromptById.dateCloses.slice(0, 10)}`}
-                </Typography>
-              }
-            />
-            {data.getPromptById.posted_by !== userData?.me.id ? (
-              <CardActions disableSpacing>
-                <NewComment promptId={id} />
-                <NewSubmission promptId={id} />
-              </CardActions>
-            ) : null}
+        <CardHeader
+          avatar={
+            <Avatar>
+              <Image
+                src={
+                  userData2?.getUserById.profile_picture ||
+                  "/public/userDefault.jpeg"
+                }
+                alt="profile"
+                className={classes.media}
+                width={70}
+                height={70}
+              />
+            </Avatar>
+          }
+          title={<Typography>{userData2?.getUserById.username}</Typography>}
+          subheader={
+            <Typography>
+              {`Open until: ${data.getPromptById.dateCloses.slice(0, 10)}`}
+            </Typography>
+          }
+        />
+        <CardContent>
+          <Grid container justifyContent="center" direction="column" alignItems="center">
+            <Link href={`/prompts/${id}`} passHref>
+              <Typography variant="h5" component="h1" className={classes.titleHead}>
+                {data.getPromptById.prompt}
+              </Typography>
+            </Link>
+            <TopSongCard promptId={id} />
           </Grid>
-          <Grid item xs={8}>
-            <CardContent className={classes.content}>
-              <TopSongCard promptId={id} />
-            </CardContent>
-          </Grid>
-        </Grid>
+        </CardContent>
+        {data.getPromptById.posted_by !== userData?.me.id ? (
+          <CardActions disableSpacing>
+            <NewComment promptId={id} />
+            <NewSubmission promptId={id} />
+          </CardActions>
+        ) : null}
       </Card>
     </Grid>
   );
