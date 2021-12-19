@@ -145,12 +145,10 @@ const Prompt = ({ id }) => {
           subheader={
             <Typography>
               {`Open until: ${data.getPromptById.dateCloses.slice(0, 10)}`}
-        <PromptMenu promptId={data.getPromptById.id} isClosed={data.getPromptById.isClosed} dateCloses={data.getPromptById.dateCloses} posted_by={data.getPromptById.posted_by}/>
-        <Link href={`/prompts/${id}`} passHref>
-          <CardContent className={classes.content}>
-            <Typography className="promptContent">
-              {data.getPromptById.prompt}
             </Typography>
+          }
+          action={
+            <PromptMenu promptId={data.getPromptById.id} isClosed={data.getPromptById.isClosed} dateCloses={data.getPromptById.dateCloses} posted_by={data.getPromptById.posted_by}/>
           }
         />
         <CardContent>
