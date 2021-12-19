@@ -314,6 +314,16 @@ query GetComments {
   }
 }
 `
+const UPDATE_PROMPT_DATE = gql`
+mutation UpdatePrompt($isClosed: Boolean, $postedBy: String!, $promptId: String!, $dateCloses: DateTime) {
+  updatePrompt(isClosed: $isClosed, posted_by: $postedBy, id: $promptId, dateCloses: $dateCloses) {
+    id
+    posted_by
+    isClosed
+    dateCloses
+  }
+}
+`
 
 export default {
   LOGIN_USER,
@@ -339,5 +349,6 @@ export default {
   DELETE_COMMENT,
   GET_TOP_SONG,
   DELETE_USER,
-  GET_COMMENTS
+  GET_COMMENTS,
+  UPDATE_PROMPT_DATE
 };

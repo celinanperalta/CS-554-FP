@@ -47,7 +47,7 @@ export class PromptResolver {
   @Arg("comments", (type) => [String], {nullable:true}) comments: string[],
   @Arg("datePosted", (type)=>Date, {nullable:true}) datePosted: Date,
   @Arg("dateCloses", (type)=>Date, {nullable:true}) dateCloses: Date,
-  @Arg("isClosed") isClosed: boolean,
+  @Arg("isClosed", {nullable:true}) isClosed: boolean,
   @Ctx() ctx: UserLoginContext
   ) : Promise<Prompt> {
       if(!isAuthenticated(ctx) || getUserFromContext(ctx)!==posted_by){throw "Error, must authenticate/can't update another users prompt"}
