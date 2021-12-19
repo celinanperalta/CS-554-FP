@@ -13,6 +13,12 @@ const useStyles = makeStyles({
 });
 
 const Login = () => {
+
+  const { data } = useUser({
+    redirectTo: '/users/me',
+    redirectIfFound: true
+  })
+  
   const classes = useStyles();
   const router = useRouter();
   const [username, setUsername] = useState('')
