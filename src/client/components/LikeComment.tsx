@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import queries from "../queries";
 import Like from "@material-ui/icons/Favorite";
 import { IconButton } from "@material-ui/core";
+import Stack from "@mui/material/Stack";
 
 const LikeComment = (props) => {
   const [isLiked, setIsLiked] = React.useState(props.liked);
@@ -58,12 +59,18 @@ const LikeComment = (props) => {
   };
 
   return (
-    <div>
-      <IconButton onClick={handleLike}>
+    <Stack
+      direction="row"
+      spacing={1}
+      alignItems="center"
+    >
+      <IconButton onClick={handleLike} edge="end">
         <Like color={isLiked ? "secondary" : "action"} />
       </IconButton>
+      <div>
       <span>{numLikes}</span>
-    </div>
+      </div>
+    </Stack>
   );
 };
 

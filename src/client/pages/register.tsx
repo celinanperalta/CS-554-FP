@@ -15,11 +15,12 @@ const useStyles = makeStyles({
 });
 
 const Register = () => {
-  const classes = useStyles();
   const { data } = useUser({
     redirectTo: '/users/me',
     redirectIfFound: true
   })
+
+  const classes = useStyles();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
@@ -36,6 +37,7 @@ const Register = () => {
         email
       }
     })
+    Router.push('/login');
   }
 
   return (

@@ -1,3 +1,4 @@
+import Prompt from "../components/Prompt";
 import React, { useState, useEffect } from "react";
 import HomeProfile from "../components/HomeProfile";
 import queries from "../queries";
@@ -77,19 +78,6 @@ export default function Home() {
 
     activePrompts = promptData.getPrompts.slice(0, 3); //wrap activePromptcard in bigger compoentn, call this there
     displaySubmissions = subData.getSongSubmissions.slice(0, 2); //wrap songSub in bigger component, call this there
-
-    // const getPrompt = (id) => {
-    //   let prompt = useQuery(queries.GET_PROMPT, { variables: {promptId: id}, pollInterval: 4000 })
-    //   return prompt.data.getPromptById.prompt;
-    // }
-
-    // useEffect(() => {
-    //   //console.log(data.getPrompts);
-    //  // setActivePrompts(data.getPrompts.slice(0,2));
-    // }, []);
-
-    //console.log(activePrompts);
-    //prompt={getPrompt(sub.prompt_id)}
 
     if (userData && userData.me) {
       return (

@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  ApolloProvider,
-} from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import queries from "../queries";
 import Router from "next/router";
 import client from "../apollo-client";
@@ -15,8 +13,8 @@ export function AuthProvider({ children }) {
     const initializeAuth = async () => {
       const response = await client.query({
         query: queries.IS_AUTHENTICATED,
-        });
-        console.log("initializeAuth response:", response);
+      });
+      console.log("initializeAuth response:", response.data.isAuthenticated);
       auth.setAuthToken(response.data.isAuthenticated);
     };
     initializeAuth();
@@ -40,22 +38,16 @@ function useProvideAuth() {
     return authToken;
   };
 
-  const getAuthHeaders = () => {
-    if (!authToken) return null;
-
-    return {
-      authorization: `Bearer ${authToken}`,
-    };
-  };
-
-  const updateCacheAfterLogin = (cache, { data: { login }}) => {
+  const updateCacheAfterLogin = (cache, { data: { login } }) => {
     cache.writeQuery({
       query: queries.GET_ME,
-      data: { me: {
-        id: login.id,
-        username: login.username,
-        email: login.email,
-      }},
+      data: {
+        me: {
+          id: login.id,
+          username: login.username,
+          email: login.email,
+        },
+      },
     });
   };
 
@@ -74,9 +66,7 @@ function useProvideAuth() {
     } catch (error) {
       console.log("signIn error:", error);
     }
-    
   };
-
 
   const signOut = async () => {
     const result = await client.mutate({

@@ -15,15 +15,14 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
+import ListItem from '@mui/material/ListItem';
 import LikeComment from "./LikeComment";
 import useUser from "../lib/useUser";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 450,
-    minWidth: 450,
+    width: "100%",
     height: "auto",
-    margin: "10px",
     borderRadius: 5,
     border: "1px solid",
     textAlign: "left",
@@ -54,7 +53,6 @@ const useStyles = makeStyles({
     padding: "0px",
     margin: "0px",
     justifyContent: "right",
-    marginTop: "5px",
     marginRight: "7px",
   },
   icon: {
@@ -74,6 +72,10 @@ const useStyles = makeStyles({
     margin: "0px",
     paddingLeft: "10px",
     paddingRight: "10px",
+  },
+  username: {
+    fontWeight: "bold",
+    marginRight: "5px",
   },
 });
 
@@ -115,37 +117,40 @@ const Comment = (props) => {
     );
   }
 
+
   return (
-    <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
-      <Card className={classes.card} variant="outlined">
-        <div className={classes.close}>
-          {(user && data.getCommentById.posted_by==user.me.id) ? <IconButton
-            className={classes.icon}
-            onClick={handleDelete}
-            color="default"
-            aria-label="like prompt"
-            component="span"
-          >
-            <Close />
-          </IconButton> : null}
-        </div>
-        <CardContent>
-          <Typography className="promptContent">
-            {data.getCommentById.comment}
-          </Typography>
-          <Typography>
-            <User userId={data.getCommentById.posted_by} />
-          </Typography>
-          {user && (data.getCommentById.posted_by!=user.me.id) ? (
-            <LikeComment
-              id={data.getCommentById.id}
-              numLikes={data.getCommentById.likes.length}
-              liked={data.getCommentById.likes.includes(user.me.id)}
-            />
-          ) : null}
-        </CardContent>
-      </Card>
-    </Grid>
+    <ListItem
+      key={data.getCommentById.id}
+      secondaryAction={user && data.getCommentById.posted_by != user.me.id ? (
+        <LikeComment
+          id={data.getCommentById.id}
+          numLikes={data.getCommentById.likes.length}
+          liked={data.getCommentById.likes.includes(user.me.id)}
+        />
+      ) : (
+        <IconButton
+        edge="end"
+          className={classes.icon}
+          onClick={handleDelete}
+          color="default"
+          aria-label="delete prompt"
+          component="span"
+        >
+          <Close />
+        </IconButton>
+      )}
+      sx={{
+        height: "75px"
+      }}
+    >
+      <Typography className={classes.username}>
+        <User userId={data.getCommentById.posted_by} />
+      </Typography>
+      <Typography className="promptContent">
+        {data.getCommentById.comment}
+      </Typography>
+      
+    </ListItem>
   );
 };
 

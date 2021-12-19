@@ -6,6 +6,7 @@ import promptService from "../services/promptService";
 import { UserLoginContext} from "../config/types";
 import { isAuthenticated ,getUserFromContext} from "../util/authUtil";
 import { Song } from "../schemas/Song";
+import { SongSubmission } from "../schemas/SongSubmission";
 
 @Resolver((of) => Prompt)
 export class PromptResolver {
@@ -76,8 +77,8 @@ export class PromptResolver {
     }
   }
 
-  @Query((returns) => Song, {nullable:true})
-  async getTopSong(@Arg("promptId")promptId:string, @Ctx() ctx: UserLoginContext): Promise<Song> {
+  @Query((returns) => SongSubmission, {nullable:true})
+  async getTopSong(@Arg("promptId")promptId:string, @Ctx() ctx: UserLoginContext): Promise<SongSubmission> {
     if(!isAuthenticated(ctx)){throw "must authenticate to get top song"};
     try{
       return await promptService.getTopSong(promptId);
