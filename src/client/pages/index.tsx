@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import NavBar from "../components/NavBar";
+import React, {  } from "react";
 import Prompt from "../components/Prompt";
 import DisplaySubmission from "../components/SubmissionDisplay";
 import TopSong from "../components/TopSongCard";
@@ -75,19 +73,6 @@ export default function Home() {
 
     activePrompts = promptData.getPrompts.slice(0, 3); //wrap activePromptcard in bigger compoentn, call this there
     displaySubmissions = subData.getSongSubmissions.slice(0, 2); //wrap songSub in bigger component, call this there
-
-    // const getPrompt = (id) => {
-    //   let prompt = useQuery(queries.GET_PROMPT, { variables: {promptId: id}, pollInterval: 4000 })
-    //   return prompt.data.getPromptById.prompt;
-    // }
-
-    // useEffect(() => {
-    //   //console.log(data.getPrompts);
-    //  // setActivePrompts(data.getPrompts.slice(0,2));
-    // }, []);
-
-    //console.log(activePrompts);
-    //prompt={getPrompt(sub.prompt_id)}
 
     if (userData && userData.me) {
       return (

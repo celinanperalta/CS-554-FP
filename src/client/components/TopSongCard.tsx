@@ -109,6 +109,9 @@ const TopSongCard = (props) => {
                   {data.getTopSong.song.artist}
                 </Typography>
               </div>
+              <Typography variant="caption">
+                  Votes: {data.getTopSong.votes.length}
+                </Typography>
             </Grid>
           </Grid>
         </CardContent>

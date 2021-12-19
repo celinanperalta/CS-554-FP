@@ -12,19 +12,6 @@ import {
 import { Comment } from "@material-ui/icons";
 
 const useStyles = makeStyles({
-  card: {
-    maxWidth: 350,
-    minWidth: 350,
-    height: "auto",
-    marginLeft: "10px",
-    marginRight: "10px",
-    marginTop: "10px",
-    marginBottom: "10px",
-    borderRadius: 5,
-    border: "1px solid #1e8678",
-    textAlign: "left",
-    boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);",
-  },
   titleHead: {
     borderBottom: "1px solid #1e8678",
     fontWeight: "bold",
@@ -47,17 +34,11 @@ const useStyles = makeStyles({
     margin: "10px",
   },
   modalBox: {
-    maxWidth: 300,
-    minWidth: 300,
-    minHeight: 200,
-    maxHeight: 200,
-    borderRadius: 5,
-    border: "1px solid #ededed",
+    width: "100%",
     zIndex: 1300,
     backgroundColor: "white",
     margin: "auto",
-    marginTop: "30vh",
-    padding: "20px",
+    padding: "5px",
   },
   inputFields: {
     marginBottom: "10px",
@@ -65,10 +46,8 @@ const useStyles = makeStyles({
   submitButton: {
     color: "dark grey",
     borderColor: "dark grey",
-    marginTop: "25px",
   },
   input: {
-    marginBottom: "10px",
   },
 });
 
@@ -84,6 +63,15 @@ const NewComment = (props) => {
         query: queries.GET_PROMPT,
         variables: {
           promptId: props.promptId,
+        },
+      });
+      cache.writeQuery({
+        query: queries.GET_COMMENT,
+        variables: {
+          commentId: addComment.id,
+        },
+        data: {
+          getCommentById: addComment,
         },
       });
       cache.writeQuery({
@@ -115,38 +103,19 @@ const NewComment = (props) => {
 
   return (
     <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
         <Box className={classes.modalBox}>
           <form onSubmit={handleSubmit}>
-            <p className={classes.input}>Comment:</p>
             <TextField
+            label="Comment"
               type="text"
+              size="small"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              fullWidth
             />
-            <Button
-              className={classes.submitButton}
-              variant="outlined"
-              type="submit"
-            >
-              Add Comment
-            </Button>
           </form>
         </Box>
-      </Modal>
-      <IconButton
-        onClick={() => setOpen(!open)}
-        color="default"
-        aria-label="comment on prompt"
-        component="span"
-      >
-        <Comment />
-      </IconButton>
+
     </div>
   );
 };

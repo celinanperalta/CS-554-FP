@@ -21,11 +21,15 @@ import {
   Avatar,
   Collapse,
 } from "@material-ui/core";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
 import NewComment from "./NewComment";
 import NewSubmission from "./NewSubmission";
 import { useQuery } from "@apollo/client";
 import TopSongCard from "./TopSongCard";
 import Comment from "./Comment";
+import SubmissionFeed from "./SubmissionFeed";
+import { Comment as CommentIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   card: {
@@ -160,21 +164,44 @@ const Prompt = ({ id }) => {
                 {data.getPromptById.prompt}
               </Typography>
             </Link>
-            <TopSongCard promptId={id} />
+
+            {data.getPromptById.isClosed ? (
+              <TopSongCard promptId={id} />
+            ) : (
+              <div>
+                <SubmissionFeed
+                  promptId={id}
+                  songs={data.getPromptById.submittedSongs}
+                />
+              </div>
+            )}
           </Grid>
         </CardContent>
-        {data.getPromptById.posted_by !== userData?.me.id ? (
+        {data.getPromptById.posted_by !== userData?.me?.id ? (
           <CardActions disableSpacing>
-            <NewComment promptId={id} />
-            <NewSubmission promptId={id} />
-            <button onClick={() => setExpanded(!expanded)}>Expand</button>
+            <IconButton
+              onClick={() => setExpanded(!expanded)}
+              color="default"
+              aria-label="comment on prompt"
+              component="span"
+            >
+              <CommentIcon />
+            </IconButton>
+            {!data.getPromptById.isClosed && <NewSubmission promptId={id} />}
           </CardActions>
         ) : null}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            {data.getPromptById.comments.map((commentId) => {
-              return <Comment key={commentId} id={commentId} promptId={id} />;
-            })}
+            <NewComment promptId={id} />
+            <Stack
+              direction="column"
+              divider={<Divider orientation="horizontal" flexItem />}
+              spacing={0}
+            >
+              {data.getPromptById.comments.map((commentId) => {
+                return <Comment key={commentId} id={commentId} promptId={id} />;
+              })}
+            </Stack>
           </CardContent>
         </Collapse>
       </Card>
