@@ -48,7 +48,6 @@ let exportedMethods = {
         type: "track",
       },
     });
-    console.log(response.data);
     return response.data.tracks.items.map(toSong);
   },
 };

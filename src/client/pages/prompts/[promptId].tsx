@@ -8,6 +8,7 @@ import SongSubmission from "../../components/SongSubmission";
 import Prompt from "../../components/Prompt";
 import CommentFeed from "../../components/CommentFeed";
 import SubmissionFeed from "../../components/SubmissionFeed";
+import Stack from "@mui/material/Stack";
 
 import { makeStyles } from "@material-ui/core";
 
@@ -64,26 +65,14 @@ const PromptPage = () => {
     <div className="app">
       <ul className="prompts">
         {data && data.getPromptById ? (
-          <div className={classes.row}>
-            {/* <h1>{data.getPromptById.prompt}</h1> */}
-            <div className={classes.column}>
-              <Prompt id={data.getPromptById.id} />
-              {
-                <CommentFeed
-                  promptId={promptId}
-                  comments={data.getPromptById.comments}
-                />
-              }
-            </div>
-            <div className={classes.column}>
-              {
-                <SubmissionFeed
-                  promptId={promptId}
-                  songs={data.getPromptById.submittedSongs}
-                />
-              }
-            </div>
-          </div>
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+            display="flex"
+          >
+            <Prompt id={data.getPromptById.id} showComments={true}/>
+          </Stack>
         ) : null}
       </ul>
     </div>

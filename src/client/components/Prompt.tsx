@@ -94,12 +94,9 @@ const useStyles = makeStyles({
   },
 });
 
-const Prompt = ({ id }) => {
+const Prompt = ({ id, showComments }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [expanded, setExpanded] = useState(false);
-  const [submitOpen, setSubmitOpen] = useState(false);
-  const handleClose = () => setOpen(false);
+  const [expanded, setExpanded] = useState(false  || showComments);
 
   const { data: userData } = useUser({
     redirectTo: "/login",

@@ -11,8 +11,8 @@ import SpotifySearch from "./SpotifySearch";
 const useStyles = makeStyles({
   card: {
     maxWidth: 350,
-    minWidth: 350,
-    height: "auto",
+    minWidth: 500,
+    height: 600,
     marginLeft: "10px",
     marginRight: "10px",
     marginTop: "10px",
@@ -44,10 +44,9 @@ const useStyles = makeStyles({
     margin: "10px",
   },
   modalBox: {
-    maxWidth: 300,
-    minWidth: 300,
-    minHeight: 200,
-    maxHeight: 200,
+    maxWidth: 350,
+    minWidth: 500,
+    height: 600,
     borderRadius: 5,
     border: "1px solid",
     zIndex: 1300,

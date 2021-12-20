@@ -5,7 +5,7 @@ import _, { debounce } from "lodash";
 import { Song } from "../model/Song";
 import SpotifySearchResult from "./SpotifySearchResult";
 import { Card, CardContent, List } from "@material-ui/core";
-
+import SpotifyLoginButton from "./SpotifyLoginButton";
 interface SpotifySearchProps {
   handleSelect: (song: Song) => void;
 }
@@ -62,6 +62,12 @@ const SpotifySearch = ({ handleSelect }: SpotifySearchProps) => {
       return <div>Loading...</div>;
     }
     if (error) {
+       if (error.message.includes("401")){
+        return <div>
+          Please log in with Spotify.
+          <SpotifyLoginButton/>
+          </div>
+       }
       return <div>Error: {error.message}</div>;
     }
     if (data && search) {
