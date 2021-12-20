@@ -103,7 +103,7 @@ const AllPromptsFeed = () => {
                         <Typography>
                             <User userId={prompt.posted_by} />
                         </Typography>
-                        <Link href={`/prompts/${prompt.prompt_id}`}>
+                        <Link href={`/prompts/${prompt.id}`}>
                             <a style={{ color: "green" }}>Go To Prompt</a>
                         </Link>
                         </CardContent>
