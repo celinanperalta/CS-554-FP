@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { Avatar, Typography, CardHeader, makeStyles } from "@material-ui/core";
 import queries from "../queries";
 import Image from "next/image";
+import Link from "next/link";
 
 const useStyles = makeStyles({
   cardHeader: {
@@ -22,7 +23,6 @@ const UserAvatar = (props) => {
   if (data && data.getUserById)
     return (
       <CardHeader
-        className={classes.cardHeader}
         avatar={
           <Avatar>
             <Image
@@ -35,7 +35,15 @@ const UserAvatar = (props) => {
             />
           </Avatar>
         }
-        title={<Typography>{data.getUserById.username}</Typography>}
+        title={
+          <Link href={`/user/${data.getUserById.username}`} passHref>
+            <Typography>{data.getUserById.username}</Typography>
+          </Link>
+        }
+        subheader={
+            props.subheader || null
+        }
+        action={props.action || null}
       />
     );
   return null;

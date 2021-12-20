@@ -80,7 +80,7 @@ const AllCommentsFeed = () => {
             <Box className={classes.card}>
                 <p className={classes.feedHeader}>All Comments</p>
                 {data && data.getComments.slice(0).reverse().map((comment) => {
-                    return <Card className={classes.card} variant="outlined">
+                    return <Card key={comment} className={classes.card} variant="outlined">
                         <Typography className="promptContent">
                             {comment.comment}
                         </Typography>

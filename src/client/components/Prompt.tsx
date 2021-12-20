@@ -30,6 +30,7 @@ import TopSongCard from "./TopSongCard";
 import Comment from "./Comment";
 import SubmissionFeed from "./SubmissionFeed";
 import { Comment as CommentIcon } from "@material-ui/icons";
+import UserAvatar from "./UserAvatar";
 
 const useStyles = makeStyles({
   card: {
@@ -126,29 +127,24 @@ const Prompt = ({ id }) => {
   return (
     <Grid item className={classes.grid}>
       <Card className={classes.card} variant="outlined">
-        <CardHeader
-          avatar={
-            <Avatar>
-              <Image
-                src={
-                  userData2?.getUserById.profile_picture ||
-                  "/public/userDefault.jpeg"
-                }
-                alt="profile"
-                className={classes.media}
-                width={70}
-                height={70}
-              />
-            </Avatar>
-          }
-          title={<Typography>{userData2?.getUserById.username}</Typography>}
+        <UserAvatar
+          userId={userData2?.getUserById.id}
           subheader={
             <Typography>
-              {`Open until: ${data.getPromptById.dateCloses.slice(0, 10)}`}
+              {!data.getPromptById.isClosed
+                ? `Open until: ${data.getPromptById.dateCloses.slice(0, 10)}`
+                : "Prompt Closed"}
             </Typography>
           }
           action={
-            <PromptMenu promptId={data.getPromptById.id} isClosed={data.getPromptById.isClosed} dateCloses={data.getPromptById.dateCloses} posted_by={data.getPromptById.posted_by}/>
+            data.getPromptById.posted_by === userData?.me?.id ? (
+              <PromptMenu
+                promptId={data.getPromptById.id}
+                isClosed={data.getPromptById.isClosed}
+                dateCloses={data.getPromptById.dateCloses}
+                posted_by={data.getPromptById.posted_by}
+              />
+            ) : null
           }
         />
         <CardContent>
@@ -167,32 +163,31 @@ const Prompt = ({ id }) => {
                 {data.getPromptById.prompt}
               </Typography>
             </Link>
-
-            {data.getPromptById.isClosed ? (
-              <TopSongCard promptId={id} />
-            ) : (
-              <div>
+            <div>
+              {data.getPromptById.isClosed ? (
+                <TopSongCard promptId={id} />
+              ) : (
                 <SubmissionFeed
                   promptId={id}
                   songs={data.getPromptById.submittedSongs}
                 />
-              </div>
-            )}
+              )}
+            </div>
           </Grid>
         </CardContent>
-        {data.getPromptById.posted_by !== userData?.me?.id ? (
           <CardActions disableSpacing>
             <IconButton
               onClick={() => setExpanded(!expanded)}
               color="default"
               aria-label="comment on prompt"
               component="span"
-            >
+              >
               <CommentIcon />
             </IconButton>
-            {!data.getPromptById.isClosed && <NewSubmission promptId={id} />}
+              {data.getPromptById.posted_by !== userData?.me?.id ? (
+            (!data.getPromptById.isClosed && <NewSubmission promptId={id} />)
+            ) : null}
           </CardActions>
-        ) : null}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <NewComment promptId={id} />

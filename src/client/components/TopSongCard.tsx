@@ -23,25 +23,18 @@ import UserAvatar from "./UserAvatar";
 
 const useStyles = makeStyles({
   card: {
-    width: "450px",
-    minWidth: 175,
-    height: "auto",
-    marginLeft: "10px",
-    marginRight: "10px",
+    width: "100%",
+    height: 200,
     borderRadius: 5,
     border: "0px solid #1e8678",
     textAlign: "left",
-    //marginLeft: '10px',
-    // marginRight: '10px',
     boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);",
   },
   titleHead: {
     borderBottom: "1px solid #1e8678",
     fontWeight: "bold",
   },
-  grid: {
-    
-  },
+  grid: {},
   media: {
     height: "100%",
     width: "100%",
@@ -66,6 +59,11 @@ const useStyles = makeStyles({
   songTitle: {
     fontWeight: "bold",
   },
+  player: {
+    border: "1px solid #333",
+    borderRadius: 5,
+    marginBottom: "5px",
+  },
 });
 
 const TopSongCard = (props) => {
@@ -82,40 +80,36 @@ const TopSongCard = (props) => {
   if (!data.getTopSong) return <p>No Top Song</p>;
   return (
     // <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
-      <Card className={classes.card} variant="outlined">
-        <UserAvatar userId={data.getTopSong.submitted_by} />
-        <CardContent className="">
-          <Grid
-            container
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={2}
-          >
-            <Grid item xs="auto">
-              <CardMedia
-                component="img"
-                image={data.getTopSong.song.imageUrl}
-                alt={data.getTopSong.song.title}
-                className={classes.cmedia}
-              />
-            </Grid>
-            <Grid item xs={8} >
-              <div className={classes.songInfo}>
-                <Typography className={classes.songTitle}>
-                  {data.getTopSong.song.name}
-                </Typography>
-                <Typography variant="caption">
-                  {data.getTopSong.song.artist}
-                </Typography>
-              </div>
-              <Typography variant="caption">
-                  Votes: {data.getTopSong.votes.length}
-                </Typography>
-            </Grid>
+    <Card className={classes.card} variant="outlined">
+      <UserAvatar
+        userId={data.getTopSong.submitted_by}
+        subheader={
+          <Typography variant="caption">
+            Votes: {data.getTopSong.votes.length}
+          </Typography>
+        }
+      />
+      <CardContent>
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+          spacing={2}
+        >
+          <Grid item xs="auto">
+            <iframe
+              className={classes.player}
+              src={`https://open.spotify.com/embed/track/${data.getTopSong.song.id}?utm_source=generator`}
+              width="100%"
+              height="80"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            ></iframe>
           </Grid>
-        </CardContent>
-      </Card>
+        </Grid>
+      </CardContent>
+    </Card>
     // </Grid>
   );
 };

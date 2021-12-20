@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import queries from "../queries";
 import Like from "@material-ui/icons/Favorite";
 import { IconButton } from "@material-ui/core";
-
+import Stack from "@mui/material/Stack";
 interface LikeSubmissionProps {
   id: string;
   numLikes: number;
@@ -54,12 +54,14 @@ const LikeSubmission = (props) => {
   };
 
   return (
-    <div>
-      <IconButton onClick={handleLike}>
+    <Stack direction="row" spacing={1} alignItems="center" sx={{marginRight: 2}}>
+      <IconButton onClick={handleLike} edge="end">
         <Like color={isLiked ? "secondary" : "action"} />
       </IconButton>
-      <span>{numLikes}</span>
-    </div>
+      <div>
+        <span>{numLikes}</span>
+      </div>
+    </Stack>
   );
 };
 
