@@ -3,25 +3,25 @@ import { useQuery } from "@apollo/client";
 import {
   Card,
   CardContent,
-  Grid,
   Typography,
   makeStyles,
   CardMedia,
+  CardHeader,
+  Grid,
 } from "@material-ui/core";
 import LikeSubmission from "./LikeSubmission";
 import useUser from "../lib/useUser";
 import UserAvatar from "./UserAvatar";
+import Stack from "@mui/material/Stack";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 450,
-    minWidth: 450,
-    height: "auto",
-    margin: "10px",
+    width: "100%",
+    height: 200,
     borderRadius: 5,
-    border: "0px solid",
     textAlign: "left",
-    padding: "10px",
+    border: "0px solid #1e8678",
+    boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);",
   },
   titleHead: {
     borderBottom: "1px solid #1e8678",
@@ -66,9 +66,7 @@ const useStyles = makeStyles({
     borderRadius: 5,
     marginBottom: "5px",
   },
-  content: {
-    padding: "0px",
-  },
+  content: {},
   cmedia: {
     width: "60px",
     height: "auto",
@@ -107,18 +105,20 @@ const SongSubmission = (props) => {
     );
   }
   return (
-    // <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
-    <Card className={classes.card} variant="outlined">
-      <UserAvatar userId={data.getSongSubmissionById.submitted_by} />
-      <iframe
-        className={classes.player}
-        src={`https://open.spotify.com/embed/track/${data.getSongSubmissionById.song.id}?utm_source=generator`}
-        width="100%"
-        height="80"
-        frameBorder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      ></iframe>
-      <CardContent className={classes.content}>
+    <Card className={classes.card}>
+      <UserAvatar
+        userId={data.getSongSubmissionById.submitted_by}
+        action={
+          user && (
+            <LikeSubmission
+              id={data.getSongSubmissionById.id}
+              numLikes={data.getSongSubmissionById.votes.length}
+              liked={data.getSongSubmissionById.votes.includes(user.me.id)}
+            />
+          )
+        }
+      />
+      <CardContent>
         <Grid
           container
           direction="row"
@@ -127,36 +127,18 @@ const SongSubmission = (props) => {
           spacing={2}
         >
           <Grid item xs="auto">
-            <CardMedia
-              component="img"
-              image={data.getSongSubmissionById.song.imageUrl}
-              alt={data.getSongSubmissionById.song.title}
-              className={classes.cmedia}
-            />
-          </Grid>
-          <Grid item xs={8}>
-            <div className={classes.songInfo}>
-              <Typography className={classes.songTitle}>
-                {data.getSongSubmissionById.song.name}
-              </Typography>
-              <Typography variant="caption">
-                {data.getSongSubmissionById.song.artist}
-              </Typography>
-            </div>
-            <div className={classes.status}>
-              {user && (
-                <LikeSubmission
-                  id={data.getSongSubmissionById.id}
-                  numLikes={data.getSongSubmissionById.votes.length}
-                  liked={data.getSongSubmissionById.votes.includes(user.me.id)}
-                />
-              )}
-            </div>
+            <iframe
+              className={classes.player}
+              src={`https://open.spotify.com/embed/track/${data.getSongSubmissionById.song.id}?utm_source=generator`}
+              width="100%"
+              height="80"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            ></iframe>
           </Grid>
         </Grid>
       </CardContent>
     </Card>
-    // </Grid>
   );
 };
 
