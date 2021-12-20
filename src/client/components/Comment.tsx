@@ -117,11 +117,16 @@ const Comment = (props) => {
     );
   }
 
+  if (error) {
+    return null;
+  }
+  
+
   if(data){
   return (
     <ListItem
       key={data.getCommentById.id}
-      secondaryAction={user && data.getCommentById.posted_by != user.me.id ? (
+      secondaryAction={user && data?.getCommentById.posted_by != user.me.id ? (
         <LikeComment
           id={data.getCommentById.id}
           numLikes={data.getCommentById.likes.length}
@@ -149,7 +154,6 @@ const Comment = (props) => {
       <Typography className="promptContent">
         {data.getCommentById.comment}
       </Typography>
-      
     </ListItem>
   );
     }else{

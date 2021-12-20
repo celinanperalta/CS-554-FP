@@ -325,6 +325,21 @@ mutation UpdatePrompt($isClosed: Boolean, $postedBy: String!, $promptId: String!
 }
 `
 
+const DELETE_PROMPT = gql`
+mutation Mutation($id: String!) {
+  deletePrompt(id: $id) {
+    id
+    prompt
+    posted_by
+    submittedSongs
+    comments
+    datePosted
+    dateCloses
+    isClosed
+  }
+}
+`
+
 export default {
   LOGIN_USER,
   REGISTER_USER,
@@ -350,5 +365,6 @@ export default {
   GET_TOP_SONG,
   DELETE_USER,
   GET_COMMENTS,
-  UPDATE_PROMPT_DATE
+  UPDATE_PROMPT_DATE,
+  DELETE_PROMPT
 };
