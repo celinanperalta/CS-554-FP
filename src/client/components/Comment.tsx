@@ -121,6 +121,8 @@ const Comment = (props) => {
     return null;
   }
   
+
+  if(data){
   return (
     <ListItem
       key={data.getCommentById.id}
@@ -154,6 +156,9 @@ const Comment = (props) => {
       </Typography>
     </ListItem>
   );
+    }else{
+      return <div></div>
+    }
 };
 
 export default Comment;
