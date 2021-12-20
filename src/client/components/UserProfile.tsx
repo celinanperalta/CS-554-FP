@@ -95,7 +95,7 @@ const UserProfile = (props) => {
                     component="img"
                     image={data.getUserById.profile_picture}
                     // image={data.getUserById.profile_picture}
-                    alt="Live from space album cover"
+                    alt="user profile pic"
                     className={classes.media}
                     />
                     <br />
@@ -104,9 +104,9 @@ const UserProfile = (props) => {
                 </CardContent>
                     <div className={classes.status}>
                         <Winner />
-                        <p className={classes.values}>5</p>
+                        <p className={classes.values}>{data.getUserById.submissions.length}</p>
                         <Likes />
-                        <p className={classes.values}>5</p>
+                        <p className={classes.values}>{data.getUserById.votes.length}</p>
                     </div>
                 <br/>   
                 <SpotifyLoginButton />                       

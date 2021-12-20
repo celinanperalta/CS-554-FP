@@ -64,21 +64,36 @@ const useStyles = makeStyles({
         margin: "10px"
     },
     feedHeader: {
-        backgroundColor: '#333',
-        padding: '10px',
-        margin: '0px',
-        color: 'white'
-    }
+        backgroundColor: "#333",
+        padding: "10px",
+        margin: "0px",
+        color: "white",
+        display: "flex",
+        flexDirection: "row",
+        borderRadius: 5,
+    },
+    refreshButton: {
+        color: "white",
+        borderColor: "white",
+        paddingLeft: 20
+    },
+    promptHeader: {
+        margin: "auto",
+        marginLeft: "10px",
+      },
 });
 
 const AllCommentsFeed = () => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(queries.GET_COMMENTS, { pollInterval: 1000 });
+    const { loading, error, data, refetch } = useQuery(queries.GET_COMMENTS);
 
     return (
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box className={classes.card}>
-                <p className={classes.feedHeader}>All Comments</p>
+            <div className={classes.feedHeader}>
+                <h2 className={classes.promptHeader}>All Comments</h2>
+                    <Button onClick={() =>refetch()} className={classes.refreshButton}>Refresh</Button>
+                </div>
                 {data && data.getComments.slice(0).reverse().map((comment) => {
                     return <Card className={classes.card} variant="outlined">
                         <Typography className="promptContent">
