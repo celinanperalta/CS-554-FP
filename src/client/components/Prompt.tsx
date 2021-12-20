@@ -20,6 +20,7 @@ import {
   Box,
   Avatar,
   Collapse,
+  Modal,
 } from "@material-ui/core";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
@@ -31,6 +32,7 @@ import Comment from "./Comment";
 import SubmissionFeed from "./SubmissionFeed";
 import { Comment as CommentIcon } from "@material-ui/icons";
 import UserAvatar from "./UserAvatar";
+import PollIcon from "@mui/icons-material/Poll";
 
 const useStyles = makeStyles({
   card: {
@@ -70,16 +72,14 @@ const useStyles = makeStyles({
   },
 
   modalBox: {
-    maxWidth: 300,
-    minWidth: 300,
-    minHeight: 200,
-    maxHeight: 200,
+    width: "40%",
+    height: "auto",
     borderRadius: 5,
     border: "1px solid",
     zIndex: 1300,
     backgroundColor: "white",
     margin: "auto",
-    marginTop: "30vh",
+    top: "50%",
     padding: "20px",
   },
   inputFields: {
@@ -166,28 +166,30 @@ const Prompt = ({ id }) => {
             <div>
               {data.getPromptById.isClosed ? (
                 <TopSongCard promptId={id} />
-              ) : (
+              ) : data.getPromptById.submittedSongs.length > 0 ? (
                 <SubmissionFeed
                   promptId={id}
                   songs={data.getPromptById.submittedSongs}
                 />
+              ) : (
+                <Typography>No submissions yet</Typography>
               )}
             </div>
           </Grid>
         </CardContent>
-          <CardActions disableSpacing>
-            <IconButton
-              onClick={() => setExpanded(!expanded)}
-              color="default"
-              aria-label="comment on prompt"
-              component="span"
-              >
-              <CommentIcon />
-            </IconButton>
-              {data.getPromptById.posted_by !== userData?.me?.id ? (
-            (!data.getPromptById.isClosed && <NewSubmission promptId={id} />)
-            ) : null}
-          </CardActions>
+        <CardActions disableSpacing>
+          <IconButton
+            onClick={() => setExpanded(!expanded)}
+            color="default"
+            aria-label="comment on prompt"
+            component="span"
+          >
+            <CommentIcon />
+          </IconButton>
+          {data.getPromptById.posted_by !== userData?.me?.id
+            ? !data.getPromptById.isClosed && <NewSubmission promptId={id} />
+            : null}
+        </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <NewComment promptId={id} />
