@@ -17,6 +17,8 @@ import {
   Box,
 } from "@material-ui/core";
 import Stack from "@mui/material/Stack";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const useStyles = makeStyles({
   card: {
@@ -62,12 +64,39 @@ const useStyles = makeStyles({
 
 const SubmissionFeed = (props) => {
   const classes = useStyles();
+  const [current, setCurrent] = React.useState(0);
+  const items = props.songs.map((songSub) => {
+    return <SongSubmission key={songSub} songSubId={songSub} />;
+  });
+  const numItems: number = props.songs.length;
+
   return (
-    <Stack spacing={2}>
-      {props.songs.map((songSub) => {
-        return <SongSubmission key={songSub} songSubId={songSub} />;
-      })}
-    </Stack>
+    <div>
+      <Box
+        justifyContent="space-between"
+        alignItems="center"
+        display="flex"
+        flexDirection="row"
+      >
+        {numItems > 1 && <IconButton
+          onClick={() => {
+            setCurrent((current - 1) % numItems);
+          }}
+        >
+          <ArrowBackIosIcon />
+        </IconButton>
+        }
+        {items[current]}
+        {numItems > 1 && 
+        <IconButton
+          onClick={() => {
+            setCurrent((current + 1) % numItems);
+          }}
+        >
+          <ArrowForwardIosIcon />
+        </IconButton>}
+      </Box>
+    </div>
   );
 };
 

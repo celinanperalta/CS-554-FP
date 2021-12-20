@@ -36,8 +36,8 @@ const UserAvatar = (props) => {
           </Avatar>
         }
         title={
-          <Link href={`/user/${data.getUserById.username}`} passHref>
-            <Typography>{data.getUserById.username}</Typography>
+          <Link href={`/user/${data.getUserById.id}`} passHref>
+            <Typography sx={{fontWeight: "bold"}}>{data.getUserById.username}</Typography>
           </Link>
         }
         subheader={

@@ -23,6 +23,7 @@ import UserAvatar from "./UserAvatar";
 
 const useStyles = makeStyles({
   card: {
+    minWidth: 400,
     width: "100%",
     height: 200,
     borderRadius: 5,
@@ -93,7 +94,7 @@ const TopSongCard = (props) => {
         <Grid
           container
           direction="row"
-          justifyContent="flex-start"
+          justifyContent="center"
           alignItems="center"
           spacing={2}
         >

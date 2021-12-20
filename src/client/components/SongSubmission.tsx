@@ -16,6 +16,7 @@ import Stack from "@mui/material/Stack";
 
 const useStyles = makeStyles({
   card: {
+    minWidth: 400,
     width: "100%",
     height: 200,
     borderRadius: 5,
@@ -91,9 +92,9 @@ const SongSubmission = (props) => {
 
   if (loading) {
     return (
-      <div className="app">
-        <h2>Loading Song Submission</h2>
-      </div>
+      <Card className={classes.card}>
+        <p></p>
+      </Card>
     );
   }
   if (error) {
@@ -122,7 +123,7 @@ const SongSubmission = (props) => {
         <Grid
           container
           direction="row"
-          justifyContent="flex-start"
+          justifyContent="center"
           alignItems="center"
           spacing={2}
         >
