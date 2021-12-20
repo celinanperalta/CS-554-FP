@@ -85,6 +85,19 @@ const useStyles = makeStyles({
   justifyContent:"center"
 
 },
+row: {
+  display: 'flex',
+  flexDirection: 'row',
+  padding: '20px',
+  justifyContent: 'center'
+
+},
+column: {
+display: 'flex',
+flexDirection: 'column',
+padding: '20px',
+textAlign: 'center'
+}
 });
 
 const User = () => {
@@ -105,9 +118,8 @@ const User = () => {
   if (loading || !user) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   return (
-    <Stack spacing={2}>
-      <Item>
-      <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
+    <div className={classes.row}>
+      <div className={classes.column}>
             <Card className={classes.card} variant="outlined">
                 <CardContent className={classes.content}>
                     <CardMedia
@@ -123,18 +135,17 @@ const User = () => {
                 </CardContent>
                     <div className={classes.status}>
                         <Winner />
-                        <p className={classes.values}>{user.getUserById.submissions.length}</p>
+                        <p className={classes.values}>{user.getUserById.submissions.length}</p> 
                         <Likes />
                         <p className={classes.values}>{user.getUserById.votes.length}</p>
                     </div>
                 <br/>                       
             </Card>
-        </Grid>
-        </Item>
-      <Item>
-      <PromptFeed userId={user.getUserById.id} prompts={user.getUserById.prompts} />
-      </Item>
-    </Stack>
+        </div>
+        <div className={classes.column}>
+          <PromptFeed userId={user.getUserById.id} prompts={user.getUserById.prompts} />
+        </div>
+      </div>
   );
 };
 
