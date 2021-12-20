@@ -64,23 +64,39 @@ const useStyles = makeStyles({
         margin: "10px"
     },
     feedHeader: {
-        backgroundColor: '#333',
-        padding: '10px',
-        margin: '0px',
-        color: 'white'
-    }
+        backgroundColor: "#333",
+        padding: "10px",
+        margin: "0px",
+        color: "white",
+        display: "flex",
+        flexDirection: "row",
+        borderRadius: 5,
+    },
+    refreshButton: {
+        color: "white",
+        borderColor: "white",
+        paddingLeft: 20
+    },
+    promptHeader: {
+        margin: "auto",
+        marginLeft: "10px",
+      },
 });
 
 const AllPromptsFeed = () => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(queries.GET_PROMPTS, { pollInterval: 1000 });
+    const { loading, error, data, refetch } = useQuery(queries.GET_PROMPTS);
 
     return (
         <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box className={classes.card}>
-                <p className={classes.feedHeader}>All Prompts</p>
-                {data && data.getPrompts.slice(0).sort((a,b)=>{a.datePosted > b.datePosted ? 1: -1}).map((prompt) => {
-                    return <Card className={classes.card} variant="outlined">
+                <div className={classes.feedHeader}>
+                <h2 className={classes.promptHeader}>All Prompts</h2>
+                    <Button onClick={() =>refetch()} className={classes.refreshButton}>Refresh</Button>
+                </div>
+                {data && data.getPrompts.slice(0).sort((a, b) => { a.datePosted > b.datePosted ? 1 : -1 }).map((prompt) => {
+                    return <Card className={classes.card} >
+                        <CardContent>
                         <Typography className="promptContent">
                             {prompt.prompt}
                         </Typography>
@@ -88,8 +104,9 @@ const AllPromptsFeed = () => {
                             <User userId={prompt.posted_by} />
                         </Typography>
                         <Link href={`/prompts/${prompt.prompt_id}`}>
-                        <a style={{color:"green"}}>Go To Prompt</a>
+                            <a style={{ color: "green" }}>Go To Prompt</a>
                         </Link>
+                        </CardContent>
                     </Card>
                 })}
             </Box>

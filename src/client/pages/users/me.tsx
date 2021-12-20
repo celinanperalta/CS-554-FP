@@ -8,7 +8,6 @@ import NewPrompt from "../../components/NewPrompt";
 import Profile from '../../components/UserProfile';
 import PromptFeed from '../../components/PromptFeed';
 
-
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -54,8 +53,7 @@ const Me = () => {
         {/* <SpotifyLoginButton /> */}
       </div>
       <div className={classes.column}>
-        <PromptFeed prompts={user.data.getUserById.prompts} />
-        {/* <NewPrompt/> */}
+        <PromptFeed userId={user.data.getUserById.id} prompts={user.data.getUserById.prompts} />
       </div>
       {user.data.getUserById.accessToken && (
       <div className={classes.row}>

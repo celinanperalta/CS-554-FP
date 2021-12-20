@@ -8,6 +8,7 @@ import NewPrompt from "../components/NewPrompt";
 import { useQuery } from "@apollo/client";
 import queries from "../queries";
 import client from "../apollo-client";
+import useUser from "../lib/useUser";
 
 import {
   Card,
@@ -65,6 +66,8 @@ const useStyles = makeStyles({
     color: "white",
     display: "flex",
     flexDirection: "row",
+    width: 750,
+    borderRadius: 5,
     //justifyContent: 'flex-end'
   },
   promptHeader: {
@@ -75,20 +78,32 @@ const useStyles = makeStyles({
 
 const PromptFeed = (props) => {
   const classes = useStyles();
+  const { data } = useUser({
+    redirectTo: "/login",
+  });
 
+  const user = useQuery(queries.GET_USER, {
+    skip: !data,
+    variables: {
+      id: props.userId
+    },
+  });
+
+  if(data && user){
   return (
     <Grid item className={classes.grid} xs={12} sm={6} md={4} lg={3} xl={2}>
-      <Box className={classes.card}>
         <div className={classes.feedHeader}>
-          <h2 className={classes.promptHeader}>My Prompts</h2>
-          <NewPrompt />
+          <h2 className={classes.promptHeader}>{data.me.id===props.userId ? "My Prompts" : `${user.data.getUserById.username}'s Prompts`}</h2>
+          {(user.data.getUserById.id && data.me.id===props.userId)? <NewPrompt/> : null}
         </div>
+        
         {props.prompts.map((prompt) => {
           return <Prompt key={prompt} id={prompt} />;
         })}
-      </Box>
     </Grid>
-  );
+  );}else{
+    return <div>Loading...</div>
+  }
 };
 
 
